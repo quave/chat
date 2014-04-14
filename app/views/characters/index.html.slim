@@ -1,0 +1,29 @@
+h1 Listing characters
+
+table
+  thead
+    tr
+      th Name
+      th User
+      th Game
+      th Desc
+      th Color
+      th
+      th
+      th
+
+  tbody
+    - @characters.each do |character|
+      tr
+        td = character.name
+        td = character.user
+        td = character.game
+        td = character.desc
+        td = character.color
+        td = link_to 'Show', character
+        td = link_to 'Edit', edit_character_path(character)
+        td = link_to 'Destroy', character, data: {:confirm => 'Are you sure?'}, :method => :delete
+
+br
+
+= link_to 'New Character', new_character_path

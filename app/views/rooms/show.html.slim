@@ -1,0 +1,15 @@
+p#notice = notice
+
+p
+  strong Name:
+  = @room.name
+p
+  strong Game:
+  = @room.game
+p
+  strong Order:
+  = @room.order
+
+= link_to 'Edit', edit_room_path(@room)
+'|
+= link_to 'Back', rooms_path

@@ -1,0 +1,34 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  edit_link: "Edit"
+  show_link: "Show"
+  destroy_link: "Destroy"
+  create_game: "Создать игру"
+  
+  lobby:
+    title: "Let's play!"
+    tip: "Yahoo!"
+    my_games: "My games"
+    all_games: "All games"
+    greetings: "Greetings, stranger!"
+    greetings_text: "Ты набрел на место, где такие же как ты играют в словесные ролевые игры."
+
+  game:
+    send_request: "Wanna play!"
+    characters:
+      player_name_title: "Player"
+      char_name_title: "Character"
+      char_class_title: "Class"
+      status_title: "Status"
+      empty: "No one is here yet"
+
+  devise:
+    sign_in: "Sign in"
+    sign_in_page_title: "Sign in"
+    sign_up: "Sign up"
+    sign_out: "Sign out"
+    profile:
+      title: "Edit"
+      display_name: "Name"

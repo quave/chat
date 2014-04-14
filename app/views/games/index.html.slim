@@ -1,0 +1,35 @@
+h1 Listing games
+
+table
+  thead
+    tr
+      th Name
+      th Desc
+      th Status
+      th Creator
+      th Need chars
+      th Tags
+      th Deny empty requests
+      th Private
+      th
+      th
+      th
+
+  tbody
+    - @games.each do |game|
+      tr
+        td = game.name
+        td = game.desc
+        td = game.status
+        td = game.creator
+        td = game.need_chars
+        td = game.tags
+        td = game.deny_empty_requests
+        td = game.private
+        td = link_to 'Show', game
+        td = link_to 'Edit', edit_game_path(game)
+        td = link_to 'Destroy', game, data: {:confirm => 'Are you sure?'}, :method => :delete
+
+br
+
+= link_to 'New Game', new_game_path

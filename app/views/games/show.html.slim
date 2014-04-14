@@ -1,0 +1,30 @@
+p#notice = notice
+
+p
+  strong Name:
+  = @game.name
+p
+  strong Desc:
+  = @game.desc
+p
+  strong Status:
+  = @game.status
+p
+  strong Creator:
+  = @game.creator
+p
+  strong Need chars:
+  = @game.need_chars
+p
+  strong Tags:
+  = @game.tags
+p
+  strong Deny empty requests:
+  = @game.deny_empty_requests
+p
+  strong Private:
+  = @game.private
+
+= link_to 'Edit', edit_game_path(@game)
+'|
+= link_to 'Back', games_path

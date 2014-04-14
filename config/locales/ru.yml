@@ -1,0 +1,50 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+ru:
+ 
+  devise:
+    sign_in: "Войти"
+    sign_in_page_title: "Вход"
+    sign_up: "Зарегистрироваться"
+    sign_out: "Выйти"
+    profile:
+      title: "Редактирование профиля"
+      display_name: "Имя"
+      email: "Email"
+      password: "Новый пароль"
+      password_confirmation: "Еще раз"
+      current_password: "Текущий пароль"
+      leave_empty: "оставьте пустым, если не хотите менять"
+      need_current_password: "необхоидм ваш текущий пароль, чтобы подтвердить его смену"
+      update: "Обновить"
+      unhappy: "Не понравилось?"
+      delete_account_h: "Удаление аккаунта"
+      delete_account: "Удалить аккаунт"
+
+  activerecord:
+    attributes:
+      player:
+        current_password: "Текущий пароль"
+    errors:
+      models:
+        player:
+          attributes:
+            name: 
+              blank: "Пустое имя"
+            email: 
+              blank: "Пустой email"
+            password: 
+              blank: "Пароль пустой"
+              confirmation: "Нет подтверждения пароля"
+            password_confirmation:
+              blank: "Нет подтверждения пароля"
+            current_password:
+              blank: "Текущий пароль пустой"
+        room:
+          attributes:
+            name:
+              blank: "Пустое имя"
+    success:
+      character:
+        created: "Персонаж успешно создан"

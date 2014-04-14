@@ -1,0 +1,12 @@
+= simple_form_for(@character) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :name
+    = f.association :user
+    = f.association :game
+    = f.input :desc
+    = f.input :color
+
+  .form-actions
+    = f.button :submit
