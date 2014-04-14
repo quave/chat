@@ -1,13 +1,9 @@
-= simple_form_for @game, html: { class: 'form-horizontal' } do |f|
+= simple_form_for @game, html: { class: 'form-horizontal', role: 'form' },
+  wrapper: :horizontal_form do |f|
   = f.error_notification
 
-  = f.input :name, label: "Название", input_html: { class: "input-lg" }
+  = f.input :name
   = f.input :desc
-  = f.input :status
-  = f.input :need_chars
-  = f.input :tags
-  = f.input :deny_empty_requests
-  = f.input :private
 
   .form-actions
     = f.button :submit

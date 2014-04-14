@@ -24,7 +24,7 @@ group :doc do
 end
 
 gem 'devise'
-gem 'simple_form'
+gem 'simple_form', git: 'https://github.com/plataformatec/simple_form'
 gem 'cancan'
 
 # Use ActiveModel has_secure_password
