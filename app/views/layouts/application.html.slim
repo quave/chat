@@ -19,37 +19,23 @@ html lang="en"
             span.icon-bar
             span.icon-bar
             span.icon-bar
-          = link_to "R", ".", class: "navbar-brand"
+          = link_to "R", root_path, class: "navbar-brand"
         .collapse.navbar-collapse
           ul.nav.navbar-nav
-            li.active= link_to "Home", "#"
-            li= link_to "About", "#about"
-            li= link_to "Contact", "#contact"
+            li.active= link_to "Home", root_path
 
     header role="banner"
       .container
-        h1= yield(:title)
+        = notice 
+        = alert
+        = yield :head
 
-    .wrap
-      .container
-        .row
-          .col-sm-9
-            main role="main"
-              p.notice= notice
-              p.alert= alert
-
-              section
-                = yield
-
-          .col-sm-3
-            aside role="complementary"
-              nav.list-group role="navigation"
-                = link_to "Home", "#", class: "list-group-item active"
-                = link_to "About", "#about", class: "list-group-item"
-                = link_to "Contact", "#contact", class: "list-group-item"
+    .container
+      = yield
 
     footer role="contentinfo"
       .container
+        .inner= yield :foot
         small RolePlayground &copy;
 
     = javascript_include_tag 'application'

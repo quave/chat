@@ -1,20 +1,27 @@
 Chat::Application.routes.draw do
   resources :messages
+  resources :users
 
   resources :characters
 
   resources :rooms
 
-  resources :games
+  resources :games do
+    resources :rooms, except: :index do
+      put :up, on: :member
+      put :down, on: :member
+    end
+
+    resources :characters
+  end
 
   devise_for :users
-  resources :users
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'chat#index'
+  root 'lobby#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

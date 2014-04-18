@@ -1,11 +1,11 @@
-= title I18n.t 'lobby.title'
+- title I18n.t 'lobby.title'
 
-= content_for :head do
+- content_for :head do
   h1= I18n.t 'lobby.title'
   .tip= I18n.t 'lobby.tip'
 
 .row
-  .span9
+  .col-sm-9
     -if user_signed_in?
 
       - if @my_games.any?
@@ -14,17 +14,17 @@
           - @my_games.each do |g|
             li= link_to g.name, game_path(g)
 
-      - if @current_games.any?
-        h2= I18n.t 'lobby.all_games'
-        ul#all-games
-          - @current_games.each do |g|
-            li= link_to g.name, game_path(g)
-
     - else
       h2= I18n.t('lobby.greetings')
       p.greetings-text= I18n.t('lobby.greetings_text')
       = link_to I18n.t('devise.sign_up'), new_user_registration_path, :class => 'btn btn-lg btn-sign-up btn-success'
       = link_to I18n.t('devise.sign_in'), new_user_session_path, :class => 'btn btn-sign-in btn-lg btn-primary'
-  .span3
+
+    - if @current_games.any?
+      h2= I18n.t 'lobby.all_games'
+      ul#all-games
+        = render @current_games
+
+  .col-sm-3
     - if user_signed_in?
       = link_to I18n.t('create_game'), new_game_path, :class => 'btn btn-success btn-lg'

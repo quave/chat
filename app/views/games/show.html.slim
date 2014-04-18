@@ -1,6 +1,50 @@
-p#notice = notice
+- title @game.name
+- content_for :head do
+  h2= @game.name
 
+.row
+  .col-sm-9
+    #tags
+      - @game.tags.split(',').each do |t|
+        span.tag.label.label-warning= t.strip
 
-= link_to 'Edit', edit_game_path(@game)
-'|
-= link_to 'Back', games_path
+    #chars
+      - if @game.characters.any?
+        table.table.table-striped
+          thead
+            tr
+              th= "Игрок"
+              th= "Персонаж"
+              th= "Класс"
+              th= "Статус"
+              th
+          tbody
+            - @game.characters.each do |c|
+              tr
+                td= link_to c.user.name, registration_path(c.user)
+                td= link_to c.name, game_character_path(@game, c)
+                td= 'Druid'
+                td= ['В игре', 'Oжидает', 'Мертв'].sample
+                td= link_to("Редактировать", edit_game_character_path(@game, c), :class => 'btn btn-small btn-warning') if user_signed_in? && c.user_id == current_user.id
+      - else
+        p
+          i.muted= "Пока что ни одной заявки"
+
+      = link_to "Хочу играть!", new_game_character_path(@game), :class => 'btn btn-large btn-success' if user_signed_in? && @game.characters.all? {|c| c.user_id != current_user.id }
+      -if @game.deny_empty_requests
+        i.text-warning.deny-empty-requests= "Заполни персонажа сразу, #{current_user.name}"
+
+    - if !@game.desc.blank?
+      #desc.well.well-small
+        p= @game.desc
+
+  .col-sm-3
+    =render partial: "rooms/list", :locals => { :game => @game }
+
+    -if user_signed_in?
+      - if can_edit_game? @game
+        = link_to "Редактировать игру", edit_game_path(@game), :class => 'btn btn-warning btn-block'
+        = link_to "Удалить игру", game_path(@game), :method => :delete, :class => 'btn btn-danger btn-block', :confirm => "Вы уверены?"
+      - else
+        - if !@game.private
+          = link_to "Читать", edit_game_path(@game), :class => 'btn btn-warning btn-block'

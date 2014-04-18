@@ -2,8 +2,21 @@
   wrapper: :horizontal_form do |f|
   = f.error_notification
 
-  = f.input :name
-  = f.input :desc
+  = f.input :name, input_html: { class: 'input-lg' }
+  = f.input :desc, input_html: { rows: 6 }
 
-  .form-actions
-    = f.button :submit
+  = f.input :need_chars
+  = f.input :tags
+
+  .form-group.boolean.game_deny_empty_requests
+    .col-sm-2
+    .col-sm-10
+      = f.input_field :deny_empty_requests, as: :boolean, label: false, inline_label: 'Запретить предварительные запросы?'
+
+  .form-group.boolean.game_private
+    .col-sm-2
+    .col-sm-10
+      = f.input_field :private, as: :boolean, label: false, inline_label: 'Скрыть от посторонних глаз?'
+
+  .col-sm-offset-2
+    = f.button :submit, class: 'btn btn-success btn-lg'
