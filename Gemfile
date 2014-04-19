@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 ruby '2.0.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.0.4'
+gem 'rails'
 
 gem 'sass-rails', '~> 4.0.2'
 gem 'uglifier', '>= 1.3.0'
@@ -12,6 +12,7 @@ gem 'slim-rails'
 gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
+gem 'tzinfo-data'
 
 group :development, :test do
   gem 'thin'
@@ -24,7 +25,7 @@ group :doc do
 end
 
 gem 'devise'
-gem 'simple_form', git: 'https://github.com/plataformatec/simple_form'
+gem 'simple_form', '~> 3.1.0.rc1'
 gem 'cancan'
 
 # Use ActiveModel has_secure_password
