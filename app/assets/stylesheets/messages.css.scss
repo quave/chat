@@ -1,3 +1,87 @@
 // Place all the styles related to the messages controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+.tip {
+  color: #888;
+  margin-bottom: 20px;
+}
+
+#chat {
+  max-width: 600px;
+}
+
+.static {
+  width: 800px;
+  margin: 0 auto;
+  position: fixed;
+  bottom: 150px;
+}
+
+#players {
+  width: 165px;
+  background: #fff;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+#players li {
+  cursor: pointer;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+}
+
+#message {
+  resize: none;
+  width: 600px;
+  height: 96px;
+  display: block;
+  float: left;
+  margin-right: 20px;
+  border: none;
+}
+
+#send {
+  display: block;
+  float: left;
+  height: 100px;
+  width: 100px;
+  padding: 10px; 
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#dddddd), to(#aaa));
+  border: none;
+}
+
+#chat {
+  margin-bottom: 140px;
+  height: 100%;
+}
+
+#chat .message {
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+#chat .message .time {
+  color: #aaa;
+  font-size: 11px;
+  display: inline-block;
+  margin-right: 5px;
+}
+
+#chat .message .name {
+  color: #FF6A14;
+}
+
+#chat .message .delimiter {
+  display: inline-block;
+  margin-right: 3px;
+}
+
+#chat .message .text {
+  display: inline;
+  white-space: pre-wrap;
+}

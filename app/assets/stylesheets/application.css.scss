@@ -1,0 +1,99 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require_self
+ *= require_tree .
+ */
+
+$font-family-sans-serif: 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$font-family-sans-serif-light: 'Segoe UI Light', 'Helvetica Neue Light', Helvetica, Arial, sans-serif;
+$font-family-serif: Cambria, 'Times New Roman', Times, serif;
+$font-family-monospace: Menlo, Monaco, Consolas, 'Courier New', Courier, monospace;
+$font-size-base: 16px;
+
+@import "bootstrap";
+
+
+body {
+  line-height: 1.5em;
+}
+
+h1, h2, h3 {
+  line-height: 1.5em;
+}
+
+h2 {
+  font-family: $font-family-sans-serif-light;
+  font-size: 250%;
+  font-weight: 100;
+  color: #888;
+}
+
+li {
+  line-height: inherit;
+}
+
+.readable {
+  font-family: $font-family-serif;
+}
+
+.label, .badge {
+  font-size: 75%;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+}
+
+textarea.input-xxlarge {
+  max-width: 530px;
+  min-height: 200px;
+  height: 200px;
+}
+
+.profile {
+  position: absolute;
+  top: .5em;
+  right: .5em;
+}
+
+.profile > * {
+  margin-left: .5em;
+}
+
+.links {
+  margin-top: 1em;
+}
+
+/* room list */
+#room-list {
+  margin-bottom: 2em;
+}
+
+#room-list .add {
+  margin-left: 1em;
+}
+
+#room-list > ul > li > a {
+  float: left;
+  margin-right: .5em;
+}
+
+#room-list > ul > li > .action {
+  padding: .5em .5em 0 .5em;
+  background: transparent;
+}
+
+#room-list .dropdown.open .caret
+{
+    border-bottom-color: #005580;
+    border-top-color: #005580;
+}
+
+#room-list .dropdown-menu a i {
+  margin-top: .3em;
+}
