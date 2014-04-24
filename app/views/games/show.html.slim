@@ -7,6 +7,7 @@
     #tags
       - @game.tags.split(',').each do |t|
         span.tag.label.label-warning= t.strip
+        |  
 
     #chars
       - if @game.characters.any?
