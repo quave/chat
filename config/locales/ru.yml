@@ -2,7 +2,29 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 ru:
- 
+  
+  edit_link: "Редактировать"
+  show_link: "Посмотреть"
+  destroy_link: "Удалить"
+  create_game: "Создать игру"
+  
+  lobby:
+    title: "Играем?"
+    tip: "Yahoo!"
+    my_games: "Мои игры"
+    all_games: "Текущие игры"
+    greetings: "Привет, незнакомец!"
+    greetings_text: "Ты набрел на место, где такие же как ты играют в словесные ролевые игры."
+
+  game:
+    send_request: "Wanna play!"
+    characters:
+      player_name_title: "Player"
+      char_name_title: "Character"
+      char_class_title: "Class"
+      status_title: "Status"
+      empty: "No one is here yet"
+
   devise:
     sign_in: "Войти"
     sign_in_page_title: "Вход"
