@@ -1,21 +1,13 @@
 p#notice = notice
 
-p
-  strong Name:
-  = @character.name
-p
-  strong User:
-  = @character.user
-p
-  strong Game:
-  = @character.game
-p
-  strong Desc:
-  = @character.desc
-p
-  strong Color:
-  = @character.color
+h1= @character.name
+span
+  = @character.user.name
+  | , Игра:
+  = @character.game.name
 
-= link_to 'Edit', edit_game_character_path(@game, @character)
+.well= @character.desc
+
+= link_to 'Редактировать', edit_game_character_path(@game, @character)
 '|
-= link_to 'Back', game_characters_path(@game)
+= link_to 'Назад', game_characters_path(@game)

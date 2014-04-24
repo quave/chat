@@ -30,11 +30,15 @@ class GamesController < ApplicationController
     @game = Game.new(game_params)
     @game.creator_id = current_user.id
 
-    respond_to do |format|
-      if @game.save
-        format.html { redirect_to @game, notice: 'Игра создана!' }
+    if @game.save
+      Character.create_master @game
+
+      respond_to do |format|
+        format.html { redirect_to @game, notice: 'Ура! Игра создана!' }
         format.json { render action: 'show', status: :created, location: @game }
-      else
+      end
+    else
+      respond_to do |format|
         format.html { render action: 'new' }
         format.json { render json: @game.errors, status: :unprocessable_entity }
       end
@@ -46,7 +50,7 @@ class GamesController < ApplicationController
   def update
     respond_to do |format|
       if @game.update(game_params)
-        format.html { redirect_to @game, notice: 'Game was successfully updated.' }
+        format.html { redirect_to @game, notice: 'Ура! Игра обновлена!' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

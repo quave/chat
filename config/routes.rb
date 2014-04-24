@@ -9,10 +9,10 @@ Chat::Application.routes.draw do
       put :down, on: :member
     end
 
-    resources :characters
+    resources :characters, except: :index
   end
 
-  devise_for :users
+  devise_for :users, controllers: {sessions: 'sessions'}
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

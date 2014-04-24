@@ -22,7 +22,11 @@ html lang="en"
           = link_to "R", root_path, class: "navbar-brand"
         .collapse.navbar-collapse
           ul.nav.navbar-nav
-            li.active= link_to "Home", root_path
+            - if user_signed_in?
+              li= link_to "Выход", destroy_user_session_path, method: :delete, html: { class: 'pull-right'}
+            - else
+              li= link_to "Войти", new_user_session_path, html: { class: 'pull-right'}
+
 
     header role="banner"
       .container
@@ -39,3 +43,4 @@ html lang="en"
         small RolePlayground &copy;
 
     = javascript_include_tag 'application'
+    = javascript_include_tag :defaults

@@ -2,12 +2,6 @@ class CharactersController < ApplicationController
   before_action :set_character, only: [:show, :edit, :update, :destroy]
   before_action :set_game
 
-  # GET /characters
-  # GET /characters.json
-  def index
-    @characters = Character.all
-  end
-
   # GET /characters/1
   # GET /characters/1.json
   def show
@@ -31,7 +25,7 @@ class CharactersController < ApplicationController
 
     respond_to do |format|
       if @character.save
-        format.html { redirect_to @game, notice: 'Character was successfully created.' }
+        format.html { redirect_to @game, notice: 'Ура! Персонаж создан!' }
         format.json { render action: 'show', status: :created, location: @character }
       else
         format.html { render action: 'new' }
@@ -45,7 +39,7 @@ class CharactersController < ApplicationController
   def update
     respond_to do |format|
       if @character.update(character_params)
-        format.html { redirect_to @game, notice: 'Character was successfully updated.' }
+        format.html { redirect_to @game, notice: 'Ура! Персонаж обновлен!' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
