@@ -17,13 +17,13 @@ ru:
     greetings_text: "Ты набрел на место, где такие же как ты играют в словесные ролевые игры."
 
   game:
-    send_request: "Wanna play!"
+    send_request: "Хочу играть!"
     characters:
-      player_name_title: "Player"
-      char_name_title: "Character"
-      char_class_title: "Class"
-      status_title: "Status"
-      empty: "No one is here yet"
+      player_name_title: "Игрок"
+      char_name_title: "Персонаж"
+      char_class_title: "Класс"
+      status_title: "Статус"
+      empty: "Пока что никого нет"
 
   devise:
     sign_in: "Войти"
