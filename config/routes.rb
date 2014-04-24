@@ -1,5 +1,10 @@
 Chat::Application.routes.draw do
   resources :messages
+<<<<<<< HEAD
+=======
+
+  resources :characters
+>>>>>>> 3814cde11228e145c73d70fefd09d4f04ba8b871
 
   resources :rooms
 
