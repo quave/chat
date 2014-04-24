@@ -8,6 +8,6 @@ class User < ActiveRecord::Base
   validate :name, uniqueness: true
 
   def name
-    @name || '%username%'
+    read_attribute(:name) || '%username%'
   end
 end

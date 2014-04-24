@@ -6,8 +6,7 @@
   .col-sm-9
     #tags
       - @game.tags.split(',').each do |t|
-        span.tag.label.label-warning= t.strip
-        |  
+        span.tag.label.label-warning> = t.strip
 
     #chars
       - if @game.characters.any?
@@ -40,7 +39,7 @@
         p= @game.desc
 
   .col-sm-3
-    =render partial: "rooms/list", :locals => { :game => @game }
+    =render partial: "games/rooms_list", :locals => { :game => @game }
 
     -if user_signed_in?
       - if can_edit_game? @game

@@ -1,0 +1,38 @@
+#room-list
+  h4= "Комнаты"
+  
+  ul.nav.nav-pills.stacked
+    - game.rooms.each_with_index.map do |room, i|
+      - this_room = params[:controller] == 'rooms' && params[:id].to_i == room.id
+
+      - if can_edit_game? game
+        li.dropdown[class=(this_room ? "active" : "")]
+          - if this_room
+            a= room.name
+          - else
+            = link_to room.name, game_room_path(game, room)
+          a.dropdown-toggle.action data-toggle="dropdown" href="#"
+            b.caret
+          ul.dropdown-menu
+            - unless i == 0
+              li
+                a href=up_game_room_path(game, room) data-method=:put
+                  i.icon-chevron-up
+                  = "Вверх"
+            - unless i == game.rooms.size - 1
+              li
+                a href=down_game_room_path(game, room) data-method=:put
+                  i.icon-chevron-down
+                  = "Вниз"
+            li
+              a href=edit_game_room_path(game, room)
+                i.icon-edit
+                = "Редактировать"
+            li
+              a href=game_room_path(game, room) data-method=:delete data-confirm="Вы уверены?"
+                i.icon-remove
+                = "Удалить"
+      - else
+        li.clearfix= link_to room.name, game_room_path(game, room)
+  - if can_edit_game? game
+    = link_to "Добавить", new_game_room_path(game), :class => "btn btn-success btn-small add"

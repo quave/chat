@@ -1,9 +1,8 @@
-= simple_form_for(@room) do |f|
+= simple_form_for([@game, @room]) do |f|
   = f.error_notification
 
   .form-inputs
-    = f.input :name
-    = f.association :game
+    = f.input :name, label: 'Имя', input_html: { class: 'input-lg' }
     = f.input :order
 
   .form-actions

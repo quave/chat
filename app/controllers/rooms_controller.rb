@@ -1,11 +1,6 @@
 class RoomsController < ApplicationController
   before_action :set_room, only: [:show, :edit, :update, :destroy]
-
-  # GET /rooms
-  # GET /rooms.json
-  def index
-    @rooms = Room.all
-  end
+  before_action :set_game
 
   # GET /rooms/1
   # GET /rooms/1.json
@@ -25,10 +20,11 @@ class RoomsController < ApplicationController
   # POST /rooms.json
   def create
     @room = Room.new(room_params)
+    @room.game_id = @game.id
 
     respond_to do |format|
       if @room.save
-        format.html { redirect_to @room, notice: 'Ура! Комната создана!' }
+        format.html { redirect_to @game, notice: 'Ура! Комната создана!' }
         format.json { render action: 'show', status: :created, location: @room }
       else
         format.html { render action: 'new' }
@@ -65,6 +61,10 @@ class RoomsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_room
       @room = Room.find(params[:id])
+    end
+
+    def set_game
+      @game = Game.find params[:game_id]
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

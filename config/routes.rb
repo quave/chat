@@ -1,6 +1,5 @@
 Chat::Application.routes.draw do
   resources :messages
-  resources :rooms
 
   resources :games do
     resources :rooms, except: :index do
@@ -9,6 +8,7 @@ Chat::Application.routes.draw do
     end
 
     resources :characters, except: :index
+    resources :rooms, except: :index
   end
 
   devise_for :users, controllers: {sessions: 'sessions'}
