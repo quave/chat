@@ -1,6 +1,6 @@
 # Use this setup block to configure all options available in SimpleForm.
 SimpleForm.setup do |config|
-  config.button_class = 'btn btn-default'
+  config.button_class = 'btn btn-success'
   config.boolean_label_class = nil
 
   config.wrappers :vertical_form, tag: 'div', class: 'form-group', error_class: 'has-error' do |b|
@@ -75,9 +75,9 @@ SimpleForm.setup do |config|
     b.use :html5
     b.use :placeholder
 
-    b.wrapper tag: 'div', class: 'col-sm-offset-3 col-sm-9' do |wr|
+    b.wrapper tag: 'div', class: 'col-sm-offset-2 col-sm-10' do |wr|
       wr.wrapper tag: 'div', class: 'checkbox' do |ba|
-        ba.use :label_input, class: 'col-sm-9'
+        ba.use :label_input, class: 'col-sm-10'
       end
 
       wr.use :error, wrap_with: { tag: 'span', class: 'help-block' }

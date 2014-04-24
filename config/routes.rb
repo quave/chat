@@ -1,8 +1,5 @@
 Chat::Application.routes.draw do
   resources :messages
-  resources :users
-
-  resources :characters
 
   resources :rooms
 

@@ -16,6 +16,6 @@ p
   strong Color:
   = @character.color
 
-= link_to 'Edit', edit_character_path(@character)
+= link_to 'Edit', edit_game_character_path(@game, @character)
 '|
-= link_to 'Back', characters_path
+= link_to 'Back', game_characters_path(@game)

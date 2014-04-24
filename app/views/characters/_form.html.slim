@@ -1,12 +1,9 @@
-= simple_form_for(@character) do |f|
+= simple_form_for [@game, @character], html: { class: 'form-horizontal', role: 'form' }, wrapper: :horizontal_form do |f|
   = f.error_notification
 
-  .form-inputs
-    = f.input :name
-    = f.association :user
-    = f.association :game
-    = f.input :desc
-    = f.input :color
+  = f.input :name, input_html: { class: 'input-lg' }, label_html: {class: 'label-lg'}
+  = f.input :desc, input_html: { rows: 8 }
+  = f.input :color
 
-  .form-actions
+  .col-sm-offset-2
     = f.button :submit
