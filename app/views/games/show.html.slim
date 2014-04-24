@@ -6,14 +6,8 @@
   .col-sm-9
     #tags
       - @game.tags.split(',').each do |t|
-<<<<<<< HEAD
         span.tag.label.label-warning= t.strip
         |  
-=======
-        span.label.label-warning= t.strip
-        |  
-
->>>>>>> 3814cde11228e145c73d70fefd09d4f04ba8b871
 
     #chars
       - if @game.characters.any?
