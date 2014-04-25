@@ -1,0 +1,28 @@
+<% title "Games list" %>
+<% content_for :head do %>
+  <h1>Games list</h1>
+<% end %>
+
+<table class="list">
+  <tr>
+    <th class="name">Name</th>
+    <th class="desc">Desc</th>
+    <th class="show"></th>
+    <th class="edit"></th>
+    <th class="destroy"></th>
+  </tr>
+
+<% @games.each do |game| %>
+  <tr>
+    <td class="name"><%= game.name %></td>
+    <td class="desc"><%= game.desc %></td>
+    <td class="show"><%= link_to 'Show', game %></td>
+    <td class="edit"><%= link_to 'Edit', edit_game_path(game) %></td>
+    <td class="destroy"><%= link_to 'Destroy', game, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Game', new_game_path %>

@@ -5,8 +5,6 @@ class GamesController < ApplicationController
   # GET /games.json
   def index
     @games = Game.all
-
-    render partial: 'game', collection: @games
   end
 
   # GET /games/1
@@ -30,15 +28,11 @@ class GamesController < ApplicationController
     @game = Game.new(game_params)
     @game.creator_id = current_user.id
 
-    if @game.save
-      Character.create_master @game
-
-      respond_to do |format|
+    respond_to do |format|
+      if @game.save
         format.html { redirect_to @game, notice: 'Ура! Игра создана!' }
         format.json { render action: 'show', status: :created, location: @game }
-      end
-    else
-      respond_to do |format|
+      else
         format.html { render action: 'new' }
         format.json { render json: @game.errors, status: :unprocessable_entity }
       end

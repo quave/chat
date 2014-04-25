@@ -38,7 +38,7 @@ class RoomsController < ApplicationController
   def update
     respond_to do |format|
       if @room.update(room_params)
-        format.html { redirect_to @room, notice: 'Ура! Комната обновлена!' }
+        format.html { redirect_to @game, notice: 'Ура! Комната обновлена!' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -52,7 +52,7 @@ class RoomsController < ApplicationController
   def destroy
     @room.destroy
     respond_to do |format|
-      format.html { redirect_to rooms_url }
+      format.html { redirect_to @game }
       format.json { head :no_content }
     end
   end
@@ -69,6 +69,6 @@ class RoomsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def room_params
-      params.require(:room).permit(:name, :game_id, :order)
+      params.require(:room).permit(:name)
     end
 end

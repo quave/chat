@@ -1,9 +1,9 @@
 class CreateRooms < ActiveRecord::Migration
   def change
     create_table :rooms do |t|
-      t.string :name
-      t.references :game, index: true
-      t.integer :order
+      t.string :name, null: false
+      t.references :game, null: false, index: true
+      t.integer :order, null: false, default: 0
 
       t.timestamps
     end
