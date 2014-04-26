@@ -25,32 +25,41 @@ ru:
       status_title: "Статус"
       empty: "Пока что никого нет"
 
-  devise:
-    sign_in: "Войти"
-    sign_in_page_title: "Вход"
-    sign_up: "Зарегистрироваться"
-    sign_out: "Выйти"
-    profile:
-      title: "Редактирование профиля"
-      display_name: "Имя"
-      email: "Email"
-      password: "Новый пароль"
-      password_confirmation: "Еще раз"
-      current_password: "Текущий пароль"
-      leave_empty: "оставьте пустым, если не хотите менять"
-      need_current_password: "необхоидм ваш текущий пароль, чтобы подтвердить его смену"
-      update: "Обновить"
-      unhappy: "Не понравилось?"
-      delete_account_h: "Удаление аккаунта"
-      delete_account: "Удалить аккаунт"
+  helpers:
+    submit:
+      room:
+        create: "Создать комнату"
+      game:
+        create: "Создать игру"
+      character:
+        create: "Создать Персонажа"
+    update:
+      room:
+        create: "Обновить комнату"
+      game:
+        create: "Обновить игру"
+      character:
+        create: "Обновить Персонажа"        
 
   activerecord:
     attributes:
-      player:
+      user:
         current_password: "Текущий пароль"
+      game:
+        name: 'Имя'
+        desc: 'Описание'
+        need_chars: 'Минимум персонажей'
+        tags: 'Тэги'
+      room:
+        name: 'Имя'
+      character:
+        name: 'Имя'
+        desc: 'Квинта'
+        color: 'Цвет текста'
+
     errors:
       models:
-        player:
+        user:
           attributes:
             name: 
               blank: "Пустое имя"
@@ -67,6 +76,15 @@ ru:
           attributes:
             name:
               blank: "Пустое имя"
+        game:
+          attributes:
+            name:
+              blank: "Пустое имя"
+            desc: 
+              blank: "Пустое описание"
+            need_chars:
+              blank: "Пустое количество персонажей"
+
     success:
       character:
         created: "Персонаж успешно создан"

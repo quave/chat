@@ -17,7 +17,13 @@ gem 'tzinfo-data'
 group :development, :test do
   gem 'thin'
   gem 'sqlite3'
+  gem 'rspec'
+  gem 'rspec-rails'
+  gem 'capybara'
+  gem 'mocha'
+  gem 'database_cleaner'
 end
+
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

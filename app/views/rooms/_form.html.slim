@@ -1,8 +1,7 @@
-= simple_form_for([@game, @room]) do |f|
+= simple_form_for [@game, @room], html: { class: 'form-horizontal' }, wrapper: :horizontal_form do |f|
   = f.error_notification
 
-  .form-inputs
-    = f.input :name, label: 'Имя', input_html: { class: 'input-lg' }
+  = f.input :name, label: 'Имя', input_html: { class: 'input-lg' }
 
-  .form-actions
+  .col-sm-offset-2
     = f.button :submit

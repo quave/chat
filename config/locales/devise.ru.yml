@@ -12,6 +12,23 @@ ru:
         other: "Не могу сохранить профиль. Есть ошибки:"
 
   devise:
+    sign_in: "Войти"
+    sign_in_page_title: "Вход"
+    sign_up: "Зарегистрироваться"
+    sign_out: "Выйти"
+    profile:
+      title: "Редактирование профиля"
+      display_name: "Имя"
+      email: "Email"
+      password: "Новый пароль"
+      password_confirmation: "Еще раз"
+      current_password: "Текущий пароль"
+      leave_empty: "оставьте пустым, если не хотите менять"
+      need_current_password: "необхоидм ваш текущий пароль, чтобы подтвердить его смену"
+      update: "Обновить"
+      unhappy: "Не понравилось?"
+      delete_account_h: "Удаление аккаунта"
+      delete_account: "Удалить аккаунт"
     failure:
       already_authenticated: 'Вы уже вошли.'
       unauthenticated: 'Вам необходимо войти либо зарегистрироваться.'

@@ -57,6 +57,46 @@ class RoomsController < ApplicationController
     end
   end
 
+  # PUT /game/1/room/1/up
+  def up
+    room = Room.find(params[:id])
+    prev_room = Room.find(:first, :conditions => {:game_id => params[:game_id], :order => room.order - 1})
+
+    if prev_room.nil?
+      flash[:error] = "Не могу двигать вверх."
+      redirect_to game_path(params[:game_id]) 
+      return
+    end
+
+    room.order -= 1
+    room.save
+
+    prev_room.order += 1
+    prev_room.save
+
+    redirect_to game_path(params[:game_id])
+  end
+
+  # PUT /game/1/room/1/down
+  def down
+    room = Room.find(params[:id])
+    next_room = Room.find(:first, :conditions => {:game_id => params[:game_id], :order => room.order + 1})
+
+    if next_room.nil?
+      flash[:error] = "Не могу двигать вниз."
+      redirect_to game_path(params[:game_id]) 
+      return
+    end
+
+    room.order += 1
+    room.save
+
+    next_room.order -= 1
+    next_room.save
+
+    redirect_to game_path(params[:game_id])
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_room

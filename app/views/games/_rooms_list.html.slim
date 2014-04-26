@@ -16,20 +16,20 @@
           ul.dropdown-menu
             - unless i == 0
               li
-                a href=up_game_room_path(game, room) data-method=:put
+                =link_to up_game_room_path(game, room), method: :put do
                   i.icon-chevron-up
-                  = "Вверх"
+                  | Вверх
             - unless i == game.rooms.size - 1
               li
-                a href=down_game_room_path(game, room) data-method=:put
+                = link_to down_game_room_path(game, room), method: :put do
                   i.icon-chevron-down
-                  = "Вниз"
+                  | Вниз
             li
-              a href=edit_game_room_path(game, room)
+              = link_to edit_game_room_path(game, room) do
                 i.icon-edit
-                = "Редактировать"
+                | Редактировать
             li
-              a href=game_room_path(game, room) data-method=:delete data-confirm="Вы уверены?"
+              = link_to game_room_path(game, room), method: :delete, confirm: "Вы уверены?" do
                 i.icon-remove
                 = "Удалить"
       - else

@@ -8,7 +8,6 @@ Chat::Application.routes.draw do
     end
 
     resources :characters, except: :index
-    resources :rooms, except: :index
   end
 
   devise_for :users, controllers: {sessions: 'sessions'}

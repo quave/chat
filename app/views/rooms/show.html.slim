@@ -1,0 +1,19 @@
+p#notice= notice
+
+.row
+  .col-sm-9
+    #chat
+      = render(@room.messages) unless @room.messages.nil?
+
+    = form_for :message, remote: true, url: messages_url, html: { :id => "send-form" } do |m|
+      = m.text_area :body, id: "message"
+      = m.submit id: "send", value: "Отправить", disable_with: "Отправляю", class: "btn btn-large btn-success"
+  
+  .col-sm-3
+    = render partial: "games/rooms_list", :locals => { :game => @game }
+
+    ul#players
+      - @game.characters.each do |character|
+        li= character[:name]
+
+= link_to 'Назад', game_path(params[:game_id])

@@ -1,5 +1,10 @@
 class Room < ActiveRecord::Base
   belongs_to :game
+  has_many :messages
 
-  validates :order, numericality: { only_integer: true }
+  def up
+  end
+
+  def down
+  end
 end
