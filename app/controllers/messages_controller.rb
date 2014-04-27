@@ -22,7 +22,15 @@ class MessagesController < ApplicationController
     end
 
     @character = Character.find_by game_id: params[:game_id], user_id: current_user.id
+
     @message
+  end
+
+  # Push method
+  def show
+    response.headers['Content-Type'] = 'text/event-stream'
+    response.stream.write render(@message)
+    response.stream.close
   end
 
   # PATCH/PUT /messages/1
