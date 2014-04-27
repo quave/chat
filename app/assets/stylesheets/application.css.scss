@@ -70,30 +70,10 @@ textarea.input-xxlarge {
 }
 
 /* room list */
-#room-list {
-  margin-bottom: 2em;
+#room-list > ul {
+  padding-left: 1em;
 }
 
-#room-list .add {
-  margin-left: 1em;
-}
-
-#room-list > ul > li > a {
-  float: left;
-  margin-right: .5em;
-}
-
-#room-list > ul > li > .action {
-  padding: .5em .5em 0 .5em;
-  background: transparent;
-}
-
-#room-list .dropdown.open .caret
-{
-    border-bottom-color: #005580;
-    border-top-color: #005580;
-}
-
-#room-list .dropdown-menu a i {
-  margin-top: .3em;
+#room-list > ul > li {
+  list-style: none;
 }

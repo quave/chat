@@ -22,6 +22,7 @@ group :development, :test do
   gem 'capybara'
   gem 'mocha'
   gem 'database_cleaner'
+  gem 'spork-rails'
 end
 
 

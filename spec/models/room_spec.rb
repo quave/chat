@@ -10,9 +10,15 @@ describe Room do
     subject { room1 }
 
     context 'after down' do
-      # subject.down
-      #its(:order) { should == 2 }
-      #it { room2.order.should == 1 }
+      xit "increases self's order" do
+        subject.down
+        puts Room.all
+        expect(subject.order).to eq(2) 
+      end
+      
+      xit "decreases prev room order" do
+        expect {room2.order}.to eq(1) 
+      end
     end
   end
 end

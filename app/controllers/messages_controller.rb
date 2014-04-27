@@ -7,34 +7,16 @@ class MessagesController < ApplicationController
     @messages = Message.all
   end
 
-  # GET /messages/1
-  # GET /messages/1.json
-  def show
-  end
-
-  # GET /messages/new
-  def new
-    @message = Message.new
-  end
-
-  # GET /messages/1/edit
-  def edit
-  end
-
   # POST /messages
   # POST /messages.json
   def create
     @message = Message.new(message_params)
+    @message.sender_id = current_user.id
+    @message.sender = current_user
+    @message.save
 
-    respond_to do |format|
-      if @message.save
-        format.html { redirect_to @message, notice: 'Message was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @message }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @message.errors, status: :unprocessable_entity }
-      end
-    end
+    @character = Character.find_by game_id: params[:game_id], user_id: current_user.id
+    @message
   end
 
   # PATCH/PUT /messages/1
@@ -69,6 +51,6 @@ class MessagesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def message_params
-      params.require(:message).permit(:body, :sender_id, :receiver_id, :room_id)
+      params.require(:message).permit(:body, :room_id)
     end
 end

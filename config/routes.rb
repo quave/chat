@@ -1,10 +1,11 @@
 Chat::Application.routes.draw do
-  resources :messages
 
   resources :games do
     resources :rooms, except: :index do
       put :up, on: :member
       put :down, on: :member
+
+      resources :messages, only: [:index, :create, :destroy, :update]
     end
 
     resources :characters, except: :index

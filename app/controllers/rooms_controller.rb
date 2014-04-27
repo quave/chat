@@ -1,5 +1,5 @@
 class RoomsController < ApplicationController
-  before_action :set_room, only: [:show, :edit, :update, :destroy]
+  before_action :set_room, only: [:show, :edit, :update, :destroy, :up, :down]
   before_action :set_game
 
   # GET /rooms/1
@@ -59,42 +59,20 @@ class RoomsController < ApplicationController
 
   # PUT /game/1/room/1/up
   def up
-    room = Room.find(params[:id])
-    prev_room = Room.find(:first, :conditions => {:game_id => params[:game_id], :order => room.order - 1})
-
-    if prev_room.nil?
+    unless @room.up
       flash[:error] = "Не могу двигать вверх."
-      redirect_to game_path(params[:game_id]) 
-      return
     end
 
-    room.order -= 1
-    room.save
-
-    prev_room.order += 1
-    prev_room.save
-
-    redirect_to game_path(params[:game_id])
+    redirect_to game_path(@game)
   end
 
   # PUT /game/1/room/1/down
   def down
-    room = Room.find(params[:id])
-    next_room = Room.find(:first, :conditions => {:game_id => params[:game_id], :order => room.order + 1})
-
-    if next_room.nil?
+    unless @room.down
       flash[:error] = "Не могу двигать вниз."
-      redirect_to game_path(params[:game_id]) 
-      return
     end
 
-    room.order += 1
-    room.save
-
-    next_room.order -= 1
-    next_room.save
-
-    redirect_to game_path(params[:game_id])
+    redirect_to game_path(@game)
   end
 
   private

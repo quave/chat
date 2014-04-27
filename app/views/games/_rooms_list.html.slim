@@ -1,38 +1,27 @@
 #room-list
   h4= "Комнаты"
   
-  ul.nav.nav-pills.stacked
+  ul
     - game.rooms.each_with_index.map do |room, i|
       - this_room = params[:controller] == 'rooms' && params[:id].to_i == room.id
 
-      - if can_edit_game? game
-        li.dropdown[class=(this_room ? "active" : "")]
-          - if this_room
-            a= room.name
-          - else
-            = link_to room.name, game_room_path(game, room)
-          a.dropdown-toggle.action data-toggle="dropdown" href="#"
-            b.caret
-          ul.dropdown-menu
-            - unless i == 0
-              li
-                =link_to up_game_room_path(game, room), method: :put do
-                  i.icon-chevron-up
-                  | Вверх
-            - unless i == game.rooms.size - 1
-              li
-                = link_to down_game_room_path(game, room), method: :put do
-                  i.icon-chevron-down
-                  | Вниз
-            li
-              = link_to edit_game_room_path(game, room) do
-                i.icon-edit
-                | Редактировать
-            li
-              = link_to game_room_path(game, room), method: :delete, confirm: "Вы уверены?" do
-                i.icon-remove
-                = "Удалить"
-      - else
-        li.clearfix= link_to room.name, game_room_path(game, room)
+      li.dropdown[class=(this_room ? "active" : "")]
+        - if this_room
+          a= room.name
+        - else
+          = link_to room.name, game_room_path(game, room)
+
+        - if can_edit_game? game
+            |  
+            a.dropdown-toggle.action data-toggle="dropdown" href="#"
+              b.caret
+            ul.dropdown-menu
+              - unless i == 0
+                li = link_to "Вверх", up_game_room_path(game, room), method: :put
+              - unless i == game.rooms.size - 1
+                li = link_to "Вниз", down_game_room_path(game, room), method: :put
+              li = link_to "Редактировать", edit_game_room_path(game, room)
+              li = link_to "Удалить", game_room_path(game, room), method: :delete, confirm: "Вы уверены?"
+
   - if can_edit_game? game
     = link_to "Добавить", new_game_room_path(game), :class => "btn btn-success btn-small add"

@@ -38,11 +38,11 @@ footer {
 #message {
   resize: none;
   width: 600px;
-  height: 96px;
+  height: 100px;
   display: block;
   float: left;
   margin-right: 20px;
-  border: none;
+  border: 1px solid #eee;
 }
 
 #send {
@@ -51,8 +51,6 @@ footer {
   height: 100px;
   width: 100px;
   padding: 10px; 
-  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#dddddd), to(#aaa));
-  border: none;
 }
 
 #chat {
