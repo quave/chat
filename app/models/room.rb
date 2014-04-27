@@ -26,7 +26,7 @@ class Room < ActiveRecord::Base
     
     next_room.order -= 1
     next_room.save!
-    puts 'down!'
+
     true
   end
 
