@@ -11,9 +11,15 @@ class MessagesController < ApplicationController
   # POST /messages.json
   def create
     @message = Message.new(message_params)
-    @message.sender_id = current_user.id
     @message.sender = current_user
-    @message.save
+    
+    @message.exec!
+
+    if @message.should_save?
+      @message.save
+    else
+      @message.created_at = DateTime.now
+    end
 
     @character = Character.find_by game_id: params[:game_id], user_id: current_user.id
     @message
@@ -44,6 +50,9 @@ class MessagesController < ApplicationController
   end
 
   private
+
+  
+
     # Use callbacks to share common setup or constraints between actions.
     def set_message
       @message = Message.find(params[:id])
