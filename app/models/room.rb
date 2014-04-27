@@ -4,29 +4,29 @@ class Room < ActiveRecord::Base
   before_create :set_order
   default_scope -> { order :order }
 
-  def up
+  def up!
     prev_room = Room.find_by game_id: self.game_id, order: (self.order - 1)
     return false if prev_room.nil?
 
     self.order -= 1
-    save
+    save!
     
     prev_room.order += 1
-    prev_room.save
+    prev_room.save!
 
     true
   end
 
-  def down
+  def down!
     next_room = Room.find_by game_id: self.game_id, order: (self.order + 1)
     return false if next_room.nil?
 
     self.order += 1
-    save
+    save!
     
     next_room.order -= 1
-    next_room.save
-
+    next_room.save!
+    puts 'down!'
     true
   end
 
