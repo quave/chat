@@ -13,6 +13,7 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
 gem 'tzinfo-data'
+gem 'faye'
 
 group :development, :test do
   gem 'thin'

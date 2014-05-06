@@ -1,10 +1,11 @@
 class RoomsController < ApplicationController
-  before_action :set_room, only: [:show, :edit, :update, :destroy, :up, :down]
+  before_action :set_room, only: [:edit, :update, :destroy, :up, :down]
   before_action :set_game
 
   # GET /rooms/1
   # GET /rooms/1.json
   def show
+    @room = Room.find params[:id]
   end
 
   # GET /rooms/new
@@ -74,6 +75,7 @@ class RoomsController < ApplicationController
 
     redirect_to game_path(@game)
   end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

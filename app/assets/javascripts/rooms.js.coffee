@@ -2,14 +2,31 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-$(document).ready ->
+$ ->
+  faye = new Faye.Client window.fayeUrl
+  faye.setHeader 'Access-Control-Allow-Origin', '*'
+  Faye.Transport.WebSocket.isUsable = (_,url,c) -> c false
+  subscription = faye.subscribe window.fayeMessagesChannel, (data) -> eval data
+  subscription.errback (error) -> console && console.log error
 
-  $('#send').click ->
-    if !$('#message').val()
-      return false 
+  msg = $('#message')
+  form = $('#send-form')
 
-  source = new EventSource('/items/events')
-  source.addEventListener 'message', update
+  $('html, body').animate { scrollTop: $(document).height() }, 'slow'
 
-update(event) ->
-  $('#chat').append(event.data)
+  msg.keydown (e) ->
+    return if $(this).is ':disabled'
+
+    if e.keyCode == 13 && e.ctrlKey
+      form.submit()
+
+  form.on 'ajax:beforeSend.rails', ->
+    return false if $.trim(msg.val()) == ''
+    msg.attr 'disabled', 'disabled'
+
+  $('#players li').click -> 
+    text = $(message).val()
+    name = $(this).text()
+    text && (text += ' ')
+
+    $(message).val text + name + ', '

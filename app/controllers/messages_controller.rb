@@ -1,5 +1,11 @@
+require 'eventmachine'
+
 class MessagesController < ApplicationController
   before_action :set_message, only: [:show, :edit, :update, :destroy]
+
+  def initialize
+    @@client = Faye::Client.new Chat::Application.config.faye_url
+  end
 
   # GET /messages
   # GET /messages.json
@@ -23,14 +29,25 @@ class MessagesController < ApplicationController
 
     @character = Character.find_by game_id: params[:game_id], user_id: current_user.id
 
+    EM.run do
+      client = Faye::Client.new Chat::Application.config.faye_url
+      
+      chan = Chat::Application.config.faye_messages_channel + params[:game_id]
+      pub = client.publish(chan, message: render(@message), ext: {auth_token: FAYE_TOKEN})
+      
+      pub.callback { EM.stop }
+      
+      pub.errback do |e| 
+        logger.debug e.message 
+        EM.stop
+      end
+    end
+
     @message
   end
 
   # Push method
   def show
-    response.headers['Content-Type'] = 'text/event-stream'
-    response.stream.write render(@message)
-    response.stream.close
   end
 
   # PATCH/PUT /messages/1
@@ -57,9 +74,18 @@ class MessagesController < ApplicationController
     end
   end
 
-  private
+  def events
+    response.headers["Content-Type"]="text/event-stream"
+    redis=Redis.new
+    redis.subscribe('message.create') do |on|
+      on.message do |event, data|
+        response.stream.write("data: #{data}\n\n")
+      end
+    end
+    response.stream.close
+  end
 
-  
+  private
 
     # Use callbacks to share common setup or constraints between actions.
     def set_message

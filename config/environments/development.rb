@@ -28,4 +28,7 @@ Chat::Application.configure do
   config.assets.debug = true
 
   config.default_url_options = { host: 'locahost:3000' }
+
+  config.faye_url = 'http://localhost:9292/'
 end
+
