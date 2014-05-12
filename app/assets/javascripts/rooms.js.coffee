@@ -3,14 +3,18 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 $ ->
-  faye = new Faye.Client window.fayeUrl
-  faye.setHeader 'Access-Control-Allow-Origin', '*'
-  Faye.Transport.WebSocket.isUsable = (_,url,c) -> c false
-  subscription = faye.subscribe window.fayeMessagesChannel, (data) -> eval data
-  subscription.errback (error) -> console && console.log error
-
   msg = $('#message')
   form = $('#send-form')
+
+  faye = new Faye.Client window.fayeUrl
+  Faye.Transport.WebSocket.isUsable = (_,url,c) -> c false
+  subscription = faye.subscribe window.fayeMessagesChannel, (data) -> 
+    $('#chat').append data.message
+    msg.val('')
+    msg.removeAttr 'disabled'
+
+  subscription.errback (error) -> console && console.log error
+
 
   $('html, body').animate { scrollTop: $(document).height() }, 'slow'
 

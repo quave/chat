@@ -4,7 +4,7 @@ class MessagesController < ApplicationController
   before_action :set_message, only: [:show, :edit, :update, :destroy]
 
   def initialize
-    @@client = Faye::Client.new Chat::Application.config.faye_url
+    @@client = Faye::Client.new Chat::Application.config.faye_url + 'faye'
   end
 
   # GET /messages
@@ -29,21 +29,21 @@ class MessagesController < ApplicationController
 
     @character = Character.find_by game_id: params[:game_id], user_id: current_user.id
 
-    EM.run do
-      client = Faye::Client.new Chat::Application.config.faye_url
-      
-      chan = Chat::Application.config.faye_messages_channel + params[:game_id]
-      pub = client.publish(chan, message: render(@message), ext: {auth_token: FAYE_TOKEN})
-      
-      pub.callback { EM.stop }
-      
-      pub.errback do |e| 
-        logger.debug e.message 
-        EM.stop
-      end
+
+
+    channel = "/messages/new/#{params[:room_id]}"
+    pub = @@client.publish channel, message: render(@message), ext: {auth_token: FAYE_TOKEN }
+
+    pub.callback do
+      #succsed
     end
 
-    @message
+    pub.errback do |e|
+      #error
+      logger.debug e.inspect
+    end
+
+    nil
   end
 
   # Push method

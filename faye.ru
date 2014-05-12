@@ -10,11 +10,12 @@ class ServerAuth
       return
     end
     
-    unless message.has_key 'data'
+    unless message.has_key? 'data'
       message['error'] = 'No data provided'
     end
     
     data = message['data']
+    puts ''
 
     if !data.has_key?('ext') || data['ext']['auth_token'] != FAYE_TOKEN
       message['error'] = 'Invalid authentication token'
@@ -27,6 +28,7 @@ end
 Faye::WebSocket.load_adapter('thin')
 app = Faye::RackAdapter.new(:mount => '/faye', :timeout => 45)
 app.add_extension(ServerAuth.new)
+# Faye.logger = lambda { |m| puts m }
 
 app.on :handshake do |clientId|
   puts "Handshake #{clientId}"
@@ -43,4 +45,5 @@ end
 app.on :disconnect do |clientId|
   puts "Disconnect #{clientId}"
 end
+
 run app
