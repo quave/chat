@@ -39,8 +39,8 @@ html lang="en"
 
     footer role="contentinfo"
       .container
-        .inner= yield :foot
-        small RolePlayground &copy;
+        = yield :foot
 
     = javascript_include_tag 'application'
+    = javascript_include_tag params[:controller]
     = yield :js

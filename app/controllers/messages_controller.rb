@@ -16,8 +16,14 @@ class MessagesController < ApplicationController
   # POST /messages
   # POST /messages.json
   def create
+    unless current_user.in_game? params[:game_id]
+      render :file => "public/401.html", :status => :unauthorized
+      return
+    end
+
     @message = Message.new(message_params)
     @message.sender = current_user
+    @message.room_id = params[:room_id]
     
     @message.exec!
 
@@ -29,19 +35,7 @@ class MessagesController < ApplicationController
 
     @character = Character.find_by game_id: params[:game_id], user_id: current_user.id
 
-
-
-    channel = "/messages/new/#{params[:room_id]}"
-    pub = @@client.publish channel, message: render(@message), ext: {auth_token: FAYE_TOKEN }
-
-    pub.callback do
-      #succsed
-    end
-
-    pub.errback do |e|
-      #error
-      logger.debug e.inspect
-    end
+    publish @message
 
     nil
   end
@@ -95,5 +89,10 @@ class MessagesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def message_params
       params.require(:message).permit(:body, :room_id)
+    end
+
+    def publish(message)
+      channel = "/messages/new/#{params[:room_id]}"
+      @@client.publish channel, message: render(message), ext: {auth_token: FAYE_TOKEN }
     end
 end

@@ -6,7 +6,12 @@ class RoomsController < ApplicationController
   # GET /rooms/1
   # GET /rooms/1.json
   def show
-    @room = Room.find params[:id]
+    if @game.private && !current_user.in_game?(params[:game_id])
+      flash[:alert] = 'You are not authorized'
+      redirect_to @game
+    end
+
+    @room = Room.includes(:messages).find params[:id]
   end
 
   # GET /rooms/new

@@ -28,9 +28,9 @@ $ ->
     return false if $.trim(msg.val()) == ''
     msg.attr 'disabled', 'disabled'
 
-  $('#players li').click -> 
-    text = $(message).val()
+  $('#players li .char').click -> 
+    text = msg.val()
     name = $(this).text()
     text && (text += ' ')
-
-    $(message).val text + name + ', '
+    tmp = text + name + ', '
+    msg.focus().val('').val(tmp)

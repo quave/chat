@@ -12,6 +12,7 @@ Chat::Application.routes.draw do
 
     resources :characters, except: :index
   end
+  resources :user, only: :show
 
   devise_for :users, controllers: {sessions: 'sessions'}
 

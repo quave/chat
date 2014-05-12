@@ -40,6 +40,11 @@ li {
   line-height: inherit;
 }
 
+ul {
+  list-style: none;
+  padding-left: 1em;
+}
+
 .readable {
   font-family: $font-family-serif;
 }
@@ -70,10 +75,14 @@ textarea.input-xxlarge {
 }
 
 /* room list */
-#room-list > ul {
-  padding-left: 1em;
-}
+#room-list {
+  margin-bottom: 1em;
 
-#room-list > ul > li {
-  list-style: none;
+  > ul {
+    padding-left: 1em;
+  }
+
+  > ul > li {
+    list-style: none;
+  }
 }

@@ -1,4 +1,6 @@
 class Message < ActiveRecord::Base
+  default_scope -> { order(:created_at) }
+
   belongs_to :sender, class_name: 'User'
   belongs_to :user, class_name: 'User'
   belongs_to :room
@@ -6,12 +8,16 @@ class Message < ActiveRecord::Base
   @@roll_regex = /^\\roll (\d+)?d(\d+)\+?(\d+)?/
   @@roll_bases = [2, 3, 4, 6, 8, 10, 12, 20, 100]
 
+  def character
+    sender.characters.find_by(game_id: room.game_id)
+  end
+
   def is_command?
     return body.start_with? '\\'
   end
 
   def should_save?
-    body =~ /^(\\help)|(\\nosave)/
+    body !~ /^(\\help)|(\\nosave)/
   end
 
   def exec!
