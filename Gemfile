@@ -27,7 +27,7 @@ group :development, :test do
   gem 'debugger'
 end
 
-group :development do
+group :production do
   gem 'puma', platform: 'ruby'
   gem 'pg', platform: 'ruby'
 end
