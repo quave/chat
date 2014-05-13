@@ -225,6 +225,8 @@ DEPENDENCIES
   jbuilder (~> 1.2)
   jquery-rails
   mocha
+  pg
+  puma
   rails
   rspec
   rspec-rails

@@ -1,0 +1,9 @@
+git pull
+check ruby version
+bundle 
+db migrate
+ckeck/gen secret token 
+precompile assets RAILS_ENV=production bundle exec rake assets:precompile
+start server with console  bundle exec puma -e production -b unix:///var/tmp/chat.sock
+test site
+start server deaminized  bundle exec puma -d -e production -b unix:///var/tmp/chat.sock

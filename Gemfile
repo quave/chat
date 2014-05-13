@@ -24,6 +24,12 @@ group :development, :test do
   gem 'mocha'
   gem 'database_cleaner'
   gem 'spork-rails'
+  gem 'debugger'
+end
+
+group :development do
+  gem 'puma', platform: 'ruby'
+  gem 'pg', platform: 'ruby'
 end
 
 
@@ -36,14 +42,5 @@ gem 'devise'
 gem 'simple_form', '~> 3.1.0.rc1'
 gem 'cancan'
 
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
-
-# Use unicorn as the app server
-# gem 'unicorn'
-
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development
-
-# Use debugger
-# gem 'debugger', group: [:development, :test]
