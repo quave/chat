@@ -14,4 +14,4 @@ stdout_redirect
 "#{application_path}/log/puma-#{railsenv}.stdout.log",
 "#{application_path}/log/puma-#{railsenv}.stderr.log"
 threads 0, 16
-bind "unix://www/tmp/chat.socket"
+bind "unix://var/tmp/chat.sock"
