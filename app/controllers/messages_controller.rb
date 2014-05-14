@@ -92,7 +92,9 @@ class MessagesController < ApplicationController
     end
 
     def publish(message)
-      channel = "/messages/new/#{params[:room_id]}"
-      @@client.publish channel, message: render(message), ext: {auth_token: FAYE_TOKEN }
+      EM.run do
+        channel = "/messages/new/#{params[:room_id]}"
+        @@client.publish channel, message: render(message), ext: {auth_token: FAYE_TOKEN }
+      end
     end
 end

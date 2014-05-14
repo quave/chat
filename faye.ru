@@ -25,7 +25,7 @@ class ServerAuth
   end
 end
 
-Faye::WebSocket.load_adapter('thin')
+Faye::WebSocket.load_adapter('puma')
 app = Faye::RackAdapter.new(:mount => '/faye', :timeout => 45)
 app.add_extension(ServerAuth.new)
 # Faye.logger = lambda { |m| puts m }
