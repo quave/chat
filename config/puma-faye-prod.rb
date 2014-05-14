@@ -7,8 +7,9 @@ application_path = '.'
 railsenv = 'production'
 rackup 'faye.ru'
 environment railsenv
-daemonize false
+daemonize true
 pidfile "#{application_path}/tmp/pids/puma-faye-#{railsenv}.pid"
 state_path "#{application_path}/tmp/pids/puma-faye-#{railsenv}.state"
+stdout_redirect "#{application_path}/log/puma-faye-#{railsenv}.stdout.log", "#{application_path}/log/puma-faye-#{railsenv}.stderr.log"
 threads 0, 16
-bind 'tcp://0.0.0.0:9292'
+bind "unix:///var/tmp/chat-faye.sock"
