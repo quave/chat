@@ -14,9 +14,12 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
 gem 'tzinfo-data'
 gem 'faye'
+gem 'devise'
+gem 'simple_form', '~> 3.1.0.rc1'
+gem 'cancan'
+gem 'puma'
 
 group :development, :test do
-  gem 'thin'
   gem 'sqlite3'
   gem 'rspec'
   gem 'rspec-rails'
@@ -24,23 +27,16 @@ group :development, :test do
   gem 'mocha'
   gem 'database_cleaner'
   gem 'spork-rails'
-  gem 'debugger'
 end
 
 group :production do
-  gem 'puma', platform: 'ruby'
   gem 'pg', platform: 'ruby'
 end
-
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
 end
-
-gem 'devise'
-gem 'simple_form', '~> 3.1.0.rc1'
-gem 'cancan'
 
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development
