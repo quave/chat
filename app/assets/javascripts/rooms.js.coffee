@@ -12,6 +12,7 @@ $ ->
     $('#chat').append data.message
     msg.val('')
     msg.removeAttr 'disabled'
+    $('html, body').animate { scrollTop: $(document).height() }, 'slow'
 
   subscription.errback (error) -> console && console.log error
 
