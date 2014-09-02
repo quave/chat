@@ -2,12 +2,15 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.room-header {
+  margin-top: 0;
+  margin-bottom: .5em;
+  line-height: 1em;
+}
+
 #room-show {
 
   .sidebar {
-    position: fixed;
-    left: 53%;
-    top: 7em;
 
     #players {
       margin-top: 1em;
@@ -25,29 +28,14 @@
   }
 
   .form {
-    position: fixed;
-    bottom: 0;
-    padding-bottom: 1em;
-    background: #fff;
-    margin: 10px 0 0 0;
-    border: 0;
-    -webkit-box-shadow: 0px -2em 3em rgba(255, 255, 255, 1);
-    -moz-box-shadow:    0px -2em 3em rgba(255, 255, 255, 1);
-    box-shadow:         0px -2em 3em rgba(255, 255, 255, 1);
-  
     #message {
       resize: none;
-      width: 600px;
       height: 100px;
-      display: block;
-      float: left;
-      margin-right: 20px;
-      border: 1px solid #eee;
+      width: 100%;
+      border: 1px solid #aabbaa;
     }
 
     #send {
-      display: block;
-      float: left;
       height: 100px;
       width: 100px;
       padding: 10px; 
@@ -56,32 +44,29 @@
 
   #chat {
     max-width: 600px;
-    margin-bottom: 140px;
     height: 100%;
 
     .message {
-      margin-bottom: 10px;
       overflow: hidden;
 
-      .time {
-        color: #aaa;
-        font-size: 11px;
-        display: inline-block;
-        margin-right: 5px;
-      }
+      .info {
+        float: left;
+        line-height: 1.4em;
 
-      .name {
-        color: #FF6A14;
-      }
+        .time {
+          color: #aaa;
+          font-size: 11px;
+          display: inline-block;
+          margin-right: 5px;
+        }
 
-      .delimiter {
-        display: inline-block;
-        margin-right: 3px;
-      }
-
-      .text {
-        display: inline;
-        white-space: pre-wrap;
+        .name {
+          color: #FF6A14;
+        }
+        .delimiter {
+          display: inline-block;
+          margin: 0 4px 0 2px;
+        }
       }
     }
   }

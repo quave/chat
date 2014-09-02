@@ -77,4 +77,6 @@ Chat::Application.configure do
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
+
+  config.faye_url = 'http://roleplayground.ru:9292/'
 end

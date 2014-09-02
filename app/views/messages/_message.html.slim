@@ -3,8 +3,9 @@
 - msg_class = roll ? "cmd roll" : ""
 
 .message class= msg_class
-  span.time= message.created_at.in_time_zone("Europe/Moscow").strftime("%H:%M:%S")
-  - unless roll
-    span.name= message.character.name 
-    span.delimiter= ":"
-  span.text= roll ? message.sender.name + ' ' + msg : msg
+  .info
+    span.time= message.created_at.in_time_zone("Europe/Moscow").strftime("%H:%M:%S")
+    - unless roll
+      span.name= message.character.name 
+      span.delimiter= ":"
+  .text= markdown(roll ? message.character.name + ' ' + msg : msg)

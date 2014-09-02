@@ -17,6 +17,7 @@ gem 'faye'
 gem 'devise'
 gem 'simple_form', '~> 3.1.0.rc1'
 gem 'cancan'
+gem 'redcarpet'
 gem 'puma'
 
 group :development, :test do
