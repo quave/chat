@@ -5,6 +5,7 @@ class CreateCharacters < ActiveRecord::Migration
       t.references :user, null: false, index: true
       t.references :game, null: false, index: true
       t.text :desc
+      t.integer :status, null: false, default: 0
       t.integer :color, null: false, default: 0
 
       t.timestamps
