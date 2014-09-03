@@ -4,7 +4,10 @@ class CreateCharacters < ActiveRecord::Migration
       t.string :name, null: false
       t.references :user, null: false, index: true
       t.references :game, null: false, index: true
-      t.text :desc
+      t.text :major_attr, null: false, default: ''
+      t.text :minor_attr, null: false, default: ''
+      t.text :description, null: false, default: ''
+      t.text :inventory, null: false, default: ''
       t.integer :status, null: false, default: 0
       t.integer :color, null: false, default: 0
 

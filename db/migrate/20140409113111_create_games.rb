@@ -7,8 +7,6 @@ class CreateGames < ActiveRecord::Migration
       t.references :creator, null: false
       t.integer :need_chars, null: false, default: 2
       t.string :tags, null: false, default: ''
-      t.boolean :deny_empty_requests, null: false, default: false
-      t.boolean :private, null: false, default: false
 
       t.timestamps
     end
