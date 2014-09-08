@@ -6,12 +6,14 @@ class RoomsController < ApplicationController
   # GET /rooms/1
   # GET /rooms/1.json
   def show
-    if @game.private && !current_user.in_game?(params[:game_id])
+    @room = Room.includes(:messages).find params[:id]
+
+    if @room.private && (!user_signed_in? || !current_user.in_game?(params[:game_id]))
       flash[:alert] = 'You are not authorized'
       redirect_to @game
     end
 
-    @room = Room.includes(:messages).find params[:id]
+    @room
   end
 
   # GET /rooms/new
@@ -43,6 +45,8 @@ class RoomsController < ApplicationController
   # PATCH/PUT /rooms/1
   # PATCH/PUT /rooms/1.json
   def update
+    puts 'yahoo'
+    puts room_params
     respond_to do |format|
       if @room.update(room_params)
         format.html { redirect_to @game, notice: 'Ура! Комната обновлена!' }
@@ -95,6 +99,6 @@ class RoomsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def room_params
-      params.require(:room).permit(:name)
+      params.require(:room).permit(:name, character_ids: [])
     end
 end

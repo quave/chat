@@ -13,10 +13,10 @@
         table.table.table-striped
           thead
             tr
-              th= "Игрок"
-              th= "Персонаж"
-              th= "Класс"
-              th= "Статус"
+              th= 'Игрок'
+              th= 'Персонаж'
+              th= 'Класс'
+              th= 'Статус'
               th
           tbody
             - @game.characters.each do |c|
@@ -24,27 +24,30 @@
                 td= link_to c.user.name, registration_path(c.user)
                 td= link_to c.name, game_character_path(@game, c)
                 td= 'Druid'
-                td= ['В игре', 'Oжидает', 'Мертв'].sample
-                td= link_to("Редактировать", edit_game_character_path(@game, c), :class => 'btn btn-small btn-warning') if user_signed_in? && c.user_id == current_user.id
+                td= c.status_text
+                td 
+                  =link_to('Редактировать', edit_game_character_path(@game, c), :class => 'btn btn-xs btn-warning') if user_signed_in? && c.user_id == current_user.id
+                  - if can_edit_game?(@game) && c.user != current_user && c.status == Character::PENDING
+                    =link_to 'Принять', accept_game_character_path(@game, c), :class => 'btn btn-xs btn-success', method: :patch
+                    |  
+                    =link_to'Отказать', decline_game_character_path(@game, c), :class => 'btn btn-xs btn-danger', method: :patch
       - else
         p
-          i.muted= "Пока что ни одной заявки"
+          i.muted= 'Пока что ни одной заявки'
 
-      = link_to "Хочу играть!", new_game_character_path(@game), :class => 'btn btn-large btn-success' if user_signed_in? && @game.characters.all? {|c| c.user_id != current_user.id }
-      -if @game.deny_empty_requests
-        i.text-warning.deny-empty-requests= "Заполни персонажа сразу, #{current_user.name}"
+      = link_to 'Хочу играть!', new_game_character_path(@game), :class => 'btn btn-large btn-success' if user_signed_in? && @game.characters.all? {|c| c.user_id != current_user.id }
 
     - if !@game.desc.blank?
       #desc.well.well-small
         p= @game.desc
 
   .col-sm-3
-    =render partial: "games/rooms_list", :locals => { :game => @game }
+    =render partial: 'games/rooms_list', :locals => { :game => @game }
 
     -if user_signed_in?
       - if can_edit_game? @game
-        = link_to "Редактировать игру", edit_game_path(@game), :class => 'btn btn-warning btn-block'
-        = link_to "Удалить игру", game_path(@game), :method => :delete, :class => 'btn btn-danger btn-block', :confirm => "Вы уверены?"
+        = link_to 'Редактировать игру', edit_game_path(@game), :class => 'btn btn-warning btn-block'
+        = link_to 'Удалить игру', game_path(@game), :method => :delete, :class => 'btn btn-danger btn-block', :confirm => 'Вы уверены?'
       - else
-        - if !@game.private
-          = link_to "Читать", edit_game_path(@game), :class => 'btn btn-warning btn-block'
+        - if !@game.characters.any?{|c| c.user.id == current_user.id }
+          = link_to 'Следить', edit_game_path(@game), :class => 'btn btn-warning btn-block'

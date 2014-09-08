@@ -3,5 +3,8 @@
 
   = f.input :name, label: 'Имя', input_html: { class: 'input-lg' }
 
+  = f.collection_check_boxes :character_ids, @game.characters, :id, :name do |b|
+    = b.inspect
+
   .col-sm-offset-2
     = f.button :submit

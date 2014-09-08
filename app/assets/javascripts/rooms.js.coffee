@@ -9,15 +9,15 @@ $ ->
   faye = new Faye.Client window.fayeUrl
   Faye.Transport.WebSocket.isUsable = (_,url,c) -> c false
   subscription = faye.subscribe window.fayeMessagesChannel, (data) -> 
+    scroll = $(document).height() - $(window).height() == $(document).scrollTop();
     $('#chat').append data.message
     msg.val('')
     msg.removeAttr 'disabled'
-    $('html, body').animate { scrollTop: $(document).height() }, 'slow'
+    scroll && $('html, body').animate { scrollTop: $(document).height() }, 'slow'
 
   subscription.errback (error) -> console && console.log error
 
-
-  $('html, body').animate { scrollTop: $(document).height() }, 'slow'
+  $(document).scrollTop($(document).height());
 
   msg.keydown (e) ->
     return if $(this).is ':disabled'

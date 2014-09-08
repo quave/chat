@@ -1,8 +1,8 @@
-h1 Editing game
-
+- title @game.name
+- content_for :head do
+  h2= @game.name
+  
 == render 'form'
 
-= link_to 'Show', @game
-'|
-= link_to 'Back', games_path
+= link_to 'Назад', game_path(@game)
 

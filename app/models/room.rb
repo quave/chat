@@ -1,6 +1,8 @@
 class Room < ActiveRecord::Base
   belongs_to :game
   has_many :messages
+  has_and_belongs_to_many :characters
+
   before_create :set_order
   default_scope -> { order :order }
 

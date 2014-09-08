@@ -1,5 +1,5 @@
 class CharactersController < ApplicationController
-  before_action :set_character, only: [:show, :edit, :update, :destroy]
+  before_action :set_character, only: [:show, :edit, :update, :destroy, :accept, :decline]
   before_action :set_game
 
   # GET /characters/1
@@ -58,6 +58,21 @@ class CharactersController < ApplicationController
     end
   end
 
+  def accept
+    @character.accept
+    redirect_to @character.game
+  end
+
+  def decline
+    @character.decline
+    redirect_to @character.game
+  end
+
+  def kill
+    @character.kill
+    redirect_to @character.game
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_character
@@ -70,6 +85,7 @@ class CharactersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def character_params
-      params.require(:character).permit(:name, :game_id, :desc, :color)
+      params.require(:character).permit(:name, :game_id, :major_attr, :minor_attr, 
+        :description, :inventory)
     end
 end

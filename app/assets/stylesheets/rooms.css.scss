@@ -50,8 +50,10 @@
       overflow: hidden;
 
       .info {
-        float: left;
-        line-height: 1.4em;
+        display: inline;
+        + p {
+          display: inline;
+        }
 
         .time {
           color: #aaa;

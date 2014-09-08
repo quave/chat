@@ -24,6 +24,11 @@ ru:
       char_class_title: "Класс"
       status_title: "Статус"
       empty: "Пока что никого нет"
+      statuses:
+        '0': 'Ожадает'
+        '1': 'В игре'
+        '2': 'Не принят'
+        '3': 'Мертв'
 
   helpers:
     submit:
@@ -54,10 +59,14 @@ ru:
         name: 'Имя'
       character:
         name: 'Имя'
-        desc: 'Квинта'
-        color: 'Цвет текста'
+        major_attr: 'Основные характеристики'
+        minor_attr: 'Дополнительные характеристики'
+        description: 'Описание'
+        inventory: 'Инвентать'
 
     errors:
+      messages:
+        record_invalid: 'Запись невалидна'
       models:
         user:
           attributes:

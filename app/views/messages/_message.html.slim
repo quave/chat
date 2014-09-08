@@ -8,4 +8,4 @@
     - unless roll
       span.name= message.character.name 
       span.delimiter= ":"
-  .text= markdown(roll ? message.character.name + ' ' + msg : msg)
+  = markdown(roll ? message.character.name + ' ' + msg : msg)

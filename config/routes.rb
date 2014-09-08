@@ -10,7 +10,11 @@ Chat::Application.routes.draw do
       end
     end
 
-    resources :characters, except: :index
+    resources :characters, except: :index do
+      patch :accept, on: :member
+      patch :decline, on: :member
+      patch :kill, on: :member
+    end
   end
   resources :user, only: :show
 

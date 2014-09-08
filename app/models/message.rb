@@ -1,8 +1,7 @@
 class Message < ActiveRecord::Base
   default_scope -> { order(:created_at) }
 
-  belongs_to :sender, class_name: 'User'
-  belongs_to :user, class_name: 'User'
+  belongs_to :sender, class_name: 'Character'
   belongs_to :room
 
   @@roll_regex = /^\\roll (\d+)?d(\d+)\+?(\d+)?/

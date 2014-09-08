@@ -4,7 +4,6 @@ class CreateRooms < ActiveRecord::Migration
       t.string :name, null: false
       t.references :game, null: false, index: true
       t.integer :order, null: false, default: 0
-      t.boolean :private, null: false, default: false
 
       t.timestamps
     end

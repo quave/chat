@@ -11,14 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140409114158) do
+ActiveRecord::Schema.define(version: 20140904143155) do
 
   create_table "characters", force: true do |t|
-    t.string   "name",                   null: false
-    t.integer  "user_id",                null: false
-    t.integer  "game_id",                null: false
-    t.text     "desc"
-    t.integer  "color",      default: 0, null: false
+    t.string   "name",                     null: false
+    t.integer  "user_id",                  null: false
+    t.integer  "game_id",                  null: false
+    t.text     "major_attr",  default: "", null: false
+    t.text     "minor_attr",  default: "", null: false
+    t.text     "description", default: "", null: false
+    t.text     "inventory",   default: "", null: false
+    t.integer  "status",      default: 0,  null: false
+    t.integer  "color",       default: 0,  null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -34,14 +38,12 @@ ActiveRecord::Schema.define(version: 20140409114158) do
   add_index "characters_rooms", ["room_id", "character_id"], name: "index_characters_rooms_on_room_id_and_character_id"
 
   create_table "games", force: true do |t|
-    t.string   "name",                                null: false
+    t.string   "name",                    null: false
     t.text     "desc"
-    t.integer  "status",              default: 1,     null: false
-    t.integer  "creator_id",                          null: false
-    t.integer  "need_chars",          default: 2,     null: false
-    t.string   "tags",                default: "",    null: false
-    t.boolean  "deny_empty_requests", default: false, null: false
-    t.boolean  "private",             default: false, null: false
+    t.integer  "status",     default: 1,  null: false
+    t.integer  "creator_id",              null: false
+    t.integer  "need_chars", default: 2,  null: false
+    t.string   "tags",       default: "", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -60,17 +62,25 @@ ActiveRecord::Schema.define(version: 20140409114158) do
   add_index "messages", ["sender_id"], name: "index_messages_on_sender_id"
 
   create_table "rooms", force: true do |t|
-    t.string   "name"
-    t.integer  "game_id"
-    t.integer  "order"
+    t.string   "name",                       null: false
+    t.integer  "game_id",                    null: false
+    t.integer  "order",      default: 0,     null: false
+    t.boolean  "private",    default: false, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "rooms", ["game_id"], name: "index_rooms_on_game_id"
 
+  create_table "rooms_characters", id: false, force: true do |t|
+    t.integer "room_id"
+    t.integer "character_id"
+  end
+
+  add_index "rooms_characters", ["room_id", "character_id"], name: "index_rooms_characters_on_room_id_and_character_id", unique: true
+
   create_table "users", force: true do |t|
-    t.string   "name"
+    t.string   "name",                                null: false
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
@@ -86,6 +96,7 @@ ActiveRecord::Schema.define(version: 20140409114158) do
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["name"], name: "index_users_on_name", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
 end
