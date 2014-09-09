@@ -75,9 +75,9 @@ SimpleForm.setup do |config|
     b.use :html5
     b.use :placeholder
 
-    b.wrapper tag: 'div', class: 'col-sm-offset-2 col-sm-10' do |wr|
+    b.wrapper tag: 'div', class: 'col-sm-offset-2 col-sm-10 horizontal_boolean' do |wr|
       wr.wrapper tag: 'div', class: 'checkbox' do |ba|
-        ba.use :label_input, class: 'col-sm-10'
+        ba.use :label_input
       end
 
       wr.use :error, wrap_with: { tag: 'span', class: 'help-block' }

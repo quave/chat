@@ -6,6 +6,9 @@
       = ", #{@room.name}"
 
 - content_for :js do
+  script[type='text/javascript']
+    | window.fayeUrl = '#{Chat::Application.config.faye_url}faye';
+    | window.fayeMessagesChannel = '#{Chat::Application.config.faye_messages_channel + params[:id]}';
 
 #room-show
   .row

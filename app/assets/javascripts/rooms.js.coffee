@@ -6,6 +6,8 @@ $ ->
   msg = $('#message')
   form = $('#send-form')
 
+  return if !window.fayeUrl
+
   faye = new Faye.Client window.fayeUrl
   Faye.Transport.WebSocket.isUsable = (_,url,c) -> c false
   subscription = faye.subscribe window.fayeMessagesChannel, (data) -> 
