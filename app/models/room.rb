@@ -3,6 +3,7 @@ class Room < ActiveRecord::Base
   has_many :messages
   has_and_belongs_to_many :characters
 
+  before_save :add_master
   before_create :set_order
   default_scope -> { order :order }
 
@@ -34,6 +35,16 @@ class Room < ActiveRecord::Base
 
   protected
     def set_order
-      self.order = Room.count game_id: game_id
+      self.order = game.rooms.count
+    end
+
+    def add_master
+      if characters.any? { |c| !c.master }
+        game.masters.each do |m|
+          characters.push m unless characters.include? m
+        end
+      end
+
+      characters.clear if characters.all? { |c| c.master }
     end
 end

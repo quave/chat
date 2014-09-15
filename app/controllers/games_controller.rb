@@ -10,7 +10,10 @@ class GamesController < ApplicationController
   # GET /games/1
   # GET /games/1.json
   def show
-    @game = Game.includes(:characters).find(params[:id])
+    @game = Game
+      .includes(:characters)
+      .includes(:rooms)
+      .find(params[:id])
   end
 
   # GET /games/new

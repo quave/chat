@@ -11,7 +11,7 @@ class Character < ActiveRecord::Base
   has_and_belongs_to_many :rooms
 
   def self.create_master(game, name = 'Master')
-    create({ name: name, user_id: game.creator_id, game_id: game.id, status: ACTIVE })
+    create name: name, master: true, user_id: game.creator_id, game_id: game.id, status: ACTIVE
   end
 
   def status_text 

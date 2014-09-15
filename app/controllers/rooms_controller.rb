@@ -31,7 +31,7 @@ class RoomsController < ApplicationController
     @room = Room.new(room_params)
     @room.game_id = @game.id
 
-    respond_to do |format|
+    respond_to do |format| 
       if @room.save
         format.html { redirect_to @game, notice: 'Ура! Комната создана!' }
         format.json { render action: 'show', status: :created, location: @room }

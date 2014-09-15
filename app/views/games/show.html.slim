@@ -42,7 +42,7 @@
         p= @game.desc
 
   .col-sm-3
-    =render partial: 'games/rooms_list', :locals => { :game => @game }
+    = render partial: 'games/rooms_list', :locals => { :game => @game }
 
     -if user_signed_in?
       - if can_edit_game? @game

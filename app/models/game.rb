@@ -5,6 +5,10 @@ class Game < ActiveRecord::Base
   after_create :add_master
   after_create :add_default_rooms
 
+  def masters
+    characters.where master: true
+  end
+
   protected
 
     def add_master
