@@ -1,19 +1,14 @@
 require 'spec_helper'
 
 describe Room do
-  let(:game) { Game.create name: 'test_game', creator_id: 1 }
-  subject(:room) { Room.create name: 'room1', game: game }
+  let(:game) { create :game }
+  subject(:room) { create :room }
 
   it { should respond_to :up! }
   it { should respond_to :down! }
 
   context 'order' do
     its(:order) { is_expected.to eq(1) }
-
-    it 'decrease after up' do
-      room.up!
-      expect(room.order).to eq(0)
-    end
 
     it 'decrease after up' do
       room.up!
@@ -28,15 +23,11 @@ describe Room do
     end
   end
 
-  it 'should be empty with masters only' do
-    room.characters << game.characters
+  it 'characters should be empty if includes all' do
+    create(:character, game: room.game)
+    room.game.reload
+    room.characters << room.game.characters
     room.save!
-    expect(room.characters.count).to eq(0)
-  end
-
-  it 'should include masters if not empty' do
-    room.characters << Character.create(name: 'char', user_id: 1, game: game)
-    room.save!
-    expect(room.characters.count).to be > 1
+    expect(room.characters).to be_empty
   end
 end

@@ -22,13 +22,16 @@ gem 'puma'
 
 group :development, :test do
   gem 'sqlite3'
+  gem 'factory_girl_rails'
+end
+
+group :test do
   gem 'rspec'
   gem 'rspec-its'
   gem 'rspec-rails'
   gem 'capybara'
   gem 'mocha'
   gem 'database_cleaner'
-  gem 'spork-rails'
 end
 
 group :production do

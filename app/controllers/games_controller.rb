@@ -12,7 +12,6 @@ class GamesController < ApplicationController
   def show
     @game = Game
       .includes(:characters)
-      .includes(:rooms)
       .find(params[:id])
   end
 
@@ -29,7 +28,7 @@ class GamesController < ApplicationController
   # POST /games.json
   def create
     @game = Game.new(game_params)
-    @game.creator_id = current_user.id
+    @game.creator = current_user
 
     respond_to do |format|
       if @game.save

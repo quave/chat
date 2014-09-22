@@ -3,8 +3,8 @@ class Room < ActiveRecord::Base
   has_many :messages
   has_and_belongs_to_many :characters
 
-  before_save :add_master
   before_create :set_order
+  before_save :check_characters
   default_scope -> { order :order }
 
   def up!
@@ -33,18 +33,22 @@ class Room < ActiveRecord::Base
     true
   end
 
+  def free_readable?
+    character_ids.empty?
+  end
+
+  def readable_by?(char)
+    return true if free_readable?
+
+    !char.nil? && (char.master || character_ids.include?(char.id))
+  end
+
   protected
     def set_order
       self.order = game.rooms.count
     end
 
-    def add_master
-      if characters.any? { |c| !c.master }
-        game.masters.each do |m|
-          characters.push m unless characters.include? m
-        end
-      end
-
-      characters.clear if characters.all? { |c| c.master }
+    def check_characters
+      characters.clear if character_ids.sort == game.character_ids.sort
     end
 end
