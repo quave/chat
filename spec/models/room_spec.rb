@@ -23,6 +23,56 @@ describe Room do
     end
   end
 
+  it 'is free readable' do
+    expect(room).to be_free_readable
+  end
+
+  it 'is not free readable with a char' do
+    char = create(:character, game: room.game)
+    room.characters << char
+
+    expect(room).not_to be_free_readable
+  end
+
+  it 'is readable by master' do
+    master = room.game.characters.first
+    expect(room.readable_by? master).to be true
+  end
+
+  it 'is readable by master with other chars' do
+    master = room.game.characters.first
+    char = create(:character, game: room.game)
+    room.characters << char
+
+    expect(room.readable_by? master).to be true
+  end
+
+  it 'is readable by nil char' do
+    expect(room.readable_by? nil).to be true
+  end
+
+  it 'is not readable by nil char with other chars' do
+    char = create(:character, game: room.game)
+    room.characters << char
+
+    expect(room.readable_by? nil).to be false
+  end
+
+  it 'is readable by added char' do
+    char = create(:character, game: room.game)
+    room.characters << char
+
+    expect(room.readable_by? char).to be true
+  end
+
+  it 'is readable by a char with other chars' do
+    char0 = create(:character, game: room.game)
+    char1 = create(:character, game: room.game)
+    room.characters << char0
+
+    expect(room.readable_by? char1).to be false
+  end
+
   it 'characters should be empty if includes all' do
     create(:character, game: room.game)
     room.game.reload
