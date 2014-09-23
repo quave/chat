@@ -1,18 +1,16 @@
 class Message < ActiveRecord::Base
-  default_scope -> { order(:created_at) }
-
   belongs_to :sender, class_name: 'Character'
   belongs_to :room
 
-  @@roll_regex = /^\\roll (\d+)?d(\d+)\+?(\d+)?/
-  @@roll_bases = [2, 3, 4, 6, 8, 10, 12, 20, 100]
+  default_scope -> { order(:created_at) }
 
-  def character
-    sender.characters.find_by(game_id: room.game_id)
-  end
+  ROLL_REGEX = /^\\roll (\d+)?d(\d+)\+?(\d+)?/
+  ROLL_BASES = [2, 3, 4, 6, 8, 10, 12, 20, 100]
+
+  before_save :exec_and_check
 
   def is_command?
-    return body.start_with? '\\'
+    body.start_with? '\\'
   end
 
   def should_save?
@@ -27,14 +25,14 @@ class Message < ActiveRecord::Base
   end
 
   def roll!
-    match = body.match @@roll_regex
+    match = body.match ROLL_REGEX
     return unless match
 
     times = match[1] ? match[1].to_i : 1 
     base = match[2] ? match[2].to_i : 1
     add = match[3] ? match[3].to_i : 0
 
-    return unless @@roll_bases.include? base and times <= 10
+    return unless ROLL_BASES.include? base and times <= 10
     result = add
     text = ''
 
@@ -54,6 +52,15 @@ class Message < ActiveRecord::Base
 
     body.sub! /^\\roll\s/, ''
     self.body = "#roll#кинул #{body.to_s} и получил #{result.to_s}#{text}"
+  end
+
+  private
+
+  def exec_and_check
+    #TODO: make it save
+    exec!
+    created_at = DateTime.now unless should_save?
+    should_save?
   end
 
 end

@@ -66,7 +66,6 @@ ActiveRecord::Schema.define(version: 20140904143155) do
     t.string   "name",                       null: false
     t.integer  "game_id",                    null: false
     t.integer  "order",      default: 0,     null: false
-    t.boolean  "private",    default: false, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

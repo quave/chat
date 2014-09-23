@@ -10,8 +10,22 @@ class Game < ActiveRecord::Base
     characters.where master: true
   end
 
+  def in_party?(user)
+    !get_character_for(user).nil?
+  end
+
+  def get_character_for(user)
+    if user.nil?
+      nil
+    else
+      characters.find { |c| c.user_id == user.id }
+    end
+  end
+
   def rooms_to_display(user)
-    char = characters.find { |c| c.user_id == user.id }
+    return rooms.select {|r| r.readable_by? nil} if user.nil?
+
+    char = get_character_for user
     if char.master
       rooms
     else

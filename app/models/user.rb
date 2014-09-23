@@ -14,8 +14,4 @@ class User < ActiveRecord::Base
   def name
     read_attribute(:name) || '%username%'
   end
-
-  def in_game?(game_id)
-    characters.exists?(game_id: game_id)
-  end
 end

@@ -7,8 +7,9 @@ class RoomsController < ApplicationController
   # GET /rooms/1.json
   def show
     @room = Room.includes(:messages).find params[:id]
+    @character = @game.get_character_for current_user
 
-    if @room.private && (!user_signed_in? || !current_user.in_game?(params[:game_id]))
+    unless @room.readable_by?(@character)
       flash[:alert] = 'You are not authorized'
       redirect_to @game
     end

@@ -19,7 +19,9 @@
     .sidebar.col-sm-2
       = render partial: "games/rooms_list", :locals => { :game => @game }
       ul#players
-        - @game.characters.each do |character|
+        - #TODO: display master
+        - chars = @room.characters.any? ? @room.characters : @game.characters
+        - chars.each do |character|
           li
             span.char= character.name
             span.player<= link_to character.user.name, character.user
@@ -28,8 +30,8 @@
     .row
       = form_for :message, remote: true, url: game_room_messages_url(@game, @room), html: { id: "send-form" } do |m|
         .form
-          -if current_user.in_game? params[:game_id]
+          - if @game.in_party? current_user
             .col-sm-6.col-sm-offset-2
               = m.text_area :body, id: 'message'
-            = m.submit id: "send", value: "Отправить", disable_with: "Отправляю", class: "btn btn-large btn-success col-sm-2"
-
+            = m.submit id: "send", value: "Отправить", disable_with: "Отправляю",
+              class: "btn btn-large btn-success col-sm-2"
