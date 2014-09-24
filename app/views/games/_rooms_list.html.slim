@@ -26,4 +26,4 @@
             li = link_to "Удалить", game_room_path(game, room), method: :delete, confirm: "Вы уверены?"
 
   - if can_edit_game? game
-    = link_to "Добавить", new_game_room_path(game), :class => "btn btn-success btn-small add"
+    = link_to "Добавить", new_game_room_path(game), :class => "btn btn-success btn-sm add"
