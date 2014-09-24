@@ -1,9 +1,9 @@
 require 'eventmachine'
 
 class MessagesController < ApplicationController
-  before_action :set_message, only: [:destroy]
+  before_action :set_message, only: :destroy
   before_action :set_game, only: :create
-  before_action :set_room, only: :create
+  before_action :set_room, only: :destroy
 
   def initialize
     @@client = Faye::Client.new Chat::Application.config.faye_url + 'faye'
@@ -23,11 +23,12 @@ class MessagesController < ApplicationController
       return nil
     end
 
-    @message = Message.new message_params
-    @message.sender = @game.get_character_for current_user
-    @message.save!
+    message = Message.new message_params
+    message.room_id = params[:room_id]
+    message.sender = @game.get_character_for current_user
+    message.save!
 
-    publish @message
+    publish message
     nil
   end
 
@@ -47,7 +48,7 @@ class MessagesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def message_params
-    params.require(:message).permit(:body, :room_id)
+    params.require(:message).permit(:body)
   end
 
   def set_game

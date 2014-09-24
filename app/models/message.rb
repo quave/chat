@@ -57,7 +57,6 @@ class Message < ActiveRecord::Base
   private
 
   def exec_and_check
-    #TODO: make it save
     exec!
     created_at = DateTime.now unless should_save?
     should_save?

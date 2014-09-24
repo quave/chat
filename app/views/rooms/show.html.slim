@@ -19,8 +19,7 @@
     .sidebar.col-sm-2
       = render partial: "games/rooms_list", :locals => { :game => @game }
       ul#players
-        - #TODO: display master
-        - chars = @room.characters.any? ? @room.characters : @game.characters
+        - chars = @room.characters.any? ? @game.masters | @room.characters : @game.characters
         - chars.each do |character|
           li
             span.char= character.name
