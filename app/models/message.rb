@@ -13,6 +13,10 @@ class Message < ActiveRecord::Base
     body.start_with? '\\'
   end
 
+  def is_roll?
+    body =~ /^\#roll\#/
+  end
+
   def should_save?
     body !~ /^(\\help)|(\\nosave)/
   end
@@ -52,6 +56,20 @@ class Message < ActiveRecord::Base
 
     body.sub! /^\\roll\s/, ''
     self.body = "#roll#кинул #{body.to_s} и получил #{result.to_s}#{text}"
+  end
+
+  def destroy_if_allowed(user)
+    return false if user.nil?
+
+    char = room.game.get_character_for user
+    return false unless room.readable_by? char
+
+    if char.master || (sender_id == char.id && !is_roll?)
+      destroy
+      return true
+    end
+
+    false
   end
 
   private

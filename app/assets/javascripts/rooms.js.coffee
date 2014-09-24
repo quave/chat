@@ -2,6 +2,13 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
+deleteMessage = (url) ->
+  $.ajax {
+    type: 'DELETE',
+    url: url,
+    async: false
+  }
+
 $ ->
   msg = $('#message')
   form = $('#send-form')
@@ -10,12 +17,8 @@ $ ->
 
   faye = new Faye.Client window.fayeUrl
   Faye.Transport.WebSocket.isUsable = (_,url,c) -> c false
-  subscription = faye.subscribe window.fayeMessagesChannel, (data) -> 
-    scroll = $(document).height() - $(window).height() == $(document).scrollTop();
-    $('#chat').append data.message
-    msg.val('')
-    msg.removeAttr 'disabled'
-    scroll && $('html, body').animate { scrollTop: $(document).height() }, 'slow'
+  subscription = faye.subscribe window.fayeMessagesChannel, (data) ->
+    eval if typeof(data.message) == 'array' then data.message[0] else data.message
 
   subscription.errback (error) -> console && console.log error
 
@@ -37,3 +40,5 @@ $ ->
     text && (text += ' ')
     tmp = text + name + ', '
     msg.focus().val('').val(tmp)
+
+  $('#chat .message .delete').click -> deleteMessage $(this).data('url')

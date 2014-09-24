@@ -47,7 +47,21 @@
     height: 100%;
 
     .message {
-      overflow: hidden;
+      margin-left: -1em;
+      padding-left: 1em;
+
+      .delete {
+        margin: .55em 0 0 -1.2em;
+        float: left;
+        color: #aaa;
+        font-size: 80%;
+        display: none;
+        cursor: pointer;
+      }
+
+      &:hover .delete {
+        display: block;
+      }
 
       .info {
         display: inline;

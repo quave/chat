@@ -5,9 +5,7 @@ Chat::Application.routes.draw do
       put :up, on: :member
       put :down, on: :member
 
-      resources :messages, only: [:index, :create, :destroy, :update] do
-        get :events, on: :collection
-      end
+      resources :messages, only: [:index, :create, :destroy]
     end
 
     resources :characters, except: :index do

@@ -2,7 +2,8 @@
 - msg = message.body.sub /^#roll#/, ""
 - msg_class = roll ? "cmd roll" : ""
 
-.message class= msg_class
+.message class= msg_class id="message-#{message.id}"
+  i.fa.fa-times.delete data-url= game_room_message_path(@game, @room, message)
   .info
     span.time= message.created_at.in_time_zone("Europe/Moscow").strftime("%H:%M:%S")
     - unless roll

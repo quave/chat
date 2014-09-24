@@ -2,8 +2,9 @@ require 'eventmachine'
 
 class MessagesController < ApplicationController
   before_action :set_message, only: :destroy
-  before_action :set_game, only: :create
-  before_action :set_room, only: :destroy
+  before_action :set_game, only: [:create, :destroy]
+  before_action :set_room, only: [:create, :destroy]
+  protect_from_forgery :except => :destroy
 
   def initialize
     @@client = Faye::Client.new Chat::Application.config.faye_url + 'faye'
@@ -23,20 +24,19 @@ class MessagesController < ApplicationController
       return nil
     end
 
-    message = Message.new message_params
-    message.room_id = params[:room_id]
-    message.sender = @game.get_character_for current_user
-    message.save!
-
-    publish message
-    nil
+    @message = Message.create! message_params.merge({ room_id: params[:room_id],
+                                                      sender: @game.get_character_for(current_user) })
+    publish_create
+    render nothing: true
   end
 
   # DELETE /messages/1
   # DELETE /messages/1.json
   def destroy
-    @message.destroy
-    redirect_to @room
+    if @message.destroy_if_allowed current_user
+      publish_destroy
+    end
+    render nothing: true
   end
 
   private
@@ -62,7 +62,15 @@ class MessagesController < ApplicationController
   def publish(message)
     EM.run do
       channel = "/messages/new/#{params[:room_id]}"
-      @@client.publish channel, message: render(message), ext: {auth_token: FAYE_TOKEN }
+      @@client.publish channel, message: message, ext: {auth_token: FAYE_TOKEN }
     end
+  end
+
+  def publish_create
+    publish render_to_string :create
+  end
+
+  def publish_destroy
+    publish render_to_string :destroy
   end
 end
