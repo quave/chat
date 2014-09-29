@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 20140904143155) do
     t.string   "name",                        null: false
     t.integer  "user_id",                     null: false
     t.integer  "game_id",                     null: false
-    t.boolean  "master",      default: false, null: false 
+    t.boolean  "master",      default: false, null: false
     t.text     "major_attr",  default: "",    null: false
     t.text     "minor_attr",  default: "",    null: false
     t.text     "description", default: "",    null: false
@@ -50,22 +50,20 @@ ActiveRecord::Schema.define(version: 20140904143155) do
   end
 
   create_table "messages", force: true do |t|
-    t.text     "body",        null: false
-    t.integer  "sender_id",   null: false
-    t.integer  "receiver_id"
+    t.text     "body",       null: false
+    t.integer  "sender_id",  null: false
     t.integer  "room_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "messages", ["receiver_id"], name: "index_messages_on_receiver_id"
   add_index "messages", ["room_id"], name: "index_messages_on_room_id"
   add_index "messages", ["sender_id"], name: "index_messages_on_sender_id"
 
   create_table "rooms", force: true do |t|
-    t.string   "name",                       null: false
-    t.integer  "game_id",                    null: false
-    t.integer  "order",      default: 0,     null: false
+    t.string   "name",                   null: false
+    t.integer  "game_id",                null: false
+    t.integer  "order",      default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

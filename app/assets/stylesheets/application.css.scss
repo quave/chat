@@ -12,12 +12,7 @@
  *= require_tree .
  */
 
-$font-family-sans-serif: 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-$font-family-sans-serif-light: 'Segoe UI Light', 'Helvetica Neue Light', Helvetica, Arial, sans-serif;
-$font-family-serif: Cambria, 'Times New Roman', Times, serif;
-$font-family-monospace: Menlo, Monaco, Consolas, 'Courier New', Courier, monospace;
-$font-size-base: 16px;
-
+@import "variables.css.scss";
 @import "bootstrap";
 @import "font-awesome";
 

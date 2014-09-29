@@ -14,4 +14,5 @@ class User < ActiveRecord::Base
   def name
     read_attribute(:name) || '%username%'
   end
+
 end
