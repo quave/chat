@@ -4,9 +4,6 @@ describe Room do
   let(:game) { create :game }
   subject(:room) { create :room }
 
-  it { should respond_to :up! }
-  it { should respond_to :down! }
-
   context 'order' do
     its(:order) { is_expected.to eq(1) }
 
@@ -23,54 +20,106 @@ describe Room do
     end
   end
 
-  it 'is free readable' do
-    expect(room).to be_free_readable
+  context 'readability' do
+    it 'is free readable' do
+      expect(room).to be_free_readable
+    end
+
+    it 'is not free readable with a char' do
+      char = create(:character, game: room.game)
+      room.characters << char
+
+      expect(room).not_to be_free_readable
+    end
+
+    it 'is readable by master' do
+      master = room.game.characters.first
+      expect(room.readable_by? master).to be true
+    end
+
+    it 'is readable by master with other chars' do
+      master = room.game.characters.first
+      char = create(:character, game: room.game)
+      room.characters << char
+
+      expect(room.readable_by? master).to be true
+    end
+
+    it 'is readable by nil char' do
+      expect(room.readable_by? nil).to be true
+    end
+
+    it 'is not readable by nil char with other chars' do
+      char = create(:character, game: room.game)
+      room.characters << char
+
+      expect(room.readable_by? nil).to be false
+    end
+
+    it 'is readable by added char' do
+      char = create(:character, game: room.game)
+      room.characters << char
+
+      expect(room.readable_by? char).to be true
+    end
+
+    it 'is readable by a char with other chars' do
+      char0 = create(:character, game: room.game)
+      char1 = create(:character, game: room.game)
+      room.characters << char0
+
+      expect(room.readable_by? char1).to be false
+    end
+
   end
 
-  it 'is not free readable with a char' do
-    char = create(:character, game: room.game)
-    room.characters << char
+  context 'visit' do
+    let(:user) { game.creator }
 
-    expect(room).not_to be_free_readable
-  end
+    context 'before' do
+      it 'should not be visited' do
+        expect(room.last_visited_by user).to be_nil
+      end
 
-  it 'is readable by master' do
-    master = room.game.characters.first
-    expect(room.readable_by? master).to be true
-  end
+      it 'should not be unread messages' do
+        expect(room.unread_messages_count user).to eq(0)
+      end
+    end
 
-  it 'is readable by master with other chars' do
-    master = room.game.characters.first
-    char = create(:character, game: room.game)
-    room.characters << char
+    context 'after' do
+      it 'should be visited' do
+        date = DateTime.now
+        room.user_visits << RoomsUsersVisit.new(user_id: user.id, last_visited: date)
+        expect(room.last_visited_by(user)).to eq(date)
+      end
 
-    expect(room.readable_by? master).to be true
-  end
+      it 'should not be unread messages' do
+        date = DateTime.new
+        room.user_visits << RoomsUsersVisit.new(user_id: user.id, last_visited: date)
+        expect(room.unread_messages_count user).to eq(0)
+      end
 
-  it 'is readable by nil char' do
-    expect(room.readable_by? nil).to be true
-  end
+      it 'messages should be read' do
+        char = game.characters.first
+        room.messages << Message.new(body: 'test1', sender: char)
 
-  it 'is not readable by nil char with other chars' do
-    char = create(:character, game: room.game)
-    room.characters << char
+        date = 2.hours.since
+        room.user_visits << RoomsUsersVisit.new(user_id: user.id, last_visited: date)
 
-    expect(room.readable_by? nil).to be false
-  end
+        expect(room.unread_messages_count user).to eq(0)
+      end
 
-  it 'is readable by added char' do
-    char = create(:character, game: room.game)
-    room.characters << char
+      it 'should be two unread messages' do
+        char = game.characters.first
+        date = 1.day.ago
+        room.user_visits << RoomsUsersVisit.new(user_id: user.id, last_visited: date)
 
-    expect(room.readable_by? char).to be true
-  end
+        room.messages << Message.new(body: 'test1', sender: char)
+        room.messages << Message.new(body: 'test2', sender: char)
 
-  it 'is readable by a char with other chars' do
-    char0 = create(:character, game: room.game)
-    char1 = create(:character, game: room.game)
-    room.characters << char0
-
-    expect(room.readable_by? char1).to be false
+        expect(room.unread_messages_count user).to eq(2)
+      end
+    end
   end
 
   it 'characters should be empty if includes all' do

@@ -1,6 +1,6 @@
 class RoomsController < ApplicationController
   before_action :set_room, only: [:edit, :update, :destroy, :up, :down]
-  before_action :set_game
+  before_action :set_game, only: [:show, :new, :edit]
   before_action :authenticate_user!, except: [:show]
 
   # GET /rooms/1
@@ -9,10 +9,7 @@ class RoomsController < ApplicationController
     @room = Room.includes(:messages).find params[:id]
     @character = @game.get_character_for current_user
 
-    unless @room.readable_by?(@character)
-      flash[:alert] = 'You are not authorized'
-      redirect_to @game
-    end
+    redirect_to @game, alert: 'You are not authorized' unless @room.readable_by?(@character)
 
     @room
   end
@@ -30,11 +27,11 @@ class RoomsController < ApplicationController
   # POST /rooms.json
   def create
     @room = Room.new(room_params)
-    @room.game_id = @game.id
+    @room.game_id = params[:game_id]
 
     respond_to do |format| 
       if @room.save
-        format.html { redirect_to @game, notice: 'Ура! Комната создана!' }
+        format.html { redirect_to game_path(params[:game_id]), notice: 'Ура! Комната создана!' }
         format.json { render action: 'show', status: :created, location: @room }
       else
         format.html { render action: 'new' }
@@ -50,7 +47,7 @@ class RoomsController < ApplicationController
     puts room_params
     respond_to do |format|
       if @room.update(room_params)
-        format.html { redirect_to @game, notice: 'Ура! Комната обновлена!' }
+        format.html { redirect_to game_path(params[:game_id]), notice: 'Ура! Комната обновлена!' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -64,27 +61,27 @@ class RoomsController < ApplicationController
   def destroy
     @room.destroy
     respond_to do |format|
-      format.html { redirect_to @game }
+      format.html { redirect_to game_path(params[:game_id]) }
       format.json { head :no_content }
     end
   end
 
   # PUT /game/1/room/1/up
   def up
-    unless @room.up
-      flash[:error] = "Не могу двигать вверх."
+    unless @room.up!
+      flash[:error] = 'Не могу двигать вверх.'
     end
 
-    redirect_to game_path(@game)
+    redirect_to game_path(params[:game_id])
   end
 
   # PUT /game/1/room/1/down
   def down
-    unless @room.down
-      flash[:error] = "Не могу двигать вниз."
+    unless @room.down!
+      flash[:error] = 'Не могу двигать вниз.'
     end
 
-    redirect_to game_path(@game)
+    redirect_to game_path(params[:game_id])
   end
 
 

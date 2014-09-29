@@ -1,11 +1,20 @@
 class Room < ActiveRecord::Base
   belongs_to :game
   has_many :messages
+  has_many :user_visits, class_name: 'RoomsUsersVisit'
   has_and_belongs_to_many :characters
 
   before_create :set_order
   before_save :check_characters
   default_scope -> { order :order }
+
+  def last_visited_by(user)
+    user_visits.find_by(user_id: user.id).try(:last_visited)
+  end
+
+  def unread_messages_count(user)
+    messages.where('updated_at > ?', last_visited_by(user)).count
+  end
 
   def up!
     prev_room = Room.find_by game_id: self.game_id, order: (self.order - 1)

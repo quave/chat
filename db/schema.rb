@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140904143155) do
+ActiveRecord::Schema.define(version: 20140929140450) do
 
   create_table "characters", force: true do |t|
     t.string   "name",                        null: false
@@ -76,6 +76,12 @@ ActiveRecord::Schema.define(version: 20140904143155) do
   end
 
   add_index "rooms_characters", ["room_id", "character_id"], name: "index_rooms_characters_on_room_id_and_character_id", unique: true
+
+  create_table "rooms_users_visits", primary_key: "[:room_id, :user_id]", force: true do |t|
+    t.integer  "room_id"
+    t.integer  "user_id"
+    t.datetime "last_visited", null: false
+  end
 
   create_table "users", force: true do |t|
     t.string   "name",                                null: false
