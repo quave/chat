@@ -16,6 +16,7 @@ Chat::Application.routes.draw do
     end
   end
   resources :user, only: :show
+  resources :online, only: [:create, :destroy]
 
   devise_for :users, controllers: {sessions: 'sessions'}
 

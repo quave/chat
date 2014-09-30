@@ -12,17 +12,19 @@ deleteMessage = (url) ->
 faye = null
 
 $ ->
-  return if !window.fayeUrl
-  faye ||= new Faye.Client window.fayeUrl
+  return if !window.fayeConfig
+  (typeof(faye) == 'undefined' || faye == null) &&
+    (faye = new Faye.Client window.fayeConfig.url)
   #Faye.Transport.WebSocket.isUsable = (_,url,c) -> c false
 
   msg = $('#message')
   form = $('#send-form')
 
-  subscription = faye.subscribe window.fayeMessagesChannel, (data) ->
+  subscription = faye.subscribe window.fayeConfig.messagesChannel, (data) ->
     eval if typeof(data.message) == 'array' then data.message[0] else data.message
 
   subscription.errback (error) -> console && console.log error
+  faye.publish('/in', { message: window.fayeConfig.inMessage })
 
   $(document).scrollTop($(document).height());
 
@@ -46,10 +48,5 @@ $ ->
   $('#chat .message .delete').click -> deleteMessage $(this).data('url')
 
 $(window).unload ->
-  faye && faye.unsubscribe(window.fayeMessagesChannel)
-  console.log 'unload'
-  $.ajax {
-    type: 'GET'
-    async : false
-    url: window.leavePath
-  }
+  return if !window.fayeConfig
+  faye && faye.unsubscribe window.fayeConfig.messagesChannel

@@ -4,7 +4,7 @@
 # RAILS_ENV=production bundle exec puma -C ./config/puma.rb
 
 application_path = '.'
-railsenv = 'production'
+railsenv = 'development'
 rackup 'faye.ru'
 environment railsenv
 daemonize false
