@@ -9,6 +9,9 @@ html lang="en"
     meta name="viewport" content="width=device-width, initial-scale=1"
     = csrf_meta_tags
     = stylesheet_link_tag 'application', media: 'all'
+    = javascript_include_tag 'application', controller_name
+    = javascript_include_tag Chat::Application.config.faye_url + 'faye.js'
+    = yield :js
 
   body class=yield(:page_classes)
     nav.navbar.navbar-inverse.navbar-static-top role="navigation"
@@ -40,8 +43,3 @@ html lang="en"
     footer role="contentinfo"
       .container
         = yield :foot
-
-    = javascript_include_tag 'application'
-    = javascript_include_tag params[:controller]
-    = javascript_include_tag Chat::Application.config.faye_url + 'faye.js'
-    = yield :js

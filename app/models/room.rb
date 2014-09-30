@@ -1,3 +1,4 @@
+# noinspection RubyResolve
 class Room < ActiveRecord::Base
   belongs_to :game
   has_many :messages
@@ -9,11 +10,21 @@ class Room < ActiveRecord::Base
   default_scope -> { order :order }
 
   def last_visited_by(user)
-    user_visits.find_by(user_id: user.id).try(:last_visited)
+    visits = Chat::Application::room_user_visits
+    if visits.has_key?(user.id) && visits[user.id].include?(id)
+      DateTime.now
+    else
+      visit = user_visits.find_by(user_id: user.id)
+      if visit.nil?
+        DateTime.new
+      else
+        visit.last_visited
+      end
+    end
   end
 
   def unread_messages_count(user)
-    messages.where('updated_at > ?', last_visited_by(user)).count
+    messages.where('created_at > ?', last_visited_by(user)).count
   end
 
   def up!
@@ -50,6 +61,12 @@ class Room < ActiveRecord::Base
     return true if free_readable?
 
     !char.nil? && (char.master || character_ids.include?(char.id))
+  end
+
+  def set_visit(user)
+    visit = user_visits.find_or_initialize_by user_id: user.id
+    visit.last_visited = DateTime.now
+    visit.save!
   end
 
   protected

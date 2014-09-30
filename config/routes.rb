@@ -4,6 +4,7 @@ Chat::Application.routes.draw do
     resources :rooms, except: :index do
       put :up, on: :member
       put :down, on: :member
+      get :leave, on: :member
 
       resources :messages, only: [:index, :create, :destroy]
     end

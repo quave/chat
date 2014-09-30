@@ -1,6 +1,4 @@
 class User < ActiveRecord::Base
-  default_scope -> { includes :characters }
-
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -13,6 +11,27 @@ class User < ActiveRecord::Base
 
   def name
     read_attribute(:name) || '%username%'
+  end
+
+  def visit_room(room_id)
+    visits = Chat::Application::room_user_visits
+    visits[id] ||= Set.new
+    visits[id] << room_id
+  end
+
+  def leave_room(room_id)
+    visits = Chat::Application::room_user_visits
+
+    if visits.has_key? id
+      visits[id].delete room_id
+
+      visits.delete(id) if visits[id].empty?
+    end
+  end
+
+  def in_room?(room_id)
+    visits = Chat::Application::room_user_visits
+    visits.has_key?(id) && visits[id].include?(room_id)
   end
 
 end

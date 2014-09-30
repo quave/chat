@@ -1,5 +1,5 @@
 class RoomsController < ApplicationController
-  before_action :set_room, only: [:edit, :update, :destroy, :up, :down]
+  before_action :set_room, only: [:edit, :update, :destroy, :up, :down, :leave]
   before_action :set_game, only: [:show, :new, :edit]
   before_action :authenticate_user!, except: [:show]
 
@@ -9,6 +9,7 @@ class RoomsController < ApplicationController
     @room = Room.includes(:messages).find params[:id]
     @character = @game.get_character_for current_user
 
+    current_user.try :visit_room, @room.id
     redirect_to @game, alert: 'You are not authorized' unless @room.readable_by?(@character)
 
     @room
@@ -43,8 +44,6 @@ class RoomsController < ApplicationController
   # PATCH/PUT /rooms/1
   # PATCH/PUT /rooms/1.json
   def update
-    puts 'yahoo'
-    puts room_params
     respond_to do |format|
       if @room.update(room_params)
         format.html { redirect_to game_path(params[:game_id]), notice: 'Ура! Комната обновлена!' }
@@ -84,6 +83,13 @@ class RoomsController < ApplicationController
     redirect_to game_path(params[:game_id])
   end
 
+  def leave
+    if user_signed_in?
+      @room.set_visit current_user
+      current_user.leave_room params[:id]
+    end
+    render nothing: true
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

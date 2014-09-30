@@ -1,5 +1,5 @@
 require File.expand_path('../boot', __FILE__)
-
+require 'set'
 require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
@@ -8,6 +8,13 @@ Bundler.require(*Rails.groups)
 
 module Chat
   class Application < Rails::Application
+    attr_accessor :room_user_visits
+
+    def initialize!
+      super
+      @room_user_visits = {}
+    end
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

@@ -4,11 +4,12 @@ class Character < ActiveRecord::Base
   REJECTED = 2
   DEAD = 3
 
-  validates :color, numericality: { only_integer: true }
-
   belongs_to :user
   belongs_to :game
   has_and_belongs_to_many :rooms
+
+  validates :color, numericality: { only_integer: true }
+  default_scope -> { includes(:user) }
 
   def self.create_master(game, name = 'Master')
     create name: name, master: true, user_id: game.creator_id, game_id: game.id, status: ACTIVE
@@ -37,5 +38,9 @@ class Character < ActiveRecord::Base
 
     status = DEAD
     save!
+  end
+
+  def in_room?(room_id)
+    user.in_room? room_id
   end
 end

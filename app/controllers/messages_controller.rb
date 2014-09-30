@@ -5,10 +5,7 @@ class MessagesController < ApplicationController
   before_action :set_game, only: [:create, :destroy]
   before_action :set_room, only: [:create, :destroy]
   protect_from_forgery :except => :destroy
-
-  def initialize
-    @@client = Faye::Client.new Chat::Application.config.faye_url + 'faye'
-  end
+  FAYE_CLIENT = Faye::Client.new Chat::Application.config.faye_url + 'faye'
 
   # GET /messages
   # GET /messages.json
@@ -62,7 +59,7 @@ class MessagesController < ApplicationController
   def publish(message)
     EM.run do
       channel = "/messages/new/#{params[:room_id]}"
-      @@client.publish channel, message: message, ext: {auth_token: FAYE_TOKEN }
+      FAYE_CLIENT.publish channel, message: message, ext: {auth_token: FAYE_TOKEN }
     end
   end
 
