@@ -8,11 +8,12 @@ Bundler.require(*Rails.groups)
 
 module Chat
   class Application < Rails::Application
-    attr_accessor :room_user_visits
+    attr_accessor :room_user_visits, :faye_client
 
     def initialize!
       super
       @room_user_visits = {}
+      @faye_client = Faye::Client.new "#{config.faye_url}faye"
     end
 
     # Settings in config/environments/* take precedence over those specified here.
@@ -27,5 +28,6 @@ module Chat
     config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     config.i18n.default_locale = :ru
     config.faye_messages_channel = '/messages/new/'
+    config.faye_online_channel = '/online/'
   end
 end

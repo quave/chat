@@ -1,11 +1,8 @@
-require 'eventmachine'
-
 class MessagesController < ApplicationController
   before_action :set_message, only: :destroy
   before_action :set_game, only: [:create, :destroy]
   before_action :set_room, only: [:create, :destroy]
   protect_from_forgery :except => :destroy
-  FAYE_CLIENT = Faye::Client.new Chat::Application.config.faye_url + 'faye'
 
   # GET /messages
   # GET /messages.json
@@ -56,18 +53,16 @@ class MessagesController < ApplicationController
     @room = Room.find params[:room_id]
   end
 
-  def publish(message)
-    EM.run do
-      channel = "/messages/new/#{params[:room_id]}"
-      FAYE_CLIENT.publish channel, message: message, ext: {auth_token: FAYE_TOKEN }
-    end
+  def publish_message(message)
+    channel = Chat::Application.config.faye_messages_channel + params[:room_id]
+    publish channel, message
   end
 
   def publish_create
-    publish render_to_string :create
+    publish_message render_to_string :create
   end
 
   def publish_destroy
-    publish render_to_string :destroy
+    publish_message render_to_string :destroy
   end
 end

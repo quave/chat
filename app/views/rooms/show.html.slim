@@ -6,12 +6,14 @@
       = ", #{@room.name}"
 
 - content_for :js do
-  script[type='text/javascript']
-    | window.fayeConfig = {
-    |   url: '#{Chat::Application.config.faye_url}faye',
-    |   messageChannel: '#{Chat::Application.config.faye_messages_channel + params[:id]}',
-    |   inMessage: '#{current_user.id}|#{@room.id}'
-    | };
+  - if user_signed_in?
+    script[type='text/javascript']
+      | window.fayeConfig = {
+      |   url: '#{Chat::Application.config.faye_url}faye',
+      |   messagesChannel: '#{Chat::Application.config.faye_messages_channel + params[:id]}',
+      |   onlineChannel: '#{Chat::Application.config.faye_online_channel + params[:id]}',
+      |   inMessage: '#{current_user.id}|#{@room.id}'
+      | };
 
 #room-show
   .row
@@ -24,9 +26,13 @@
       ul#players
         - chars = @room.characters.any? ? @game.masters | @room.characters : @game.characters
         - chars.each do |character|
-          li
+          - user = character.user
+          - status_class = Online.exists?(@room.id, user.id) ? 'online' : 'offline'
+          li id="player-#{user.id}"
+            span.status
+              i class= status_class
             span.char= character.name
-            span.player<= link_to character.user.name, character.user
+            span.player<= link_to user.name, user
 
   - if user_signed_in?
     .row

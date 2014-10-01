@@ -15,16 +15,22 @@ $ ->
   return if !window.fayeConfig
   (typeof(faye) == 'undefined' || faye == null) &&
     (faye = new Faye.Client window.fayeConfig.url)
-  #Faye.Transport.WebSocket.isUsable = (_,url,c) -> c false
 
   msg = $('#message')
   form = $('#send-form')
 
-  subscription = faye.subscribe window.fayeConfig.messagesChannel, (data) ->
-    eval if typeof(data.message) == 'array' then data.message[0] else data.message
-
-  subscription.errback (error) -> console && console.log error
   faye.publish('/in', { message: window.fayeConfig.inMessage })
+
+  msgSub = faye.subscribe window.fayeConfig.messagesChannel, (data) ->
+    eval if typeof(data.message) == 'array' then data.message[0] else data.message
+  msgSub.errback (error) -> console && console.log 'Msg sub error: ' + error
+
+  onlineSub = faye.subscribe window.fayeConfig.onlineChannel, (data) ->
+    id = data.message.split(':')[0]
+    status = data.message.split(':')[1]
+    $("#player-#{id} .status i").removeClass().addClass(status);
+
+  onlineSub.errback (error) -> console && console.log 'Online sub error: ' + error
 
   $(document).scrollTop($(document).height());
 
