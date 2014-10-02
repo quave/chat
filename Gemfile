@@ -19,6 +19,7 @@ gem 'simple_form', '>= 3.1.0.rc1'
 gem 'cancan'
 gem 'redcarpet'
 gem 'puma'
+gem 'colorize'
 
 group :development, :test do
   gem 'sqlite3'

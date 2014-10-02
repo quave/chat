@@ -22,10 +22,10 @@ class ServerAuth
     data = message['data']
 
     if message['channel'] == '/in'
-      room_id, user_id = data['message'].split('|')
+      user_id, room_id = data['message'].split('|')
       puts "Send online #{message.inspect}"
       res = HTTP_CLIENT.post SRV_PATH,
-        "id=#{message['clientId']}&room_id=#{room_id}&user_id=#{user_id}"
+        "id=#{message['clientId']}&user_id=#{user_id}&room_id=#{room_id}"
       puts "Send online #{res.inspect}"
       callback.call(message)
       return

@@ -27,10 +27,9 @@
         - chars = @room.characters.any? ? @game.masters | @room.characters : @game.characters
         - chars.each do |character|
           - user = character.user
-          - status_class = Online.exists?(@room.id, user.id) ? 'online' : 'offline'
+          - status_class = Online.exists?(user.id, @room.id) ? 'online' : 'offline'
           li id="player-#{user.id}"
-            span.status
-              i class= status_class
+            i.fa.fa-circle.status class= status_class
             span.char= character.name
             span.player<= link_to user.name, user
 

@@ -1,8 +1,7 @@
 class Online
   def initialize(id, user_id, room_id)
     visits = Chat::Application::room_user_visits
-    visits[id] ||= Set.new
-    visits[id] << [user_id, room_id]
+    visits[id] = [user_id, room_id]
   end
 
   def self.destroy(id)

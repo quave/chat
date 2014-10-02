@@ -2,13 +2,6 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-deleteMessage = (url) ->
-  $.ajax {
-    type: 'DELETE'
-    url: url
-    async: false
-  }
-
 faye = null
 
 $ ->
@@ -28,7 +21,8 @@ $ ->
   onlineSub = faye.subscribe window.fayeConfig.onlineChannel, (data) ->
     id = data.message.split(':')[0]
     status = data.message.split(':')[1]
-    $("#player-#{id} .status i").removeClass().addClass(status);
+    opposite = if status == 'online' then 'offline' else 'online'
+    $("#player-#{id} .status").removeClass(opposite).addClass(status);
 
   onlineSub.errback (error) -> console && console.log 'Online sub error: ' + error
 
@@ -51,7 +45,13 @@ $ ->
     tmp = text + name + ', '
     msg.focus().val('').val(tmp)
 
-  $('#chat .message .delete').click -> deleteMessage $(this).data('url')
+  $('#chat .message .delete').click ->
+    $.ajax {
+      type: 'DELETE'
+      url: $(this).data('url')
+      async: false
+    }
+
 
 $(window).unload ->
   return if !window.fayeConfig
