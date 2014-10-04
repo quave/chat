@@ -31,6 +31,6 @@ Chat::Application.configure do
 
   config.default_url_options = { host: 'locahost:3000' }
 
-  config.faye_url = 'http://localhost:9292/'
+  config.faye_url = 'http://192.168.1.2:9292/'
 end
 

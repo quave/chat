@@ -12,6 +12,12 @@ $ ->
   msg = $('#message')
   form = $('#send-form')
 
+  faye.on 'transport:up', ->
+    console.log 'up', arguments, this
+
+  faye.on 'transport:down', ->
+    console.log 'down', arguments, this
+
   faye.publish('/in', { message: window.fayeConfig.inMessage })
 
   msgSub = faye.subscribe window.fayeConfig.messagesChannel, (data) ->
@@ -52,7 +58,7 @@ $ ->
       async: false
     }
 
+window.onbeforeunload = ->
+  return if typeof(faye) == 'undefined' || !faye
+  faye.disconnect()
 
-$(window).unload ->
-  return if !window.fayeConfig
-  faye && faye.unsubscribe window.fayeConfig.messagesChannel
