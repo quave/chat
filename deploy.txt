@@ -4,4 +4,4 @@ db migrate
 ckeck/gen secret token 
 precompile assets RAILS_ENV=production bundle exec rake assets:precompile
 start server with console  bundle exec puma -C ./config/puma.rb (or just puma?)
-start faye server puma -C ./config/puma-faye.rb
+start faye server puma -C ./config/puma-faye-prod.rb

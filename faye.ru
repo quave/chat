@@ -43,21 +43,24 @@ Faye::WebSocket.load_adapter('puma')
 app = Faye::RackAdapter.new(:mount => '/faye', :timeout => 45)
 app.add_extension(ServerAuth.new)
 
-app.on :handshake do |clientId|
-  puts "Handshake #{clientId}"
+app.on :handshake do |client_id|
+  puts "Handshake #{client_id}"
 end
-app.on :subscribe do |clientId, chan|
-  puts "Subscribe #{clientId}, #{chan}"
+app.on :subscribe do |client_id, chan|
+  puts "Subscribe #{client_id}, #{chan}"
 end
-app.on :unsubscribe do |clientId, chan|
-  puts "Unsubscribe #{clientId}, #{chan}"
+app.on :unsubscribe do |client_id, chan|
+  puts "Unsubscribe #{client_id}, #{chan}"
 end
-app.on :publish do |clientId, chan, data|
-  puts "Publish #{clientId}, #{chan}, #{data}"
+app.on :publish do |client_id, chan, data|
+  puts "Publish #{client_id}, #{chan}, #{data}"
 end
-app.on :disconnect do |clientId|
-  puts "Disconnect #{clientId}"
-  res = HTTP_CLIENT.delete "#{SRV_PATH}/#{clientId}"
+app.on :connect do |client_id|
+  puts "Connect #{client_id}"
+end
+app.on :disconnect do |client_id|
+  puts "Disconnect #{client_id}"
+  res = HTTP_CLIENT.delete "#{SRV_PATH}/#{client_id}"
   puts "Send offline #{res.inspect}"
 end
 
