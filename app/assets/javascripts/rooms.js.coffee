@@ -5,6 +5,8 @@
 faye = null
 
 $ ->
+  return unless $('body').hasClass('rooms')
+
   return if !window.fayeConfig
   (typeof(faye) == 'undefined' || faye == null) &&
     (faye = new Faye.Client window.fayeConfig.url)

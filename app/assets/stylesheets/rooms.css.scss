@@ -1,96 +1,103 @@
 // Place all the styles related to the rooms controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-@import "variables.css.scss";
-@import "font-awesome";
 
-.room-header {
-  margin-top: 0;
-  margin-bottom: .5em;
-  line-height: 1em;
-}
+body.rooms {
+  @import "variables.css.scss";
+  @import "font-awesome";
 
-#room-show {
+  .room-header {
+    margin-top: 0;
+    margin-bottom: .5em;
+    line-height: 1em;
+  }
 
-  .sidebar {
+  #room-show {
 
-    #players {
-      margin-top: 1em;
-      list-style: none;
-      padding: 0;
+    .sidebar {
 
-      li {
-        cursor: pointer;
+      #players {
+        margin-top: 1em;
+        list-style: none;
+        padding: 0;
 
-        .status {
+        li {
+          cursor: pointer;
+
+          .status {
+            font-size: 80%;
+            margin-right: .3em;
+            &.online {
+              color: #5CB85C;
+            }
+            &.offline {
+              color: #888;
+            }
+          }
+
+          .player {
+            color: #aaa;
+          }
+        }
+      }
+    }
+
+    .form {
+      #message {
+        resize: none;
+        height: 100px;
+        width: 100%;
+        border: 1px solid #aabbaa;
+      }
+
+      #send {
+        height: 100px;
+        width: 100px;
+        padding: 10px;
+      }
+    }
+
+    #chat {
+      max-width: 600px;
+      height: 100%;
+
+      .message {
+        margin-left: -1em;
+        padding-left: 1em;
+
+        .delete {
+          margin: .55em 0 0 -1.2em;
+          float: left;
+          color: #aaa;
           font-size: 80%;
-          margin-right: .3em;
-          &.online { color: #5CB85C; }
-          &.offline { color: #888; }
+          display: none;
+          cursor: pointer;
         }
 
-        .player {
-          color: #aaa;
+        &:hover .delete {
+          display: block;
         }
-      }
-    }
-  }
 
-  .form {
-    #message {
-      resize: none;
-      height: 100px;
-      width: 100%;
-      border: 1px solid #aabbaa;
-    }
-
-    #send {
-      height: 100px;
-      width: 100px;
-      padding: 10px; 
-    }
-  }
-
-  #chat {
-    max-width: 600px;
-    height: 100%;
-
-    .message {
-      margin-left: -1em;
-      padding-left: 1em;
-
-      .delete {
-        margin: .55em 0 0 -1.2em;
-        float: left;
-        color: #aaa;
-        font-size: 80%;
-        display: none;
-        cursor: pointer;
-      }
-
-      &:hover .delete {
-        display: block;
-      }
-
-      .info {
-        display: inline;
-        + p {
+        .info {
           display: inline;
-        }
+          + p {
+            display: inline;
+          }
 
-        .time {
-          color: #aaa;
-          font-size: 11px;
-          display: inline-block;
-          margin-right: 5px;
-        }
+          .time {
+            color: #aaa;
+            font-size: 11px;
+            display: inline-block;
+            margin-right: 5px;
+          }
 
-        .name {
-          color: #FF6A14;
-        }
-        .delimiter {
-          display: inline-block;
-          margin: 0 4px 0 2px;
+          .name {
+            color: #FF6A14;
+          }
+          .delimiter {
+            display: inline-block;
+            margin: 0 4px 0 2px;
+          }
         }
       }
     }
