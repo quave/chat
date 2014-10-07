@@ -9,6 +9,14 @@ class Room < ActiveRecord::Base
   before_save :check_characters
   default_scope -> { order :order }
 
+  def participants
+    if free_readable?
+      game.characters
+    else
+      characters
+    end
+  end
+
   def last_visited_by(user)
     visits = Chat::Application::room_user_visits
     if visits.has_key?(user.id) && visits[user.id].include?(id)
@@ -24,6 +32,7 @@ class Room < ActiveRecord::Base
   end
 
   def unread_messages_count(user)
+    return 0 if user.nil? || Online.exists?(user.id, id)
     messages.where('created_at > ?', last_visited_by(user)).count
   end
 
@@ -63,10 +72,20 @@ class Room < ActiveRecord::Base
     !char.nil? && (char.master || character_ids.include?(char.id))
   end
 
-  def set_visit(user)
-    visit = user_visits.find_or_initialize_by user_id: user.id
+  def commit_visit(user_id)
+    visit = user_visits.find_or_initialize_by user_id: user_id
     visit.last_visited = DateTime.now
     visit.save!
+  end
+
+  def self.commit_visit(room_id, user_id)
+    find(room_id).commit_visit(user_id)
+  end
+
+  def self.show(id, user)
+    room = includes(:messages).find id
+    room.commit_visit user.id unless user.nil?
+    room
   end
 
   protected

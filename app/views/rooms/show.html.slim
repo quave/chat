@@ -6,7 +6,7 @@
       = ", #{@room.name}"
 
 - content_for :js do
-  - if user_signed_in?
+  - if user_signed_in? && @game.in_party?(current_user)
     script[type='text/javascript']
       | window.fayeConfig = {
       |   url: '#{Chat::Application.config.faye_url}faye',

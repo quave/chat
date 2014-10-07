@@ -56,18 +56,15 @@ textarea.input-xxlarge {
   height: 200px;
 }
 
-.profile {
-  position: absolute;
-  top: .5em;
-  right: .5em;
+.navbar-inverse .navbar-nav > li.unread > a {
+  color: #ccc;
+  &:hover{ color: #fff }
 }
 
-.profile > * {
-  margin-left: .5em;
-}
-
-.links {
-  margin-top: 1em;
+.unread {
+  color: #c9302c;
+  display: inline-block;
+  margin: 0 .2em;
 }
 
 /* room list */

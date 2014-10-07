@@ -6,12 +6,29 @@ class Game < ActiveRecord::Base
   after_create :add_master
   after_create :add_default_rooms
 
+  scope :for, ->(user) do
+    joins(:characters)
+    .where characters: { user_id: user.try(:id) }
+  end
+
   def masters
     characters.where master: true
   end
 
+  def unread_messages_count(user)
+    return 0 unless in_party?(user)
+
+    rooms_to_display(user).reduce(0) do |sum, room|
+      sum + room.unread_messages_count(user)
+    end
+  end
+
   def in_party?(user)
-    !get_character_for(user).nil?
+    if user.nil?
+      nil
+    else
+      characters.exists? user_id: user.id
+    end
   end
 
   def get_character_for(user)
@@ -23,9 +40,9 @@ class Game < ActiveRecord::Base
   end
 
   def rooms_to_display(user)
-    return rooms.select {|r| r.readable_by? nil} if user.nil?
-
     char = get_character_for user
+    return rooms.select {|r| r.free_readable?} if char.nil?
+
     if char.master
       rooms
     else

@@ -1,4 +1,4 @@
-- rooms = game.rooms_to_display(user_signed_in? ? current_user : nil)
+- rooms = game.rooms_to_display current_user
 
 #room-list
   h4= "Комнаты"
@@ -12,6 +12,10 @@
           a= room.name
         - else
           = link_to room.name, game_room_path(game, room)
+          - unread = room.unread_messages_count(current_user)
+          - if unread != 0
+            span.unread= unread
+
 
         - if can_edit_game? game
           |

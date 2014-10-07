@@ -1,6 +1,4 @@
 li
   = link_to game.name, game_path(game)
-  .hide
-    = link_to 'Show', game
-    = link_to 'Edit', edit_game_path(game)
-    = link_to 'Destroy', game, data: {:confirm => 'Are you sure?'}, :method => :delete
+  - unread = game.unread_messages_count(current_user)
+  span.unread= unread unless unread == 0

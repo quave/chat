@@ -6,7 +6,7 @@ class RoomsController < ApplicationController
   # GET /rooms/1
   # GET /rooms/1.json
   def show
-    @room = Room.includes(:messages).find params[:id]
+    @room = Room.show params[:id], current_user
     @character = @game.get_character_for current_user
 
     current_user.try :visit_room, @room.id

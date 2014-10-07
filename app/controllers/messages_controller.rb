@@ -20,6 +20,7 @@ class MessagesController < ApplicationController
 
     @message = Message.create! message_params.merge({ room_id: params[:room_id],
                                                       sender: @game.get_character_for(current_user) })
+
     publish_create
     render nothing: true
   end

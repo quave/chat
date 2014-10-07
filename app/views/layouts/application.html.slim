@@ -14,7 +14,7 @@ html lang="en"
     = yield :js
 
   body class="#{controller_name} #{params[:action]} #{yield(:page_classes)}"
-    nav.navbar.navbar-inverse.navbar-static-top role="navigation"
+    header.navbar.navbar-inverse.navbar-static-top role='banner'
       .container
         .navbar-header
           button.navbar-toggle type="button" data-toggle="collapse" data-target=".navbar-collapse"
@@ -23,12 +23,15 @@ html lang="en"
             span.icon-bar
             span.icon-bar
           = link_to "R", root_path, class: "navbar-brand"
-        .collapse.navbar-collapse
-          ul.nav.navbar-nav
+        nav.collapse.navbar-collapse role='navigation'
+          ul.nav.navbar-nav.navbar-right
             - if user_signed_in?
-              li= link_to "Выход", destroy_user_session_path, method: :delete, html: { class: 'pull-right'}
+              - unread = current_user.unread_messages_count
+              li.unread= link_to "Сообщения #{unread}", root_path unless unread == 0
+              li= link_to current_user.name, current_user
+              li= link_to "Выход", destroy_user_session_path, method: :delete
             - else
-              li= link_to "Войти", new_user_session_path, html: { class: 'pull-right'}
+              li= link_to "Войти", new_user_session_path
 
 
     header role="banner"
