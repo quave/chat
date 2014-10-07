@@ -14,12 +14,6 @@ $ ->
   msg = $('#message')
   form = $('#send-form')
 
-  faye.on 'transport:up', ->
-    console.log 'up', arguments, this
-
-  faye.on 'transport:down', ->
-    console.log 'down', arguments, this
-
   faye.publish('/in', { message: window.fayeConfig.inMessage })
 
   msgSub = faye.subscribe window.fayeConfig.messagesChannel, (data) ->
