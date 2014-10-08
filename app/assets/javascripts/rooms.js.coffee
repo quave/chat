@@ -14,6 +14,23 @@ $ ->
   msg = $('#message')
   form = $('#send-form')
 
+  faye.on 'transport:up', ->
+    console.log 'up', arguments, this
+
+  faye.on 'transport:down', ->
+    console.log 'down', arguments, this
+
+  extLogger = {
+    incoming: (message, callback) ->
+      console.log('incoming', message)
+      callback(message)
+    outgoing: (message, callback) ->
+      console.log('outgoing', message);
+      callback(message);
+  };
+
+  faye.addExtension(extLogger);
+
   faye.publish('/in', { message: window.fayeConfig.inMessage })
 
   msgSub = faye.subscribe window.fayeConfig.messagesChannel, (data) ->
