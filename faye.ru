@@ -2,6 +2,7 @@ require 'faye'
 require File.expand_path('../config/initializers/faye_token.rb', __FILE__)
 require File.expand_path("../config/environments/faye_#{ENV['RACK_ENV']}.rb", __FILE__)
 require 'net/http'
+require 'logger'
 
 HTTP_CLIENT = Net::HTTP.new SRV_ADDRESS, SRV_PORT
 
@@ -26,7 +27,8 @@ class ServerAuth
       puts "Send online #{message.inspect}"
       res = HTTP_CLIENT.post SRV_PATH,
         "id=#{message['clientId']}&user_id=#{user_id}&room_id=#{room_id}"
-      puts "Send online #{res.inspect}"
+      puts "Send online to #{SRV_ADDRESS} #{SRV_PORT}/#{SRV_PATH}/#{client_id}"
+      puts "Send online res #{res.inspect}"
       callback.call(message)
       return
     end
@@ -40,6 +42,8 @@ class ServerAuth
 end
 
 Faye::WebSocket.load_adapter('puma')
+Faye.logger = Logger.new(STDOUT)
+Faye.logger.level = Faye::Logging::LOG_LEVELS[:info]
 app = Faye::RackAdapter.new(:mount => '/faye', :timeout => 45)
 app.add_extension(ServerAuth.new)
 
@@ -61,7 +65,8 @@ end
 app.on :disconnect do |client_id|
   puts "Disconnect #{client_id}"
   res = HTTP_CLIENT.delete "#{SRV_PATH}/#{client_id}"
-  puts "Send offline #{res.inspect}"
+  puts "Send offline to #{SRV_ADDRESS} #{SRV_PORT}/#{SRV_PATH}/#{client_id}"
+  puts "Send offline res #{res.inspect}"
 end
 
 run app
