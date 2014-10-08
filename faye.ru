@@ -27,7 +27,7 @@ class ServerAuth
       puts "Send online #{message.inspect}"
       res = HTTP_CLIENT.post SRV_PATH,
         "id=#{message['clientId']}&user_id=#{user_id}&room_id=#{room_id}"
-      puts "Send online to #{SRV_ADDRESS} #{SRV_PORT}/#{SRV_PATH}/#{client_id}"
+      puts "Send online to #{SRV_ADDRESS} #{SRV_PORT}/#{SRV_PATH}/#{message['clientId']}"
       puts "Send online res #{res.inspect}"
       callback.call(message)
       return
@@ -43,7 +43,7 @@ end
 
 Faye::WebSocket.load_adapter('puma')
 Faye.logger = Logger.new(STDOUT)
-Faye.logger.level = Faye::Logging::LOG_LEVELS[:info]
+Faye.logger.level = Faye::Logging::LOG_LEVELS[:warn]
 app = Faye::RackAdapter.new(:mount => '/faye', :timeout => 45)
 app.add_extension(ServerAuth.new)
 
