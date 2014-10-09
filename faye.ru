@@ -25,10 +25,14 @@ class ServerAuth
     if message['channel'] == '/in'
       user_id, room_id = data['message'].split('|')
       puts "Send online #{message.inspect}"
-      res = HTTP_CLIENT.post SRV_PATH,
-        "id=#{message['clientId']}&user_id=#{user_id}&room_id=#{room_id}"
       puts "Send online to #{SRV_ADDRESS} #{SRV_PORT}/#{SRV_PATH}/#{message['clientId']}"
-      puts "Send online res #{res.inspect}"
+      begin
+        res = HTTP_CLIENT.post SRV_PATH,
+          "id=#{message['clientId']}&user_id=#{user_id}&room_id=#{room_id}"
+        puts "Send online res #{res.inspect}"
+      rescue Exception => e
+        puts "Error #{e.inspect}"
+      end
       callback.call(message)
       return
     end
@@ -64,9 +68,13 @@ app.on :connect do |client_id|
 end
 app.on :disconnect do |client_id|
   puts "Disconnect #{client_id}"
-  res = HTTP_CLIENT.delete "#{SRV_PATH}/#{client_id}"
   puts "Send offline to #{SRV_ADDRESS} #{SRV_PORT}/#{SRV_PATH}/#{client_id}"
-  puts "Send offline res #{res.inspect}"
+  begin
+    res = HTTP_CLIENT.delete "#{SRV_PATH}/#{client_id}"
+    puts "Send offline res #{res.inspect}"
+  rescue Exception => e
+    puts "Error #{e.inspect}"
+  end
 end
 
 run app

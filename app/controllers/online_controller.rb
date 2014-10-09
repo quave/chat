@@ -10,9 +10,9 @@ class OnlineController < ApplicationController
 
   def destroy
     user_id, room_id = Online.destroy params[:id]
-    Room.commit_visit room_id, user_id
-    unless user_id.nil? || room_id.nil? || Online.exists?(user_id, room_id)
-      publish_offline user_id, room_id
+    unless user_id.nil? || room_id.nil?
+      Room.commit_visit room_id, user_id
+      publish_offline user_id, room_id unless Online.exists?(user_id, room_id)
     end
     render nothing: true
   end
