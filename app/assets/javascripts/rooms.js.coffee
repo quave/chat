@@ -11,65 +11,74 @@ $ ->
   (typeof(faye) == 'undefined' || faye == null) &&
     (faye = new Faye.Client window.fayeConfig.url)
 
-  msg = $('#message')
-  form = $('#send-form')
+  testWs = new WebSocket(window.fayeConfig.url.replace(/^http/, 'ws'));
+  testWs.onerror = ->
+    faye.disable 'websocket'
+    Faye.Transport.WebSocket.isUsable = (_,url,c) -> c false
+    continueInit()
+  testWs.onopen = ->
+    continueInit()
 
-  faye.on 'transport:up', ->
-    console.log 'up', arguments, this
+  continueInit = ->
+    msg = $('#message')
+    form = $('#send-form')
 
-  faye.on 'transport:down', ->
-    console.log 'down', arguments, this
+    faye.on 'transport:up', ->
+      console.log 'up', arguments, this
 
-  extLogger = {
-    incoming: (message, callback) ->
-      console.log('incoming', message)
-      callback(message)
-    outgoing: (message, callback) ->
-      console.log('outgoing', message);
-      callback(message);
-  };
+    faye.on 'transport:down', ->
+      console.log 'down', arguments, this
 
-  faye.addExtension(extLogger);
+    extLogger = {
+      incoming: (message, callback) ->
+        console.log('incoming', message)
+        callback(message)
+      outgoing: (message, callback) ->
+        console.log('outgoing', message);
+        callback(message);
+    };
 
-  faye.publish('/in', { message: window.fayeConfig.inMessage })
+    faye.addExtension(extLogger);
 
-  msgSub = faye.subscribe window.fayeConfig.messagesChannel, (data) ->
-    eval if typeof(data.message) == 'array' then data.message[0] else data.message
-  msgSub.errback (error) -> console && console.log 'Msg sub error: ' + error
+    faye.publish('/in', { message: window.fayeConfig.inMessage })
 
-  onlineSub = faye.subscribe window.fayeConfig.onlineChannel, (data) ->
-    id = data.message.split(':')[0]
-    status = data.message.split(':')[1]
-    opposite = if status == 'online' then 'offline' else 'online'
-    $("#player-#{id} .status").removeClass(opposite).addClass(status);
+    msgSub = faye.subscribe window.fayeConfig.messagesChannel, (data) ->
+      eval if typeof(data.message) == 'array' then data.message[0] else data.message
+    msgSub.errback (error) -> console && console.log 'Msg sub error: ' + error
 
-  onlineSub.errback (error) -> console && console.log 'Online sub error: ' + error
+    onlineSub = faye.subscribe window.fayeConfig.onlineChannel, (data) ->
+      id = data.message.split(':')[0]
+      status = data.message.split(':')[1]
+      opposite = if status == 'online' then 'offline' else 'online'
+      $("#player-#{id} .status").removeClass(opposite).addClass(status);
 
-  $(document).scrollTop($(document).height());
+    onlineSub.errback (error) -> console && console.log 'Online sub error: ' + error
 
-  msg.keydown (e) ->
-    return if $(this).is ':disabled'
+    $(document).scrollTop($(document).height());
 
-    if e.keyCode == 13 && e.ctrlKey
-      form.submit()
+    msg.keydown (e) ->
+      return if $(this).is ':disabled'
 
-  form.on 'ajax:beforeSend.rails', ->
-    return false if $.trim(msg.val()) == ''
-    msg.attr 'disabled', 'disabled'
+      if e.keyCode == 13 && e.ctrlKey
+        form.submit()
 
-  $('#players li .char').click ->
-    text = msg.val()
-    name = $(this).text()
-    text && (text += ' ')
-    tmp = text + name + ', '
-    msg.focus().val('').val(tmp)
+    form.on 'ajax:beforeSend.rails', ->
+      return false if $.trim(msg.val()) == ''
+      msg.attr 'disabled', 'disabled'
 
-  $('#chat .message .delete').click ->
-    $.ajax {
-      type: 'DELETE'
-      url: $(this).data('url')
-      async: false
-    }
+    $('#players li .char').click ->
+      text = msg.val()
+      name = $(this).text()
+      text && (text += ' ')
+      tmp = text + name + ', '
+      msg.focus().val('').val(tmp)
+
+    $('#chat .message .delete').click ->
+      $.ajax {
+        type: 'DELETE'
+        url: $(this).data('url')
+        async: false
+      }
 
 window.onbeforeunload = ->
   return if typeof(faye) == 'undefined' || !faye
