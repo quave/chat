@@ -1,4 +1,7 @@
 class Game < ActiveRecord::Base
+  ON = 1
+  OVER = 0
+
   has_many :characters
   has_many :rooms
   belongs_to :creator, class_name: 'User'
@@ -10,6 +13,7 @@ class Game < ActiveRecord::Base
     joins(:characters)
     .where characters: { user_id: user.try(:id) }
   end
+  scope :active, -> { where status: Game::ON }
 
   def masters
     characters.where master: true

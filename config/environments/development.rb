@@ -29,6 +29,7 @@ Chat::Application.configure do
   # number of complex assets.
   config.assets.debug = true
 
+  config.action_mailer.default_url_options = { host: 'locahost:3000' }
   config.default_url_options = { host: 'locahost:3000' }
 
   config.faye_url = 'http://192.168.1.2:9292/'
