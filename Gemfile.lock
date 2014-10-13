@@ -115,6 +115,8 @@ GEM
     pg (0.17.1)
     puma (2.9.1)
       rack (>= 1.1, < 2.0)
+    quiet_assets (1.0.3)
+      railties (>= 3.1, < 5.0)
     rack (1.5.2)
     rack-test (0.6.2)
       rack (>= 1.0)
@@ -228,6 +230,7 @@ DEPENDENCIES
   mocha
   pg
   puma
+  quiet_assets
   rails
   redcarpet
   rspec

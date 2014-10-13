@@ -35,6 +35,6 @@ Chat::Application.configure do
   config.active_support.deprecation = :stderr
 
   config.action_mailer.default_url_options = { host: 'roleplayground.ru' }
-  config.default_url_options = { host: 'roleplayground.ru' }
+  config.action_mailer.delivery_method = :file
 
 end

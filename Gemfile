@@ -24,6 +24,7 @@ gem 'colorize'
 group :development, :test do
   gem 'sqlite3'
   gem 'factory_girl_rails'
+  gem 'quiet_assets'
 end
 
 group :test do

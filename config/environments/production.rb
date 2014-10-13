@@ -78,8 +78,18 @@ Chat::Application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 
+  config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default_url_options = { host: 'roleplayground.ru' }
-  config.default_url_options = { host: 'roleplayground.ru' }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+      address: 'smtp.yandex.ru',
+      port: 465,
+      domain: 'roleplayground.ru',
+      user_name: 'info@roleplayground.ru',
+      password: ENV['smtppass'],
+      authentication: :plain,
+      enable_starttls_auto: true
+  }
 
   config.faye_url = 'http://faye.roleplayground.ru/'
 end

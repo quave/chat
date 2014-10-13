@@ -11,8 +11,7 @@
       - if @my_games.any?
         h2= I18n.t 'lobby.my_games'
         ul#my-games
-          - @my_games.each do |g|
-            li= link_to g.name, game_path(g)
+          = render @my_games
 
     - else
       h2= I18n.t('lobby.greetings')

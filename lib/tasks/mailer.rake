@@ -16,7 +16,7 @@ namespace :mailer do
     end
 
     digest_list.each do |u, d|
-      UnreadMailer.unread_digest u, d
+      UnreadMailer.unread_digest(u, d).deliver
     end
   end
 

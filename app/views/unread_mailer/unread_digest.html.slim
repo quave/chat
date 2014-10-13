@@ -1,7 +1,0 @@
-= "Привет, #{@user.name}!"
-| Есть на что посмотреть!
-
-- @digest.each do |d|
-  | В игре
-  = link_to d.game.name, game_url(d.game)
-  = " #{d.unread_count} непрочитанных сообщений."

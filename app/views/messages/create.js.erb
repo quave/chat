@@ -2,4 +2,3 @@ var scroll = $(document).height() - $(window).height() == $(document).scrollTop(
 $('#chat').append('<%= escape_javascript(render @message) %>');
 $('#message').val('').removeAttr('disabled');
 scroll && $('html, body').animate({ scrollTop: $(document).height() }, 'slow');
-$('#chat .message .delete').click(function() { deleteMessage($(this).data('url')); });
