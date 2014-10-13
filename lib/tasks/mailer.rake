@@ -1,6 +1,13 @@
 namespace :mailer do
   desc 'Sends unread emails at the moment of call to users'
   GameUnread = Struct.new(:game, :unread_count)
+
+  def deliver_digest(user, digest)
+    UnreadMailer.unread_digest(user, digest).deliver
+  rescue Exception => e
+    puts e.inspect
+  end
+
   task send_unread: :environment do
     active_games = Game.active
 
@@ -15,9 +22,7 @@ namespace :mailer do
       end
     end
 
-    digest_list.each do |u, d|
-      UnreadMailer.unread_digest(u, d).deliver
-    end
+    digest_list.each {|u, d| deliver_digest(u,d)}
   end
 
 end
