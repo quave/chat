@@ -25,6 +25,17 @@ $ ->
 
     faye.on 'transport:up', ->
       console.log 'up', arguments, this
+      $.ajax {
+        url: window.fayeConfig.onlineUrl
+        type: 'POST'
+        data: {
+          id: faye._clientId
+          user_id: window.fayeConfig.userId
+          room_id: window.fayeConfig.roomId
+        }
+        success: ->
+          console.log('Online send', arguments)
+      }
 
     faye.on 'transport:down', ->
       console.log 'down', arguments, this
@@ -39,8 +50,6 @@ $ ->
     };
 
     faye.addExtension(extLogger);
-
-    faye.publish('/in', { message: window.fayeConfig.inMessage })
 
     msgSub = faye.subscribe window.fayeConfig.messagesChannel, (data) ->
       eval if typeof(data.message) == 'array' then data.message[0] else data.message
@@ -79,8 +88,3 @@ $ ->
         url: $(this).data('url')
         async: false
       }
-
-window.onbeforeunload = ->
-  return if typeof(faye) == 'undefined' || !faye
-  faye.disconnect()
-

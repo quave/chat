@@ -12,7 +12,9 @@
       |   url: '#{Chat::Application.config.faye_url}faye',
       |   messagesChannel: '#{Chat::Application.config.faye_messages_channel + params[:id]}',
       |   onlineChannel: '#{Chat::Application.config.faye_online_channel + params[:id]}',
-      |   inMessage: '#{current_user.id}|#{@room.id}'
+      |   onlineUrl: '#{online_index_path}',
+      |   roomId: #{@room.id},
+      |   userId: #{current_user.id}
       | };
 
 #room-show

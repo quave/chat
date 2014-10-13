@@ -6,43 +6,33 @@ require 'logger'
 
 HTTP_CLIENT = Net::HTTP.new SRV_ADDRESS, SRV_PORT
 
-class ServerAuth
-  def incoming(message, callback)
+class NoException < Exception
+end
 
+class ServerAuth
+
+  def incoming(message, callback)
     if message['channel'] =~ %r{^/meta/}
       puts 'Meta: ' + message.inspect
-      callback.call(message)
-      return
-    end
-    
-    unless message.has_key? 'data'
-      puts 'Error: no data'
-      message['error'] = 'No data provided'
+      raise NoException
     end
 
     data = message['data']
+    raise Exce.new 'No data provided' if data.nil?
 
-    if message['channel'] == '/in'
-      user_id, room_id = data['message'].split('|')
-      puts "Send online #{message.inspect}"
-      puts "Send online to #{SRV_ADDRESS} #{SRV_PORT}/#{SRV_PATH}/#{message['clientId']}"
-      begin
-        res = HTTP_CLIENT.post SRV_PATH,
-          "id=#{message['clientId']}&user_id=#{user_id}&room_id=#{room_id}"
-        puts "Send online res #{res.inspect}"
-      rescue Exception => e
-        puts "Error #{e.inspect}"
-      end
-      callback.call(message)
-      return
-    end
+    ext = data['ext']
+    raise ArgumentError.new 'Invalid authentication token' if ext.nil? || ext['auth_token'] != FAYE_TOKEN
 
-    if !data.has_key?('ext') || data['ext']['auth_token'] != FAYE_TOKEN
-      message['error'] = 'Invalid authentication token'
-    end
-    
+  rescue NoException
+    # ignored
+  rescue ArgumentError => e
+    message['error'] = e.message
+    puts e.inspect
+
+  ensure
     callback.call(message)
   end
+
 end
 
 Faye::WebSocket.load_adapter('puma')
