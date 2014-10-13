@@ -3,7 +3,7 @@
 # start puma with:
 # RAILS_ENV=production bundle exec puma -C ./config/puma.rb
 
-workers 2
+workers ENV['FAYE_WORK'].to_i || 0
 application_path = '/var/www/chat'
 railsenv = 'production'
 rackup 'faye.ru'

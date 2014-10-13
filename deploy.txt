@@ -3,5 +3,12 @@ bundle
 db migrate
 ckeck/gen secret token 
 precompile assets RAILS_ENV=production bundle exec rake assets:precompile
+
+export SITE_WORK=1
+export FAYE_WORK=1
+
 start server with console  bundle exec puma -C ./config/puma.rb (or just puma?)
 start faye server puma -C ./config/puma-faye-prod.rb
+
+crontab -e
+00 2 * * * cd /ror/home/proj/chat/ && /home/ror/.rvm/gems/ruby-2.0.0-p451/bin/rake RAILS_ENV=production mailer:send_unread
