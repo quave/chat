@@ -81,6 +81,7 @@ Chat::Application.configure do
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default_url_options = { host: 'roleplayground.ru' }
   config.action_mailer.delivery_method = :sendmail
+  config.action_mailer.sendmail_settings = { :arguments => "-i" }
 
   config.faye_url = 'http://faye.roleplayground.ru/'
 end
