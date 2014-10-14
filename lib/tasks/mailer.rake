@@ -3,7 +3,7 @@ namespace :mailer do
   GameUnread = Struct.new(:game, :unread_count)
 
   def deliver_digest(user, digest)
-    UnreadMailer.unread_digest(user, digest).deliver
+    UnreadMailer.unread_digest(user, digest).deliver if user.send_unread
   rescue Exception => e
     puts e.inspect
   end
