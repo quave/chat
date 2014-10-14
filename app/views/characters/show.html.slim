@@ -1,28 +1,26 @@
 - title @character.name
 - content_for :head do
-  h2= @character.name
-
-p#notice = notice
-
-span
-  = link_to @character.user.name, @character.user
-  | &nbsp;играет&nbsp;в&nbsp;
-  = @character.game.name
+  = link_to 'Назад', game_path(@game)
+  - if @character.user == current_user
+    | &nbsp;|&nbsp;
+    = link_to 'Редактировать', edit_game_character_path(@game, @character)
+  h2
+    = @character.name
+    small
+      = link_to @character.user.name, @character.user
+      | &nbsp;в&nbsp;игре&nbsp;
+      = link_to @character.game.name, game_path
 
 br
-strong Основные характеристики
+span Основные характеристики
 .well= markdown(@character.major_attr)
 br
-strong Дополнительные характеристики
+span Дополнительные характеристики
 .well= markdown(@character.minor_attr)
 br
-strong Описание
+span Описание
 .well= markdown(@character.description)
 br
-strong Инвентарь
+span Инвентарь
 .well= markdown(@character.inventory)
 
-- if @character.user == current_user
-  = link_to 'Редактировать', edit_game_character_path(@game, @character)
-  |  
-= link_to 'Назад', game_path(@game)

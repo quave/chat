@@ -12,3 +12,10 @@ start faye server puma -C ./config/puma-faye-prod.rb
 
 crontab -e
 00 2 * * * cd /ror/home/proj/chat/ && /home/ror/.rvm/gems/ruby-2.0.0-p451/bin/rake RAILS_ENV=production mailer:send_unread
+
+
+git pull && fuser -k /var/tmp/chat.sock && fuser -k /var/tmp/chat-faye.sock &&
+bundle update && rake db:migrate && RAILS_ENV=production bundle exec rake assets:precompile &&
+export SITE_WORK=1 && export FAYE_WORK=1 &&
+
+puma && puma -C ./config/puma-faye-prod.rb

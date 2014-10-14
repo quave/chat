@@ -33,16 +33,13 @@ html lang="en"
             - else
               li= link_to "Войти", new_user_session_path
 
-
-    header role="banner"
-      .container
-        = notice 
-        = alert
-        = yield :head
-
     .container
+      = notice
+      = alert
+      = yield :head
       = yield
 
-    footer role="contentinfo"
+    footer.footer role="footer"
       .container
         = yield :foot
+        = link_to "RolePlayGround.ru", root_path

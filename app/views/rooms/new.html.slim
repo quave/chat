@@ -1,5 +1,6 @@
-h1 Новая комната
+- title 'Добавь комнату'
+- content_for :head do
+  = link_to 'Назад', game_path(params[:game_id])
+  h2 Добавь комнату
 
 == render 'form'
-
-= link_to 'Назад', game_path(params[:game_id])

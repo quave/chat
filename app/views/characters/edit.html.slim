@@ -1,8 +1,8 @@
 - title 'Редактирование персонажа'
 - content_for :head do
-  h1 Редактирование персонажа
+  = link_to 'Назад', game_path(@game)
+  h2 Измени персонажа
 
 == render 'form'
 
-= link_to 'Назад', game_path(@game)
 

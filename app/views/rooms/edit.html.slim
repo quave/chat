@@ -1,8 +1,9 @@
-- title 'Редактирование комнаты'
+- title 'Отредактируй комнату'
 - content_for :head do
-  h1= 'Редактирование комнаты'
+  = link_to 'Назад', game_path(params[:game_id])
+  h1 Отредактируй комнату
 
 == render 'form'
 
-= link_to 'Назад', game_path(params[:game_id])
+
 

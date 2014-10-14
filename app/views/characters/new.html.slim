@@ -1,5 +1,8 @@
-h1 New character
+- content_for :head do
+  h2
+    = link_to 'Назад', game_path(@game)
+    | Создай персонажа
 
 == render 'form'
 
-= link_to 'Назад', game_path(@game)
+
