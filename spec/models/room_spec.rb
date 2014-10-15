@@ -74,7 +74,7 @@ describe Room do
   end
 
   context 'visit' do
-    let(:user) { game.creator }
+    let(:profile) { game.creator }
 
     context 'before' do
       it 'should not be visited' do

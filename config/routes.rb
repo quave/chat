@@ -15,7 +15,7 @@ Chat::Application.routes.draw do
       patch :kill, on: :member
     end
   end
-  resources :user, only: :show
+  resources :profile, only: [:index, :show, :update]
   resources :online, only: [:create, :destroy]
 
   devise_for :users, controllers: {sessions: 'sessions'}

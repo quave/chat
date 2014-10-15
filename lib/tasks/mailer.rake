@@ -14,7 +14,7 @@ namespace :mailer do
     digest_list = {}
 
     active_games.each do |g|
-      users = g.characters.map(&:user)
+      users = g.characters.map(&:profile)
 
       users.each do |u|
         digest_list[u] ||= []

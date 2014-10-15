@@ -21,14 +21,4 @@ class Message < ActiveRecord::Base
 
     false
   end
-
-=begin
-  private
-
-  def read_by_online_users
-    users = room.participants.map &:user
-    users.select! {|u| Online.exists? u.id, room.id}
-    users.each {|u| room.commit_visit(u.id)}
-  end
-=end
 end
