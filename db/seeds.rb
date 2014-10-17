@@ -14,14 +14,14 @@ user = User.create(name: 'Vlad2', email: 'vlad2@admin.ru', password: '123456789'
 Game.create(name: 'Новые горизонты', desc: desc, creator_id: user.id, need_chars: 5, tags: 'evil master, hardcore, massacre, d&d3.5')
 
 user = User.create(name: 'Waron', email: 'v1@v.ru', password: '123456789', send_unread: false, confirmed_at: DateTime.now)
-Character.create name: 'Салесити', profile: user, game: game, status: Character::ACTIVE
+Character.create name: 'Салесити', user: user, game: game, status: Character::ACTIVE
 
 user = User.create(name: 'kicjakun', email: 'v2@v.ru', password: '123456789', send_unread: false, confirmed_at: DateTime.now)
-Character.create name: 'Иллт', profile: user, game: game, status: Character::ACTIVE
+Character.create name: 'Иллт', user: user, game: game, status: Character::ACTIVE
 
 user = User.create(name: 'Fovire', email: 'v3@v.ru', password: '123456789', send_unread: false, confirmed_at: DateTime.now)
-Character.create name: 'Масторкавен', profile: user, game: game, status: Character::ACTIVE
+Character.create name: 'Масторкавен', user: user, game: game, status: Character::ACTIVE
 
 user = User.create(name: 'Entreria', email: 'v4@v.ru', password: '123456789', send_unread: false, confirmed_at: DateTime.now)
-Character.create name: 'Байкл Мэй', profile: user, game: game, status: Character::ACTIVE
+Character.create name: 'Байкл Мэй', user: user, game: game, status: Character::ACTIVE
 

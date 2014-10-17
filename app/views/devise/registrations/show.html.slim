@@ -1,0 +1,11 @@
+- title "Профиль #{@user.name}"
+- content_for :head do
+  h2= @user.name
+
+  #room-show
+    .row
+      .col-sm-9
+        .name= @user.name
+        .email= @user.email if @user.show_email
+        .registered= @user.created_at
+        .description= @user.description

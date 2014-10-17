@@ -2,7 +2,7 @@ class CreateCharacters < ActiveRecord::Migration
   def change
     create_table :characters do |t|
       t.string :name, null: false
-      t.references :profile, null: false, index: true
+      t.references :profiles, null: false, index: true
       t.references :game, null: false, index: true
       t.boolean :master, null: false, default: false
       t.text :major_attr, null: false, default: ''

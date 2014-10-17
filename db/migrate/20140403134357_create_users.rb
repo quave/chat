@@ -4,6 +4,8 @@ class CreateUsers < ActiveRecord::Migration
 
       t.string :name,               null: false
       t.boolean :send_unred,        null: false, default: true
+      t.boolean :show_email,        null: false, default: false
+      t.text :description,          null: false, default: ''
 
       ## Database authenticatable
       t.string :email,              null: false, default: ''

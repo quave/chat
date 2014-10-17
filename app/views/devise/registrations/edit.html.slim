@@ -1,0 +1,38 @@
+- title 'Профиль #{current_user.name}'
+- content_for :head do
+  = link_to 'Назад', :back
+  h2= current_user.name
+
+= simple_form_for current_user, url: profile_path, html: { method: :put, class: 'form-horizontal', role: 'form' },
+    wrapper: :horizontal_form do |f|
+  = f.error_notification
+
+  .form-group
+    label.control-label.col-sm-2 Зарегистрирован
+    .col-sm-10.read-only= current_user.created_at
+
+  = f.input :name, required: true, autofocus: true
+  = f.input :email, required: true
+  - if devise_mapping.confirmable? && resource.pending_reconfirmation?
+    p
+      | Ожидаю подтверждения для:
+      = resource.unconfirmed_email
+
+  = f.input :description, input_html: { rows: 6 }
+  = f.input :show_email, inline_label: 'Показывать емейл другим пользователям',
+    label: false, wrapper: :horizontal_boolean
+  = f.input :send_unread, inline_label: 'Присылать письма о непрочитанных сообщениях',
+    label: false, wrapper: :horizontal_boolean
+  = f.input :password, autocomplete: 'off', hint: "leave it blank if you don't want to change it", required: false
+  = f.input :password_confirmation, required: false
+  = f.input :current_password, hint: 'we need your current password to confirm your changes', required: true
+
+  .form-group
+    .col-sm-2
+    .col-sm-10= f.button :submit, class: 'btn btn-success btn-lg', value: 'Сохранить'
+
+h3 Удалить аккаунт
+p
+  | Не понравилось?
+  = link_to 'Удалить мой аккаунт', cancel_profile_path, data: { confirm: 'Вы уверены?' }, method: :delete
+

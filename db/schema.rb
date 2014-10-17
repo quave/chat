@@ -84,10 +84,12 @@ ActiveRecord::Schema.define(version: 20140929140450) do
   end
 
   create_table "users", force: true do |t|
-    t.string   "name",                                  null: false
-    t.boolean  "send_unread",            default: true, null: false
-    t.string   "email",                  default: "",   null: false
-    t.string   "encrypted_password",     default: "",   null: false
+    t.string   "name",                                    null: false
+    t.boolean  "send_unread",            default: true,   null: false
+    t.boolean  "show_email",             default: false,  null: false
+    t.text     "description",            default: "",     null: false
+    t.string   "email",                  default: "",     null: false
+    t.string   "encrypted_password",     default: "",     null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"

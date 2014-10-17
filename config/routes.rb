@@ -15,11 +15,26 @@ Chat::Application.routes.draw do
       patch :kill, on: :member
     end
   end
-  resources :profile, only: [:index, :show, :update]
+#  resource :profile, only: :update do
+#    get '(/:name)', action: :show
+#  end
   resources :online, only: [:create, :destroy]
 
-  devise_for :users, controllers: {sessions: 'sessions'}
-
+  devise_for :users, controllers: {sessions: 'sessions', registrations: 'registrations'},
+             :skip => [:sessions, :registrations]
+  as :user do
+    # Registrations routes
+    get '/profile(/:name)' => 'registrations#edit', as: :profile
+    put '/profile' => 'registrations#update'
+    patch '/profile' => 'registrations#update'
+    get '/profile/cancel' => 'registrations#cancel', as: :cancel_profile
+    get '/sing-up' => 'registrations#new', as: :new_user_registration
+    post '/sing-up' => 'registrations#create', as: :user_registration
+    # Sessions routes
+    get '/sign-in' => 'sessions#new', :as => :new_user_session
+    post '/sign-in' => 'sessions#create', :as => :user_session
+    delete '/sign-out' => 'sessions#destroy', :as => :destroy_user_session
+  end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
