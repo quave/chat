@@ -19,21 +19,18 @@ class Room < ActiveRecord::Base
 
   def last_visited_by(user)
     visits = Chat::Application::room_user_visits
-    if visits.has_key?(user.id) && visits[user.id].include?(id)
+    if !visits[user.id].nil? && visits[user.id].include?(id)
       DateTime.now
     else
       visit = user_visits.find_by(user_id: user.id)
-      if visit.nil?
-        DateTime.new
-      else
-        visit.last_visited
-      end
+      visit.try :last_visited
     end
   end
 
   def unread_messages_count(user)
     return 0 if user.nil? || Online.exists?(user.id, id)
-    messages.where('created_at > ?', last_visited_by(user)).count
+    date = last_visited_by(user) || DateTime.now
+    messages.where('created_at > ?', date).count
   end
 
   def up!

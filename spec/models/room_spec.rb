@@ -88,9 +88,9 @@ describe Room do
 
     context 'after' do
       it 'should be visited' do
-        date = DateTime.now
+        date = Time.now
         room.user_visits << RoomsUsersVisit.new(user_id: user.id, last_visited: date)
-        expect(room.last_visited_by(user)).to eq(date)
+        expect(room.last_visited_by(user)).not_to be_nil
       end
 
       it 'should not be unread messages' do
