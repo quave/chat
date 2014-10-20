@@ -13,6 +13,11 @@ class Game < ActiveRecord::Base
     joins(:characters)
     .where characters: { user_id: user.try(:id) }
   end
+  scope :with_master, ->(user) { where creator: user.try(:id) }
+  scope :with_player, ->(user) do
+    joins(:characters)
+    .where "characters.user_id = :user_id AND creator_id != :user_id", { user_id: user.try(:id) }
+  end
   scope :active, -> { where status: Game::ON }
 
   def masters

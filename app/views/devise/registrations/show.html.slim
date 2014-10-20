@@ -1,11 +1,28 @@
 - title "Профиль #{@user.name}"
 - content_for :head do
-  h2= @user.name
+  .row
+    h2.col-md-offset-2.col-md-10= @user.name
 
-  #room-show
-    .row
-      .col-sm-9
-        .name= @user.name
-        .email= @user.email if @user.show_email
-        .registered= @user.created_at
-        .description= @user.description
+  .form-horizontal
+    - if @user.show_email
+      .form-group
+        label.control-label.col-sm-2 Email
+        .col-sm-10.read-only= @user.email
+
+    - unless @user.description.empty?
+      .row
+        label.control-label.col-md-2 О себе
+        .col-md-10.well= @user.description
+
+    .form-group
+      label.control-label.col-sm-2 Зарегистрирован
+      .col-sm-10.read-only= @user.created_at
+
+  .row
+    .col-md-offset-2.col-md-10
+      - if @owned_games.any?
+        h4 Ведет
+        ul= render @owned_games
+      - if @played_games.any?
+        h4 Участвует
+        ul= render @played_games

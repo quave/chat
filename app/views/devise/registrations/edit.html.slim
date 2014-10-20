@@ -1,4 +1,4 @@
-- title 'Профиль #{current_user.name}'
+- title 'Мой профиль'
 - content_for :head do
   = link_to 'Назад', :back
   h2= current_user.name
@@ -6,10 +6,6 @@
 = simple_form_for current_user, url: profile_path, html: { method: :put, class: 'form-horizontal', role: 'form' },
     wrapper: :horizontal_form do |f|
   = f.error_notification
-
-  .form-group
-    label.control-label.col-sm-2 Зарегистрирован
-    .col-sm-10.read-only= current_user.created_at
 
   = f.input :name, required: true, autofocus: true
   = f.input :email, required: true
@@ -26,6 +22,10 @@
   = f.input :password, autocomplete: 'off', hint: "leave it blank if you don't want to change it", required: false
   = f.input :password_confirmation, required: false
   = f.input :current_password, hint: 'we need your current password to confirm your changes', required: true
+
+  .form-group
+    label.control-label.col-sm-2 Зарегистрирован
+    .col-sm-10.read-only= current_user.created_at
 
   .form-group
     .col-sm-2
