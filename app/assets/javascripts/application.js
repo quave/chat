@@ -13,5 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap
+//= require markdown
+//= require bootstrap-markdown
+//= require_directory ../../../vendor/assets/javascripts/locale
 //= require_self
 //= require_tree

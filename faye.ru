@@ -18,7 +18,7 @@ class ServerAuth
     end
 
     data = message['data']
-    raise Exce.new 'No data provided' if data.nil?
+    raise ArgumentError.new 'No data provided' if data.nil?
 
     ext = data['ext']
     raise ArgumentError.new 'Invalid authentication token' if ext.nil? || ext['auth_token'] != FAYE_TOKEN

@@ -33,7 +33,7 @@
           li id="player-#{user.id}"
             i.fa.fa-circle.status class= status_class
             span.char= character.name
-            span.player<= link_to user.name, user
+            span.player<= link_to user.name, profile_path(user.name)
 
   - if user_signed_in?
     .row
@@ -41,7 +41,7 @@
         .form
           - if @game.in_party? current_user
             .col-sm-6.col-sm-offset-2
-              = m.text_area :body, id: 'message'
+              = m.text_area :body, id: 'message', 'data-provide' => 'markdown'
             .col-sm-2
               = m.submit id: 'send', value: 'Отправить', disable_with: 'Отправляю',
                 class: 'btn btn-large btn-success'
