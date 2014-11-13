@@ -5,24 +5,45 @@ application up and running.
 
 Things you may want to cover:
 
-* Ruby version
+=== Ruby version
+>= 2.0.0
 
-* System dependencies
+=== System dependencies
 
-* Configuration
+=== Configuration
 
-* Database creation
+=== Database creation
+rake db:create
 
-* Database initialization
+=== Database initialization
+rake db:setup
 
-* How to run the test suite
+=== How to run the test suite
+rspec spec
 
-* Services (job queues, cache servers, search engines, etc.)
+=== Services (job queues, cache servers, search engines, etc.)
+Faye comet server
+Rake task on cron
 
-* Deployment instructions
+=== Deployment instructions
+git pull
+bundle 
+db migrate
+ckeck/gen secret token 
+precompile assets RAILS_ENV=production bundle exec rake assets:precompile
 
-* ...
+export SITE_WORK=1
+export FAYE_WORK=1
 
+start server with console  bundle exec puma -C ./config/puma.rb (or just puma?)
+start faye server puma -C ./config/puma-faye-prod.rb
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+crontab -e
+00 2 * * * cd /ror/home/proj/chat/ && /home/ror/.rvm/gems/ruby-2.0.0-p451/bin/rake RAILS_ENV=production mailer:send_unread
+
+git pull && fuser -k /var/tmp/chat.sock && fuser -k /var/tmp/chat-faye.sock &&
+bundle update && rake db:migrate && RAILS_ENV=production bundle exec rake assets:precompile &&
+export SITE_WORK=1 && export FAYE_WORK=1 &&
+
+puma && puma -C ./config/puma-faye-prod.rb
+
