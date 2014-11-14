@@ -67,6 +67,11 @@ textarea.input-xxlarge {
   &:hover{ color: #fff }
 }
 
+.status {
+  &.not-started { font-weight: bolder; }
+  &.over { color: #888; }
+}
+
 .unread {
   color: #c9302c;
   display: inline-block;

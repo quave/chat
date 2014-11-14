@@ -1,5 +1,6 @@
 class Game < ActiveRecord::Base
-  ON = 1
+  NOT_STARTED = 1
+  STARTED = 2
   OVER = 0
 
   has_many :characters
@@ -16,9 +17,23 @@ class Game < ActiveRecord::Base
   scope :with_master, ->(user) { where creator: user.try(:id) }
   scope :with_player, ->(user) do
     joins(:characters)
-    .where "characters.user_id = :user_id AND creator_id != :user_id", { user_id: user.try(:id) }
+    .where "characters.user_id = :user_id AND creator_id != :user_id AND status IN :statuses",
+           { user_id: user.try(:id), statuses: [NOT_STARTED, STARTED] }
   end
-  scope :active, -> { where status: Game::ON }
+  scope :not_started, -> { where status: Game::NOT_STARTED }
+  scope :started, -> { where status: Game::STARTED }
+
+  def start_by(user)
+    return unless self.creator == user
+    self.status = STARTED
+    self.save
+  end
+
+  def stop_by(user)
+    return unless self.creator == user
+    self.status = OVER
+    self.save
+  end
 
   def masters
     characters.where master: true

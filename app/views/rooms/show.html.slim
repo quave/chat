@@ -35,13 +35,12 @@
             span.char= character.name
             span.player<= link_to user.name, profile_path(user.name)
 
-  - if user_signed_in?
+  - if user_signed_in? && @game.in_party?(current_user) && @game.status != Game::OVER
     .row
-      = form_for :message, remote: true, url: game_room_messages_url(@game, @room), html: { id: 'send-form' } do |m|
-        .form
-          - if @game.in_party? current_user
-            .col-sm-6.col-sm-offset-2
-              = m.text_area :body, id: 'message'
-            .col-sm-2
-              = m.submit id: 'send', value: 'Отправить', disable_with: 'Отправляю',
-                class: 'btn btn-large btn-success'
+      = form_for :message, remote: true, url: game_room_messages_url(@game, @room),
+      html: { id: 'send-form', class: 'form' } do |m|
+        .col-sm-6.col-sm-offset-2
+          = m.text_area :body, id: 'message'
+        .col-sm-2
+          = m.submit id: 'send', value: 'Отправить', disable_with: 'Отправляю',
+            class: 'btn btn-large btn-success'

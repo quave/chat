@@ -47,8 +47,11 @@
 
     -if user_signed_in?
       - if can_edit_game? @game
+        - unless @game.status == Game::STARTED
+          = link_to 'Начать игру', start_game_path(@game), :class => 'btn btn-success btn-block', method: :put
         = link_to 'Редактировать игру', edit_game_path(@game), :class => 'btn btn-warning btn-block'
-        = link_to 'Удалить игру', game_path(@game), :method => :delete, :class => 'btn btn-danger btn-block', :confirm => 'Вы уверены?'
+        - unless @game.status == Game::OVER
+          = link_to 'Завершить игру', stop_game_path(@game), :class => 'btn btn-danger btn-block', method: :put
       - else
         - if !@game.characters.any?{|c| c.user.id == current_user.id }
           = link_to 'Следить', edit_game_path(@game), :class => 'btn btn-warning btn-block'
