@@ -27,21 +27,21 @@
 
   var Markdown = function (element, options) {
     // Class Properties
-    this.$ns           = 'bootstrap-markdown'
-    this.$element      = $(element)
-    this.$editable     = {el:null, type:null,attrKeys:[], attrValues:[], content:null}
-    this.$options      = $.extend(true, {}, $.fn.markdown.defaults, options, this.$element.data(), this.$element.data('options'))
-    this.$oldContent   = null
-    this.$isPreview    = false
-    this.$isFullscreen = false
-    this.$editor       = null
-    this.$textarea     = null
-    this.$handler      = []
-    this.$callback     = []
-    this.$nextTab      = []
+    this.$ns           = 'bootstrap-markdown';
+    this.$element      = $(element);
+    this.$editable     = {el:null, type:null,attrKeys:[], attrValues:[], content:null};
+    this.$options      = $.extend(true, {}, $.fn.markdown.defaults, options, this.$element.data(), this.$element.data('options'));
+    this.$oldContent   = null;
+    this.$isPreview    = false;
+    this.$isFullscreen = false;
+    this.$editor       = null;
+    this.$textarea     = null;
+    this.$handler      = [];
+    this.$callback     = [];
+    this.$nextTab      = [];
 
     this.showEditor()
-  }
+  };
 
   Markdown.prototype = {
 
@@ -51,7 +51,7 @@
       var handler = this.$handler, isAll = (name == 'all'),that = this
 
       $.each(handler,function(k,v) {
-        var halt = true
+        var halt = true;
         if (isAll) {
           halt = false
         } else {
@@ -68,18 +68,20 @@
       var i,
           ns = this.$ns,
           handler = this.$handler,
-          callback = this.$callback
+          callback = this.$callback;
 
       for (i=0;i<buttonsArray.length;i++) {
         // Build each group container
-        var y, btnGroups = buttonsArray[i]
+        var y, btnGroups = buttonsArray[i];
         for (y=0;y<btnGroups.length;y++) {
           // Build each button group
           var z,
               buttons = btnGroups[y].data,
               btnGroupContainer = $('<div/>', {
                                     'class': 'btn-group'
-                                  })
+                                  });
+
+            btnGroups[y].cssClass && btnGroupContainer.addClass(btnGroups[y].cssClass);
 
           for (z=0;z<buttons.length;z++) {
             var button = buttons[z],
@@ -90,7 +92,7 @@
                 btnClass = button.btnClass ? button.btnClass : 'btn',
                 tabIndex = button.tabIndex ? button.tabIndex : '-1',
                 hotkey = typeof button.hotkey !== 'undefined' ? button.hotkey : '',
-                hotkeyCaption = typeof jQuery.hotkeys !== 'undefined' && hotkey !== '' ? ' ('+hotkey+')' : ''
+                hotkeyCaption = typeof jQuery.hotkeys !== 'undefined' && hotkey !== '' ? ' ('+hotkey+')' : '';
 
             // Construct the button object
             buttonContainer = $('<button></button>');
@@ -132,9 +134,9 @@
       // Set size and resizable Properties
       var hasRows = typeof this.$textarea.attr('rows') != 'undefined',
           maxRows = this.$textarea.val().split("\n").length > 5 ? this.$textarea.val().split("\n").length : '5',
-          rowsVal = hasRows ? this.$textarea.attr('rows') : maxRows
+          rowsVal = hasRows ? this.$textarea.attr('rows') : maxRows;
 
-      this.$textarea.attr('rows',rowsVal)
+      this.$textarea.attr('rows',rowsVal);
       if (this.$options.resize) {
         this.$textarea.css('resize',this.$options.resize)
       }
@@ -143,7 +145,7 @@
         .on('focus',    $.proxy(this.focus, this))
         .on('keypress', $.proxy(this.keypress, this))
         .on('keyup',    $.proxy(this.keyup, this))
-        .on('change',   $.proxy(this.change, this))
+        .on('change',   $.proxy(this.change, this));
 
       if (this.eventSupported('keydown')) {
         this.$textarea.on('keydown', $.proxy(this.keydown, this))
@@ -159,12 +161,12 @@
           callback = this.$callback,
           handlerName = target.attr('data-handler'),
           callbackIndex = handler.indexOf(handlerName),
-          callbackHandler = callback[callbackIndex]
+          callbackHandler = callback[callbackIndex];
 
       // Trigger the focusin
-      $(e.currentTarget).focus()
+      $(e.currentTarget).focus();
 
-      callbackHandler(this)
+      callbackHandler(this);
 
       // Trigger onChange for each button handle
       this.change(this);
@@ -180,7 +182,7 @@
 
   , __localize: function(string) {
       var messages = $.fn.markdown.messages,
-          language = this.$options.language
+          language = this.$options.language;
       if (
         typeof messages !== 'undefined' &&
         typeof messages[language] !== 'undefined' &&
@@ -197,14 +199,14 @@
 
   , setFullscreen: function(mode) {
     var $editor = this.$editor,
-        $textarea = this.$textarea
+        $textarea = this.$textarea;
 
     if (mode === true) {
-      $editor.addClass('md-fullscreen-mode')
-      $('body').addClass('md-nooverflow')
+      $editor.addClass('md-fullscreen-mode');
+      $('body').addClass('md-nooverflow');
       this.$options.onFullscreen(this)
     } else {
-      $editor.removeClass('md-fullscreen-mode')
+      $editor.removeClass('md-fullscreen-mode');
       $('body').removeClass('md-nooverflow')
     }
 
@@ -217,8 +219,6 @@
           textarea,
           ns = this.$ns,
           container = this.$element,
-          originalHeigth = container.css('height'),
-          originalWidth = container.css('width'),
           editable = this.$editable,
           handler = this.$handler,
           callback = this.$callback,
@@ -228,19 +228,19 @@
                       click: function() {
                         instance.focus()
                       }
-                    })
+                    });
 
       // Prepare the editor
       if (this.$editor == null) {
         // Create the panel
         var editorHeader = $('<div/>', {
                             'class': 'md-header btn-toolbar'
-                            })
+                            });
 
         // Merge the main & additional button groups together
-        var allBtnGroups = []
-        if (options.buttons.length > 0) allBtnGroups = allBtnGroups.concat(options.buttons[0])
-        if (options.additionalButtons.length > 0) allBtnGroups = allBtnGroups.concat(options.additionalButtons[0])
+        var allBtnGroups = [];
+        if (options.buttons.length > 0) allBtnGroups = allBtnGroups.concat(options.buttons[0]);
+        if (options.additionalButtons.length > 0) allBtnGroups = allBtnGroups.concat(options.additionalButtons[0]);
 
         // Reduce and/or reorder the button groups
         if (options.reorderButtonGroups.length > 0) {
@@ -249,8 +249,8 @@
                 return options.reorderButtonGroups.indexOf(btnGroup.name) > -1
               })
               .sort(function(a, b) {
-                if (options.reorderButtonGroups.indexOf(a.name) < options.reorderButtonGroups.indexOf(b.name)) return -1
-                if (options.reorderButtonGroups.indexOf(a.name) > options.reorderButtonGroups.indexOf(b.name)) return 1
+                if (options.reorderButtonGroups.indexOf(a.name) < options.reorderButtonGroups.indexOf(b.name)) return -1;
+                if (options.reorderButtonGroups.indexOf(a.name) > options.reorderButtonGroups.indexOf(b.name)) return 1;
                 return 0
               })
         }
@@ -267,35 +267,35 @@
           })
         }
 
-        editor.append(editorHeader)
+        editor.append(editorHeader);
 
         // Wrap the textarea
         if (container.is('textarea')) {
-          container.before(editor)
-          textarea = container
-          textarea.addClass('md-input')
+          container.before(editor);
+          textarea = container;
+          textarea.addClass('md-input');
           editor.append(textarea)
         } else {
           var rawContent = (typeof toMarkdown == 'function') ? toMarkdown(container.html()) : container.html(),
-              currentContent = $.trim(rawContent)
+              currentContent = $.trim(rawContent);
 
           // This is some arbitrary content that could be edited
           textarea = $('<textarea/>', {
                        'class': 'md-input',
                        'val' : currentContent
-                      })
+                      });
 
-          editor.append(textarea)
+          editor.append(textarea);
 
           // Save the editable
-          editable.el = container
-          editable.type = container.prop('tagName').toLowerCase()
-          editable.content = container.html()
+          editable.el = container;
+          editable.type = container.prop('tagName').toLowerCase();
+          editable.content = container.html();
 
           $(container[0].attributes).each(function(){
-            editable.attrKeys.push(this.nodeName)
+            editable.attrKeys.push(this.nodeName);
             editable.attrValues.push(this.nodeValue)
-          })
+          });
 
           // Set editor to blocked the original container
           container.replaceWith(editor)
@@ -305,15 +305,15 @@
                            'class': 'md-footer'
                          }),
             createFooter = false,
-            footer = ''
+            footer;
         // Create the footer if savable
         if (options.savable) {
           createFooter = true;
-          var saveHandler = 'cmdSave'
+          var saveHandler = 'cmdSave';
 
           // Register handler and callback
-          handler.push(saveHandler)
-          callback.push(options.onSave)
+          handler.push(saveHandler);
+          callback.push(options.onSave);
 
           editorFooter.append('<button class="btn btn-success" data-provider="'
                               +ns
@@ -326,19 +326,19 @@
 
         }
 
-        footer = typeof options.footer === 'function' ? options.footer(this) : options.footer
+        footer = typeof options.footer === 'function' ? options.footer(this) : options.footer;
 
         if ($.trim(footer) !== '') {
           createFooter = true;
           editorFooter.append(footer);
         }
 
-        if (createFooter) editor.append(editorFooter)
+        if (createFooter) editor.append(editorFooter);
 
         // Set width
         if (options.width && options.width !== 'inherit') {
           if (jQuery.isNumeric(options.width)) {
-            editor.css('display', 'table')
+            editor.css('display', 'table');
             textarea.css('width', options.width + 'px')
           } else {
             editor.addClass(options.width)
@@ -358,12 +358,12 @@
         }
 
         // Reference
-        this.$editor     = editor
-        this.$textarea   = textarea
-        this.$editable   = editable
-        this.$oldContent = this.getContent()
+        this.$editor     = editor;
+        this.$textarea   = textarea;
+        this.$editable   = editable;
+        this.$oldContent = this.getContent();
 
-        this.__setListener()
+        this.__setListener();
 
         // Set editor attributes, data short-hand API and listener
         this.$editor.attr('id',(new Date).getTime())
@@ -377,10 +377,10 @@
         if (this.eventSupported('keydown') && typeof jQuery.hotkeys === 'object') {
           editorHeader.find('[data-provider="bootstrap-markdown"]').each(function() {
             var $button = $(this),
-              hotkey = $button.attr('data-hotkey')
+              hotkey = $button.attr('data-hotkey');
             if (hotkey.toLowerCase() !== '') {
               textarea.bind('keydown', hotkey, function() {
-                $button.trigger('click')
+                $button.trigger('click');
                 return false;
               })
             }
@@ -398,7 +398,7 @@
       }
 
       if (options.autofocus) {
-        this.$textarea.focus()
+        this.$textarea.focus();
         this.$editor.addClass('active')
       }
 

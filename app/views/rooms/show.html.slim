@@ -41,7 +41,7 @@
         .form
           - if @game.in_party? current_user
             .col-sm-6.col-sm-offset-2
-              = m.text_area :body, id: 'message', 'data-provide' => 'markdown'
+              = m.text_area :body, id: 'message'
             .col-sm-2
               = m.submit id: 'send', value: 'Отправить', disable_with: 'Отправляю',
                 class: 'btn btn-large btn-success'

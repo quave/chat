@@ -40,7 +40,7 @@
 
     - if !@game.desc.blank?
       #desc.well.well-small
-        p= @game.desc
+        p= markdown @game.desc
 
   .col-sm-3
     = render partial: 'games/rooms_list', locals: { game: @game }

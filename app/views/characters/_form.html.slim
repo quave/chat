@@ -2,10 +2,10 @@
   = f.error_notification
 
   = f.input :name, input_html: { class: 'input-lg' }, label_html: {class: 'label-lg'}
-  = f.input :major_attr, input_html: { rows: 8 }
-  = f.input :minor_attr, input_html: { rows: 8 }
-  = f.input :description, input_html: { rows: 8 }
-  = f.input :inventory, input_html: { rows: 8 }
+  = f.input :major_attr, input_html: { rows: 8, :'data-provide' => 'markdown' }
+  = f.input :minor_attr, input_html: { rows: 8, :'data-provide' => 'markdown' }
+  = f.input :description, input_html: { rows: 8, :'data-provide' => 'markdown' }
+  = f.input :inventory, input_html: { rows: 8, :'data-provide' => 'markdown' }
 
   .col-sm-offset-2
     = f.button :submit
