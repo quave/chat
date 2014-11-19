@@ -1,5 +1,6 @@
 class GamesController < ApplicationController
-  before_action :set_game, only: [:edit, :update, :destroy]
+  before_action :authenticate_user!, except: [:index, :show]
+  before_action :set_game, except: [:index, :create, :new, :show]
 
   # GET /games
   # GET /games.json
@@ -24,9 +25,21 @@ class GamesController < ApplicationController
   def edit
   end
 
+  # PUT /games/1/start
+  def start
+    @game.start_by current_user
+    redirect_to @game
+  end
+
+  # PUT /games/1/stop
+  def stop
+    @game.stop_by current_user
+    redirect_to @game
+  end
+
   # POST /games
   # POST /games.json
-  def create
+  def creates
     @game = Game.new(game_params)
     @game.creator = current_user
 
@@ -52,16 +65,6 @@ class GamesController < ApplicationController
         format.html { render action: 'edit' }
         format.json { render json: @game.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  # DELETE /games/1
-  # DELETE /games/1.json
-  def destroy
-    @game.destroy
-    respond_to do |format|
-      format.html { redirect_to games_url }
-      format.json { head :no_content }
     end
   end
 

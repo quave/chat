@@ -1,6 +1,9 @@
 Chat::Application.routes.draw do
 
-  resources :games do
+  resources :games, except: :destroy do
+    put :start, on: :member
+    put :stop, on: :member
+
     resources :rooms, except: :index do
       put :up, on: :member
       put :down, on: :member

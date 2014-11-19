@@ -7,7 +7,7 @@
   h2
     = @character.name
     small
-      = link_to @character.user.name, @character.user
+      = link_to @character.user.name, profile_path(@character.user.name)
       | &nbsp;в&nbsp;игре&nbsp;
       = link_to @character.game.name, game_path
 

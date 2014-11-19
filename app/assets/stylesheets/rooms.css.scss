@@ -43,6 +43,9 @@ body.rooms {
     }
 
     .form {
+      .rolls {
+        margin-top: .3em;
+      }
       #message {
         resize: none;
         height: 100px;

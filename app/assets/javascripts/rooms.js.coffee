@@ -6,6 +6,10 @@ faye = null
 
 $ ->
   return unless $('body').hasClass('rooms')
+  msg = $('#message')
+  form = $('#send-form')
+
+  initMsgInput(msg);
 
   return if !window.fayeConfig
   (typeof(faye) == 'undefined' || faye == null) &&
@@ -20,8 +24,6 @@ $ ->
     continueInit()
 
   continueInit = ->
-    msg = $('#message')
-    form = $('#send-form')
 
     faye.on 'transport:up', ->
       console.log 'up', arguments, this
@@ -88,3 +90,40 @@ $ ->
         url: $(this).data('url')
         async: false
       }
+
+initMsgInput = (input) ->
+  getCallback = (roll) ->
+    (e) ->
+      # Replace selection with some drinks
+      selected = e.getSelection()
+      content = e.getContent()
+
+      # Give random drink
+      chunk = '\\roll d' + roll
+
+      # transform selection and set the cursor into chunked text
+      if selected.length
+        e.replaceSelection(chunk)
+        cursor = selected.start
+      else
+        e.setContent(chunk + ' ' + content)
+        cursor = 0
+
+      # Set the cursor
+      e.setSelection cursor, cursor+chunk.length
+
+  buttons = []
+  for n in [4, 6, 8, 10, 20, 100]
+    title = 'd' + n
+    buttons.push({
+      name: title
+      toggle: false
+      title: title
+      btnText: title
+      callback: getCallback(n)
+    })
+
+  input.markdown {
+    autofocus: true
+    additionalButtons: [[{ name: 'groupRolls', cssClass:'rolls',  data: buttons }]]
+  }

@@ -8,8 +8,28 @@ describe Game do
   it { expect(game.rooms.count).to eq(1) }
   it { expect(game.characters.count).to eq(1) }
 
+  its(:status) { is_expected.to eq(Game::NOT_STARTED) }
+
   it 'should have master' do
     expect(game.characters.first.master).to be true
+  end
+
+  context 'status' do
+    it 'should be started after start' do
+      game.start_by game.creator
+      expect(game.status).to eq(Game::STARTED)
+    end
+
+    it 'should be over after stop' do
+      game.stop_by game.creator
+      expect(game.status).to eq(Game::OVER)
+    end
+
+    it 'should not be started or stopped not by creator' do
+      game.start_by nil
+      game.stop_by nil
+      expect(game.status).to eq(Game::NOT_STARTED)
+    end
   end
 
   context 'rooms to display list' do

@@ -1,4 +1,5 @@
 li
-  = link_to game.name, game_path(game)
+  - css = 'status ' + (game.status == Game::NOT_STARTED ? 'not-started' : game.status == Game::STARTED ? 'started' : 'over')
+  = link_to game.name, game_path(game), class: css
   - unread = game.unread_messages_count(current_user)
   span.unread= unread unless unread == 0
