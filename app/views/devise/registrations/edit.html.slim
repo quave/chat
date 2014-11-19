@@ -19,9 +19,9 @@
     label: false, wrapper: :horizontal_boolean
   = f.input :send_unread, inline_label: 'Присылать письма о непрочитанных сообщениях',
     label: false, wrapper: :horizontal_boolean
-  = f.input :password, autocomplete: 'off', hint: "leave it blank if you don't want to change it", required: false
+  = f.input :password, autocomplete: 'off', hint: "оставь пустым, если не хочешь менять", required: false
   = f.input :password_confirmation, required: false
-  = f.input :current_password, hint: 'we need your current password to confirm your changes', required: true
+  = f.input :current_password, hint: 'введи текущий пароль для подтверждения изменений', required: true
 
   .form-group
     label.control-label.col-sm-2 Зарегистрирован

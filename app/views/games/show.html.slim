@@ -22,7 +22,7 @@
           tbody
             - @game.characters.each do |c|
               tr
-                td= link_to c.user.name, registration_path(c.user)
+                td= link_to c.user.name, profile_path(c.user.name)
                 td= link_to c.name, game_character_path(@game, c)
                 td= 'Druid'
                 td= c.status_text

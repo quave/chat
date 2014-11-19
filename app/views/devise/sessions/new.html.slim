@@ -1,12 +1,12 @@
 - title I18n.t 'devise.sign_in_page_title'
-- content_for :head do
-  h1= I18n.t 'devise.sign_in_page_title'
 
 = simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
   .form-inputs
-    = f.input :email, required: false, autofocus: true
-    = f.input :password, required: false
-    = f.input :remember_me, as: :boolean if devise_mapping.rememberable?
+    = f.input :email, required: false, autofocus: true, placeholder: 'Email', label_html: { class: 'sr-only' }
+    = f.input :password, required: false, placeholder: 'Пароль', label_html: { class: 'sr-only' }
+    = f.input :remember_me, as: :boolean, inline_label: 'Запомнить меня', label_html: { class: 'sr-only' }
+
   .form-actions
-    = f.button :submit, "Sign in"
-= render "devise/shared/links"
+    = f.button :submit, 'Войти'
+
+= render 'devise/shared/links'

@@ -1,0 +1,43 @@
+body.devise {
+  background: #eee;
+
+  header.navbar {
+    background: transparent;
+    position: relative;
+    .background {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: #888;
+      opacity: .5;
+    }
+    .container{
+      position: relative;
+    }
+  }
+
+  .page-content {
+    @include border-top-radius(5px);
+    @include border-bottom-radius(5px);
+
+    background: #fff;
+    padding: 0 2em 2em;
+
+    .boolean {
+      margin: 0;
+      label { font-weight: normal; }
+    }
+
+    .form-actions {
+      @extend .clearfix;
+
+      .btn {
+        @extend .pull-right;
+      }
+    }
+
+    .links {
+      font-size: 80%;
+    }
+  }
+}

@@ -1,9 +1,8 @@
-h2
-  | Forgot your password?
+- title 'Восстановление пароля'
 = simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
   = f.error_notification
   .form-inputs
-    = f.input :email, required: true, autofocus: true
+    = f.input :email, required: true, autofocus: true, placeholder: 'Email', label_html: { class: 'sr-only' }
   .form-actions
-    = f.button :submit, "Send me reset password instructions"
+    = f.button :submit, 'Выслать инструкции'
 = render "devise/shared/links"

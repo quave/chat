@@ -9,13 +9,20 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- *= require_tree .
  */
 
-@import "variables.css.scss";
+@import "variables";
 @import "bootstrap";
 @import "font-awesome";
 @import "bootstrap-markdown";
+@import "characters";
+@import "devise";
+@import "games";
+@import "lobby";
+@import "messages";
+@import "profile";
+@import "scaffolds";
+@import "users";
 
 html {
   position: relative;

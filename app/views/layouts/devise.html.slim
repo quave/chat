@@ -1,0 +1,28 @@
+doctype html
+html lang="en"
+  head
+    meta charset="utf-8"
+    meta http-equiv="X-UA-Compatible" content="IE=edge"
+    / Use title if it's in the page YAML frontmatter
+    title= yield(:title) || ''
+    meta name="description" content=""
+    meta name="viewport" content="width=device-width, initial-scale=1"
+    = csrf_meta_tags
+    = stylesheet_link_tag 'application', media: 'all'
+    = javascript_include_tag 'application'
+
+  body class="devise #{params[:controller]} #{params[:action]} #{yield(:page_classes)}"
+    header.navbar.navbar-static-top role='banner'
+      .background
+      .container
+        .navbar-header
+          = link_to 'R', root_path, class: 'navbar-brand'
+
+    .container
+      = notice
+      = alert
+
+      .row-float
+        .col-md-4.col-md-offset-4.page-content
+          h3= yield :title
+          = yield
