@@ -1,8 +1,7 @@
 class LobbyController < ApplicationController
+  before_action :set_game_lists
 
   def index
-    @my_games = Game.for current_user
-    @current_games = Game.not_started + Game.started
   end
 
 end

@@ -1,0 +1,12 @@
+- content_for :content
+  .row
+    .sidebar-nav.col-md-2
+      h4 Мои игры
+      ul#my-games
+        = render @my_games
+
+    .col-md-10
+      = yield :head
+      = yield
+
+= render template: 'layouts/application'

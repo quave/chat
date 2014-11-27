@@ -1,10 +1,13 @@
 - game_unread = @game.unread_messages_count current_user
 - title game_unread == 0 ? @game.name : "#{@game.name} (#{game_unread})"
 - content_for :head do
-  h2= @game.name
+  h2
+    = @game.name
 
 .row
   .col-sm-9
+    p#status.callout{class=get_status_class(@game.status)}= I18n.t "game.statuses.#{@game.status}"
+
     #tags
       - @game.tags.split(',').each do |t|
         span.tag.label.label-warning> = t.strip

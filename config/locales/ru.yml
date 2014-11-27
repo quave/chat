@@ -18,6 +18,10 @@ ru:
 
   game:
     send_request: "Хочу играть!"
+    statuses:
+      '0': Игра завершена
+      '1': Набор партии
+      '2': Игра идет
     characters:
       player_name_title: "Игрок"
       char_name_title: "Персонаж"

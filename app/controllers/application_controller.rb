@@ -9,6 +9,11 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  def set_game_lists
+    @my_games = Game.for current_user
+    @current_games = Game.not_started + Game.started
+  end
+
   def publish(channel, message)
     EM.run do
       Chat::Application.faye_client.publish channel, message: message, ext: {auth_token: FAYE_TOKEN }

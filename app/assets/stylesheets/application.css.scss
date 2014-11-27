@@ -74,6 +74,19 @@ textarea.input-xxlarge {
   &:hover{ color: #fff }
 }
 
+.callout {
+  @include border-left-radius(3px);
+  @include border-right-radius(3px);
+  border: 1px solid #eee;
+  padding: .3em .7em;
+
+  &.primary { border-left: 5px solid $brand-primary; }
+  &.info { border-left: 5px solid $brand-info; }
+  &.success { border-left: 5px solid $brand-success; }
+  &.warning { border-left: 5px solid $brand-warning; }
+  &.danger { border-left: 5px solid $brand-danger; }
+}
+
 .status {
   &.not-started { font-weight: bolder; }
   &.over { color: #888; }

@@ -1,6 +1,7 @@
 class GamesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_game, except: [:index, :create, :new, :show]
+  before_action :set_game_lists, only: [:show, :new, :update]
 
   # GET /games
   # GET /games.json

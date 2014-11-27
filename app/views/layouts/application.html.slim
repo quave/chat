@@ -1,18 +1,4 @@
-doctype html
-html lang="en"
-  head
-    meta charset="utf-8"
-    meta http-equiv="X-UA-Compatible" content="IE=edge"
-    / Use title if it's in the page YAML frontmatter
-    title= yield(:title) || ''
-    meta name="description" content=""
-    meta name="viewport" content="width=device-width, initial-scale=1"
-    = csrf_meta_tags
-    = stylesheet_link_tag 'application', media: 'all'
-    = javascript_include_tag 'application'
-    = javascript_include_tag Chat::Application.config.faye_url + 'faye/faye.js'
-    = yield :js
-
+- content_for :body
   body class="#{controller_name} #{params[:action]} #{yield(:page_classes)}"
     header.navbar.navbar-inverse.navbar-static-top role='banner'
       .container
@@ -36,10 +22,12 @@ html lang="en"
     .container
       = notice
       = alert
-      = yield :head
-      = yield
+      = yield :head unless content_for?(:content)
+      = content_for?(:content) ? yield(:content) : yield
 
     footer.footer role="footer"
       .container
         = yield :foot
         = link_to "RolePlayGround.ru", root_path
+
+= render template: 'layouts/main'

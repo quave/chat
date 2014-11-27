@@ -58,6 +58,8 @@ GEM
       responders
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
+    devise-russian (2.0.1.1)
+      devise
     diff-lcs (1.2.5)
     em-http-request (1.1.2)
       addressable (>= 2.3.4)
@@ -225,6 +227,7 @@ DEPENDENCIES
   colorize
   database_cleaner
   devise
+  devise-russian
   factory_girl_rails
   faye
   font-awesome-rails
