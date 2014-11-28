@@ -2,7 +2,7 @@
  * Russian translation for bootstrap-markdown
  * by Oleg Vivtash <o@vivtash.net>
  */
-;(function($){
+(function($){
   $.fn.markdown.messages['ru'] = {
     'Bold': "Жирный",
     'Italic': "Курсив",
@@ -21,4 +21,4 @@
     'enter image title here': "Введите название изображения",
     'list text here': "текст списка"
   };
-}(jQuery))
+}(jQuery));
