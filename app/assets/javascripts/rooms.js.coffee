@@ -9,13 +9,13 @@ $ ->
   msg = $('#message')
   form = $('#send-form')
 
-  initMsgInput(msg);
+  initMsgInput(msg)
 
   return if !window.fayeConfig
   (typeof(faye) == 'undefined' || faye == null) &&
     (faye = new Faye.Client window.fayeConfig.url)
 
-  testWs = new WebSocket(window.fayeConfig.url.replace(/^http/, 'ws'));
+  testWs = new WebSocket(window.fayeConfig.url.replace(/^http/, 'ws'))
   testWs.onerror = ->
     faye.disable 'websocket'
     Faye.Transport.WebSocket.isUsable = (_,url,c) -> c false
@@ -47,11 +47,11 @@ $ ->
         console.log('incoming', message)
         callback(message)
       outgoing: (message, callback) ->
-        console.log('outgoing', message);
-        callback(message);
-    };
+        console.log('outgoing', message)
+        callback(message)
+    }
 
-    faye.addExtension(extLogger);
+    faye.addExtension(extLogger)
 
     msgSub = faye.subscribe window.fayeConfig.messagesChannel, (data) ->
       eval if typeof(data.message) == 'array' then data.message[0] else data.message
@@ -61,11 +61,11 @@ $ ->
       id = data.message.split(':')[0]
       status = data.message.split(':')[1]
       opposite = if status == 'online' then 'offline' else 'online'
-      $("#player-#{id} .status").removeClass(opposite).addClass(status);
+      $("#player-#{id} .status").removeClass(opposite).addClass(status)
 
     onlineSub.errback (error) -> console && console.log 'Online sub error: ' + error
 
-    $(document).scrollTop($(document).height());
+    $(document).scrollTop($(document).height())
 
     msg.keydown (e) ->
       return if $(this).is ':disabled'
