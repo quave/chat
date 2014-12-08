@@ -23,37 +23,31 @@ div
             = t('posts', :scope => 'forem.general')
       tbody
         - forums.each do |forum|
-          |  <tr class="forum 
-          = cycle("odd", "even")
-          | "> 
-          td
-            = link_to t('edit', :scope => 'forem.admin.forums'), forem.edit_admin_forum_path(forum), :class => "btn btn-info"
-          td
-            = link_to t('delete', :scope => 'forem.admin.forums'), forem.admin_forum_path(forum), :method => :delete, data: { :confirm => t("delete_confirm", :scope => 'forem.admin.forums') }, :class => "btn btn-danger"
-          td
-            = link_to forem_emojify(forum.title), forem.forum_path(forum)
-            .description
-              = forem_format(forum.description)
-            = t('.last_post')
-            - if last_post = forum.posts.last
-              = link_to(forem_emojify(last_post.topic.subject), forem.forum_topic_path(forum, last_post.topic)) -
-              = t('by')
-              = link_to_if Forem.user_profile_links, last_post.user.forem_name, [main_app, last_post.user]
-              = time_ago_in_words(last_post.created_at) -
-            - else
-              = t('.none')
-            br
-            span.moderators
-              strong
-                = t('.moderators')
-                | :
-              - if forum.moderators.exists?
-                - forum.moderators.map do |moderator|
-                  = link_to moderator, [forem, :admin, moderator]
-                  - end.to_sentence
+          tr.forum{class=cycle("odd", "even")}
+            td= link_to t('edit', :scope => 'forem.admin.forums'), forem.edit_admin_forum_path(forum), :class => "btn btn-info"
+            td= link_to t('delete', :scope => 'forem.admin.forums'), forem.admin_forum_path(forum), :method => :delete, data: { :confirm => t("delete_confirm", :scope => 'forem.admin.forums') }, :class => "btn btn-danger"
+            td
+              = link_to forem_emojify(forum.title), forem.forum_path(forum)
+              .description
+                = forem_format(forum.description)
+              = t('.last_post')
+              - if last_post = forum.posts.last
+                = link_to(forem_emojify(last_post.topic.subject), forem.forum_topic_path(forum, last_post.topic))
+                = t('by')
+                = link_to_if Forem.user_profile_links, last_post.user.forem_name, [main_app, last_post.user]
+                = time_ago_in_words(last_post.created_at)
+              - else
+                = t('.none')
+              br
+              span.moderators
+                strong
+                  = t('.moderators')
+                  | :
+                - if forum.moderators.exists?
+                  = forum.moderators.map { |moderator| link_to moderator, [forem, :admin, moderator] }.to_sentence
                 - else
                   = t('.none')
-          td
-            = forum.topics.count
-          td
-            = forum.posts.count
+            td
+              = forum.topics.count
+            td
+              = forum.posts.count
