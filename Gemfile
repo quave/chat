@@ -16,11 +16,14 @@ gem 'tzinfo-data'
 gem 'faye'
 gem 'devise'
 gem 'devise-russian'
-gem 'simple_form', '>= 3.1.0.rc1'
+gem 'simple_form', '>= 3.1.0'
 gem 'cancan'
 gem 'redcarpet'
 gem 'puma'
 gem 'colorize'
+gem 'forem', git: 'https://github.com/quave/forem.git', branch: 'rails4'
+gem 'forem-bootstrap', :github => "radar/forem-bootstrap"
+gem 'will_paginate'
 
 group :development, :test do
   gem 'sqlite3'

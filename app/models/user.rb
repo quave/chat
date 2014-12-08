@@ -14,6 +14,10 @@ class User < ActiveRecord::Base
     read_attribute(:name) || '%username%'
   end
 
+  def to_s
+    self.name
+  end
+
   def unread_messages_count
     Game.for(self).reduce(0) do |sum, game|
       sum + game.unread_messages_count(self)

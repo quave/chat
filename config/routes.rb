@@ -1,5 +1,7 @@
 Chat::Application.routes.draw do
 
+  mount Forem::Engine, :at => '/forums'
+
   resources :games, except: :destroy do
     put :start, on: :member
     put :stop, on: :member
@@ -43,6 +45,7 @@ Chat::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'lobby#index'
+
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
