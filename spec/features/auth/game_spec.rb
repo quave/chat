@@ -1,10 +1,7 @@
 require 'spec_helper'
 
 feature 'Main page' do
-  before(:each) do
-    user = FactoryGirl.create(:user)
-    login_as user, :scope => :user, :run_callbacks => false
-  end
+  include_context 'authed'
 
   let!(:game) { create(:game) }
 
