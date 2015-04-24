@@ -11,6 +11,7 @@
           = link_to "R", root_path, class: "navbar-brand"
         nav.collapse.navbar-collapse role='navigation'
           ul.nav.navbar-nav.navbar-right
+            li= link_to "Форумы", forem.root_path
             - if user_signed_in?
               - unread = current_user.unread_messages_count
               li.unread= link_to "Сообщения #{unread}", root_path unless unread == 0

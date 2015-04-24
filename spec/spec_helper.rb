@@ -41,6 +41,7 @@ require 'capybara/rspec'
 
 include Devise::TestHelpers
 include Warden::Test::Helpers
+Warden.test_mode!
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -53,6 +54,8 @@ ActiveRecord::Migration.maintain_test_schema!
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
   config.include Rails.application.routes.url_helpers
+  config.include Devise::TestHelpers, type: :controller
+
 
   # ## Mock Framework
   #

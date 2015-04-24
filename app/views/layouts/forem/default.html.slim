@@ -1,0 +1,40 @@
+doctype html
+html lang="en"
+  head
+    meta charset="utf-8"
+    meta http-equiv="X-UA-Compatible" content="IE=edge"
+    / Use title if it's in the page YAML frontmatter
+    title= yield(:title) || ''
+    meta name="description" content=""
+    meta name="viewport" content="width=device-width, initial-scale=1"
+    = csrf_meta_tags
+    = stylesheet_link_tag 'application', 'forem', media: 'all'
+    = javascript_include_tag 'application', 'forem'
+
+  body class="#{controller_name} #{params[:action]} #{yield(:page_classes)}"
+    header.navbar.navbar-inverse.navbar-static-top role='banner'
+      .container
+        .navbar-header
+          button.navbar-toggle type="button" data-toggle="collapse" data-target=".navbar-collapse"
+            span.sr-only Toggle navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          = link_to "R", main_app.root_path, class: "navbar-brand"
+        nav.collapse.navbar-collapse role='navigation'
+          ul.nav.navbar-nav.navbar-right
+            - if user_signed_in?
+              li= link_to current_user.name, main_app.profile_path
+              li= link_to "Выход", main_app.destroy_user_session_path, method: :delete
+            - else
+              li= link_to "Войти", main_app.new_user_session_path
+
+    .container
+      = notice
+      = alert
+      = yield
+
+    footer.footer role="footer"
+      .container
+        = yield :foot
+        = link_to "RolePlayGround.ru", main_app.root_path
