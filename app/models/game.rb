@@ -17,7 +17,7 @@ class Game < ActiveRecord::Base
   scope :with_master, ->(user) { where creator: user.try(:id) }
   scope :with_player, ->(user) do
     joins(:characters)
-    .where "characters.user_id = :user_id AND creator_id != :user_id AND status IN :statuses",
+    .where "characters.user_id = :user_id AND creator_id != :user_id AND games.status IN (:statuses)",
            { user_id: user.try(:id), statuses: [NOT_STARTED, STARTED] }
   end
   scope :not_started, -> { where status: Game::NOT_STARTED }
