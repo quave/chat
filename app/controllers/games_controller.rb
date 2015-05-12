@@ -40,7 +40,7 @@ class GamesController < ApplicationController
 
   # POST /games
   # POST /games.json
-  def creates
+  def create
     @game = Game.new(game_params)
     @game.creator = current_user
 
