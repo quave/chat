@@ -22,10 +22,10 @@ test:
 
 production:
   adapter: postgresql 
-  host: localhost
+  host: postgres
   database: d20chat
   username: postgres
-  password: postgrespass
+# password: postgrespass
   pool: 5
   timeout: 5000
   encoding: unicode 
